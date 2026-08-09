@@ -477,7 +477,7 @@ function renderVideoModal() {
   var ytId = isMobile ? featured.youtube_9_16 : featured.youtube_16_9;
   var embedClass = isMobile ? "video-embed video-embed-9-16" : "video-embed video-embed-16-9";
   var h = "<h3 class=\"video-modal-title\">"+esc(featured.title)+"</h3>";
-  h += "<div class=\""+embedClass+"\"><iframe src=\"https://www.youtube.com/embed/"+ytId+"?cc_load_policy=1&cc_lang_pref="+S.lang+"&hl="+S.lang+"\" title=\""+esc(featured.title)+"\" frameborder=\"0\" allow=\"autoplay; encrypted-media; picture-in-picture\" allowfullscreen></iframe></div>";
+  h += "<div class=\""+embedClass+"\"><iframe src=\"https://www.youtube.com/embed/"+ytId+"?cc_load_policy=1&cc_lang_pref="+S.lang+"&hl="+S.lang+"&fs=0"+"\" title=\""+esc(featured.title)+"\" frameborder=\"0\" allow=\"autoplay; encrypted-media; picture-in-picture\"></iframe></div>";
   h += "<div class=\"video-list\">";
   var cats = [];
   for(var i=0;i<lib.length;i++){ if(cats.indexOf(lib[i].category)<0) cats.push(lib[i].category); }
