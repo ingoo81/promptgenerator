@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<title>Prompt Generator für Lehrkräfte</title>
+<meta name="description" content="Führt Lehrkräfte Schritt für Schritt zu einem passenden Auswertungs-Prompt für Sprech-Hausaufgaben.">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<style>
+:root{--p:#a5c500;--d:#003468;--w:#fef3c7;--wb:#fcd34d;--wt:#92400e;--ib:#eff6ff;--ibb:#bfdbfe;--it:#1e40af;--selbg:#f0f8d8;--selbg-hover:#f6faeb;}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:#f8fafc;font-family:'Segoe UI',Arial,sans-serif;}
+.gh{background:var(--d);}
+.hi{max-width:780px;margin:0 auto;padding:16px 24px;display:flex;align-items:center;gap:16px;}
+.ht{flex:1;}.ht h1{font-size:26px;font-weight:800;color:white;margin-bottom:3px;letter-spacing:-.01em;}
+.ht .sub{color:var(--p);font-size:12px;font-weight:500;}
+.hbadge{width:56px;height:56px;border-radius:50%;background:var(--p);color:var(--d);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:22px;flex-shrink:0;border:3px solid rgba(255,255,255,.25);}
+.hs{background:linear-gradient(135deg,var(--d) 0%,#005a8e 100%);padding:9px 24px;display:flex;align-items:center;justify-content:center;border-bottom:3px solid var(--p);}
+.hs span{color:rgba(255,255,255,.85);font-size:13px;font-style:italic;}
+.ww{max-width:780px;margin:0 auto;padding:26px 20px 50px;}
+.pp{display:flex;gap:3px;margin-bottom:4px;}
+.pip{height:4px;flex:1;border-radius:2px;background:#e2e8f0;transition:background .3s;}
+.pip.done{background:var(--p);}.pip.active{background:var(--d);}
+.pi{display:flex;justify-content:space-between;font-size:11px;color:#64748b;margin-bottom:18px;}
+.sc{background:white;border-radius:20px;box-shadow:0 4px 24px rgba(0,52,104,.1);border:2px solid #e2e8f0;padding:26px 26px 22px;}
+.ey{font-size:11px;font-weight:700;color:var(--p);text-transform:uppercase;letter-spacing:.08em;margin-bottom:6px;}
+.st{font-size:19px;font-weight:800;color:var(--d);margin-bottom:5px;}
+.sh{font-size:13px;color:#64748b;line-height:1.55;margin-bottom:20px;}
+.fg{margin-bottom:14px;}.fg label{display:block;font-size:13px;font-weight:600;color:var(--d);margin-bottom:5px;}
+.rq{color:#ef4444;}
+input.ti,textarea.ti{width:100%;border:2px solid #e2e8f0;border-radius:10px;padding:10px 13px;font-size:14px;color:#1e293b;background:#f8fafc;font-family:inherit;transition:border-color .18s;}
+input.ti:focus,textarea.ti:focus{outline:none;border-color:var(--p);background:white;box-shadow:0 0 0 3px rgba(165,197,0,.15);}
+.rg{display:flex;flex-direction:column;gap:8px;}
+.ro{display:flex;align-items:flex-start;gap:12px;padding:11px 14px;border-radius:12px;border:2px solid #e2e8f0;cursor:pointer;background:#f8fafc;transition:all .15s;}
+.ro:hover{border-color:var(--p);background:var(--selbg);}
+.ro.sel{border-color:var(--p);background:var(--selbg);}
+.ro input[type=radio],.ro input[type=checkbox]{margin-top:3px;accent-color:var(--d);flex-shrink:0;}
+.rl{font-size:13px;font-weight:600;color:var(--d);}
+.rd{font-size:12px;color:#64748b;margin-top:2px;line-height:1.4;}
+.niv-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:4px;}
+.niv-chip{padding:12px 8px;border-radius:12px;border:2px solid #e2e8f0;cursor:pointer;text-align:center;background:#f8fafc;transition:all .15s;}
+.niv-chip:hover{border-color:var(--p);background:var(--selbg);}
+.niv-chip.sel{border-color:var(--p);background:var(--selbg);}
+.niv-chip .nc{font-size:16px;font-weight:800;color:var(--d);}
+.niv-chip .nn{font-size:10.5px;color:#64748b;margin-top:2px;}
+.nr{display:flex;justify-content:space-between;align-items:center;margin-top:22px;}
+.bb{background:white;border:2px solid #e2e8f0;color:#64748b;border-radius:10px;padding:10px 20px;font-size:13px;font-weight:600;cursor:pointer;transition:all .15s;font-family:inherit;}
+.bb:hover{border-color:#94a3b8;color:#334155;}
+.bb:disabled{opacity:.4;cursor:default;}
+.bn{background:var(--d);color:white;border:none;border-radius:10px;padding:10px 24px;font-size:14px;font-weight:700;cursor:pointer;transition:all .18s;font-family:inherit;}
+.bn:hover{background:#004d8c;transform:translateY(-1px);}
+.bn.gen{background:var(--p);color:var(--d);font-size:15px;padding:12px 28px;}
+.bn.gen:hover{background:#8fb000;}
+.em{font-size:12px;color:#ef4444;text-align:center;min-height:18px;margin-top:8px;}
+.rb{background:#f0f4f8;border:2px solid #e2e8f0;border-radius:12px;padding:16px 18px;font-size:13px;line-height:1.75;color:#1e293b;max-height:460px;overflow-y:auto;margin-bottom:14px;white-space:pre-wrap;}
+.rl2{font-size:11px;font-weight:700;color:var(--d);text-transform:uppercase;letter-spacing:.06em;margin:10px 0 3px;display:block;}
+.cb{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;padding:13px 20px;background:var(--p);color:var(--d);font-size:14px;font-weight:800;border:none;border-radius:12px;cursor:pointer;transition:all .2s;box-shadow:0 3px 10px rgba(165,197,0,.35);font-family:inherit;}
+.cb:hover{background:#8fb000;transform:translateY(-1px);}
+.cb.ok{background:#22c55e;color:white;}
+.tb{background:var(--ib);border:1.5px solid var(--ibb);border-radius:10px;padding:11px 14px;font-size:12px;color:var(--it);margin-top:14px;line-height:1.5;}
+.wb2{background:var(--w);border:1.5px solid var(--wb);border-radius:10px;padding:10px 14px;font-size:12px;color:var(--wt);margin-top:12px;line-height:1.5;}
+.av{background:#f0f4f8;border:2px dashed #cbd5e1;border-radius:12px;padding:14px 16px;margin-top:4px;}
+.av p{font-size:12px;color:#64748b;line-height:1.5;}
+footer{text-align:center;padding:16px;font-size:11px;color:#94a3b8;border-top:1px solid #e2e8f0;margin-top:10px;}
+@media (max-width: 600px) {
+  .hi{padding:12px 16px;gap:10px;}
+  .ht h1{font-size:18px;}
+  .ht .sub{font-size:11px;}
+  .hbadge{width:44px;height:44px;font-size:17px;}
+  .hs{padding:7px 16px;}
+  .hs span{font-size:12px;}
+  .ww{padding:16px 12px 48px;}
+  .sc{padding:18px 16px 16px;border-radius:14px;}
+  .st{font-size:17px;}
+  .sh{font-size:14px;}
+  .niv-grid{grid-template-columns:repeat(3,1fr);gap:6px;}
+  .bb,.bn{padding:11px 16px;font-size:14px;}
+  .rb{font-size:14px;line-height:1.65;padding:14px 14px;}
+  .tb{font-size:13px;padding:10px 12px;}
+}
+</style>
+</head>
+<body>
+<header class="gh">
+  <div class="hi">
+    <div class="ht"><h1>Prompt Generator für Lehrkräfte</h1></div>
+    <div class="hbadge">👩‍🏫</div>
+  </div>
+</header>
+<div class="hs"><span>✦ Baue dir in wenigen Schritten einen Auswertungs-Prompt für Sprech-Hausaufgaben.</span></div>
+<div class="ww">
+  <div class="pp" id="pips"></div>
+  <div class="pi"><span id="slbl"></span><span id="scnt"></span></div>
+  <div class="sc" id="sc"></div>
+  <div class="em" id="em"></div>
+  <div class="nr">
+    <button class="bb" id="bb" onclick="nav(-1)">← Zurück</button>
+    <button class="bn" id="bn" onclick="nav(1)">Weiter →</button>
+  </div>
+</div>
+<footer>Prompt Generator für Lehrkräfte · promptgenerator.site/teachers</footer>
+
+<script>
+var NIVEAUS = [
+  {c:"A1", n:"Einstieg"}, {c:"A2", n:"Grundlagen"}, {c:"B1", n:"Mittelstufe"},
+  {c:"B2", n:"Oberstufe"}, {c:"C1", n:"Fortgeschritten"}, {c:"C2", n:"Nahezu muttersprachlich"}
+];
+
+// Bewertungskriterien je Niveau, destilliert aus den offiziellen Goethe-Modellsätzen
+// (Bewertungskriterien Sprechen), vereinfacht auf zwei Dimensionen (Aufgabenerfüllung,
+// Sprache) und angepasst an ein freies Gespräch statt einer mehrteiligen Prüfung.
+// Aussprache fließt bewusst nirgends ein (keine Audiodaten vorhanden).
+// A1 (Start Deutsch 1) nutzt im Original eine holistische 3-Stufen-Skala statt A-E
+// und wird deshalb als Sonderfall behandelt (typ: "holistisch").
+var NIVEAU_KRITERIEN = {
+  A1: {
+    typ: "holistisch",
+    quelle: "Start Deutsch 1",
+    stufen: [
+      { label: "Aufgabe voll erfüllt und verständlich", punkte: 100, note: 1 },
+      { label: "Aufgabe wegen sprachlicher oder inhaltlicher Mängel nur teilweise erfüllt", punkte: 50, note: 4 },
+      { label: "Aufgabe nicht erfüllt und/oder unverständlich", punkte: 0, note: 6 }
+    ]
+  },
+  A2: {
+    typ: "zweidimensional",
+    quelle: "Goethe-Zertifikat A2",
+    aufgabenerfuellung: {
+      A: "durchgängig angemessen",
+      B: "überwiegend angemessen",
+      C: "teilweise angemessen",
+      D: "kaum angemessen",
+      E: "nicht bewertbar"
+    },
+    sprache: {
+      A: "angemessen/differenziert, vereinzelte Fehlgriffe ohne Beeinträchtigung",
+      B: "überwiegend angemessen, mehrere Fehlgriffe ohne Beeinträchtigung",
+      C: "teilweise angemessen, Fehlgriffe beeinträchtigen teilweise",
+      D: "kaum angemessen, Fehlgriffe beeinträchtigen erheblich",
+      E: "durchgängig unangemessen"
+    }
+  },
+  B1: {
+    typ: "zweidimensional",
+    quelle: "Goethe-Zertifikat B1",
+    aufgabenerfuellung: {
+      A: "Sprachfunktionen in Inhalt und Umfang angemessen behandelt; Gespräch angemessen begonnen, in Gang gehalten und beendet",
+      B: "überwiegend angemessen",
+      C: "teilweise angemessen",
+      D: "kaum angemessen",
+      E: "Gesprächsanteil nicht bewertbar"
+    },
+    sprache: {
+      A: "Register situations- und partneradäquat; Wortschatz und Strukturen differenziert, vereinzelte Fehlgriffe beeinträchtigen das Verständnis nicht",
+      B: "noch weitgehend situations- und partneradäquat; überwiegend angemessen, mehrere Fehlgriffe beeinträchtigen das Verständnis noch nicht",
+      C: "ansatzweise situations- und partneradäquat; teilweise angemessen oder begrenzt, mehrere Fehlgriffe beeinträchtigen das Verständnis teilweise",
+      D: "nicht mehr situations- und partneradäquat; kaum vorhanden, mehrere Fehlgriffe beeinträchtigen das Verständnis erheblich",
+      E: "Äußerung größtenteils unverständlich"
+    }
+  },
+  B2: {
+    typ: "zweidimensional",
+    quelle: "Goethe-Zertifikat B2",
+    aufgabenerfuellung: {
+      A: "Sprachfunktionen angemessen; Gespräch angemessen begonnen, in Gang gehalten und beendet; Register situations- und partneradäquat",
+      B: "überwiegend angemessen",
+      C: "in Teilen angemessen",
+      D: "kaum noch angemessen",
+      E: "nicht mehr verständlich"
+    },
+    sprache: {
+      A: "Wortschatz/Strukturen differenziert, vereinzelte Fehlgriffe beeinträchtigen das Verständnis nicht; Sätze angemessen verknüpft, natürliche Sprechweise",
+      B: "überwiegend angemessen, mehrere Fehlgriffe beeinträchtigen das Verständnis noch nicht; überwiegend angemessen verknüpft, verlangsamte aber flüssige Sprechweise",
+      C: "Repertoire begrenzt, mehrere Fehlgriffe beeinträchtigen das Verständnis stellenweise; teilweise verknüpft, stockende Sprechweise beeinträchtigt das Verständnis stellenweise",
+      D: "kaum Repertoire vorhanden, Fehlgriffe beeinträchtigen das Verständnis durchgehend; kaum verknüpft, stockende Sprechweise beeinträchtigt das Verständnis durchgehend",
+      E: "Äußerung unverständlich"
+    }
+  },
+  C1: {
+    typ: "zweidimensional",
+    quelle: "Goethe-Zertifikat C1",
+    aufgabenerfuellung: {
+      A: "sehr gut und sehr ausführlich, sehr interaktiv",
+      B: "gut und ausführlich, gut interaktiv",
+      C: "gut und ausführlich genug; Gesprächsfähigkeit vorhanden, aber nicht sehr aktiv",
+      D: "unvollständig und zu kurz; Beteiligung nur auf Anfrage",
+      E: "viel zu kurz bzw. Thema verfehlt; große Schwierigkeiten, sich überhaupt zu beteiligen"
+    },
+    sprache: {
+      A: "klar zusammenhängend, angemessenes Sprechtempo; wenig Umschreibungen/Wortsuche; nur vereinzelte Regelverstöße",
+      B: "zusammenhängend, angemessenes Sprechtempo; über weite Strecken angemessene Ausdrucksweise; stellenweise Regelverstöße mit Neigung zur Selbstkorrektur",
+      C: "nicht immer zusammenhängend; vage/allgemeine Ausdrucksweise; häufige Regelverstöße, die das Verständnis noch nicht beeinträchtigen",
+      D: "stockende, bruchstückhafte Sprechweise; situations-unspezifische Ausdrucksweise mit größerer Zahl an Fehlgriffen; Regelverstöße beeinträchtigen das Verständnis erheblich",
+      E: "abgehackte Sprechweise, zentrale Aussagen bleiben unklar; Regelverstöße verhindern das Verständnis weitgehend"
+    }
+  },
+  C2: {
+    typ: "zweidimensional",
+    quelle: "Goethe-Zertifikat C2",
+    aufgabenerfuellung: {
+      A: "strukturiert, adressatenbezogen, ausführlich; souveräne, situations- und partneradäquate Gesprächsführung",
+      B: "größtenteils strukturiert, Umfang angemessen; situations- und partneradäquate Gesprächsführung",
+      C: "Struktur erkennbar, einzelne Aspekte unklar oder knapp; an mehreren Stellen nicht situations- und partneradäquat",
+      D: "Struktur kaum erkennbar, viele Aspekte unklar oder zu knapp; wenig initiativ im Gespräch",
+      E: "Thema verfehlt, Umfang nicht ausreichend; keine erkennbare Gesprächsführung"
+    },
+    sprache: {
+      A: "Verknüpfungsmittel komplex, variabel und flexibel eingesetzt; breites Spektrum, flexibel/differenziert, natürliche Kommunikation trotz höchstens vereinzelter Abweichungen",
+      B: "verschiedene Verknüpfungsmittel angemessen eingesetzt; Spektrum angemessen, Fehlgriffe/Regelverstöße stören die Kommunikation nicht",
+      C: "wenige, wenig abwechslungsreiche Verknüpfungsmittel; Spektrum angemessen mit einzelnen störenden Fehlgriffen, oder Spektrum begrenzt mit häufigeren, noch nicht störenden Fehlgriffen",
+      D: "einfach strukturierte, unverbundene Sätze; kaum Spektrum vorhanden, Fehlgriffe/Regelverstöße behindern die Kommunikation",
+      E: "Äußerung inkohärent bzw. unverständlich"
+    }
+  }
+};
+
+var LAENGEN = [
+  {c:"knapp", n:"Knapp", d:"ca. 600 Wörter — nur das Nötigste", limit:600},
+  {c:"mittel", n:"Mittel", d:"ca. 1200 Wörter — ausgewogen", limit:1200},
+  {c:"ausfuehrlich", n:"Ausführlich", d:"ca. 1800 Wörter — mit mehr Erklärung", limit:1800}
+];
+
+var S = {
+  niveau: "",
+  klassengroesse: "",
+  vorschlaege: true,
+  spannbreite: true,
+  gruppenbildung: true,
+  noten: false,
+  notenformat: "punkte",
+  laenge: "mittel",
+  artefakte: false,
+  aufgabenPrompt: ""
+};
+
+var cur = 0;
+var T = 6; // 5 Inhaltsschritte + 1 Ergebnisschritt
+
+function esc(s) {
+  return String(s == null ? "" : s)
+    .replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;")
+    .replace(/"/g,"&quot;").replace(/'/g,"&#39;");
+}
+
+function renderPips() {
+  var pips = document.getElementById("pips");
+  var h = "";
+  for (var i = 0; i < T; i++) {
+    var cls = "pip";
+    if (i < cur) cls += " done";
+    if (i === cur) cls += " active";
+    h += "<div class=\"" + cls + "\"></div>";
+  }
+  pips.innerHTML = h;
+  var labels = ["Kontext","Bausteine","Format & Länge","Übungsmaterial","Aufgabenbeschreibung","Ergebnis"];
+  document.getElementById("slbl").textContent = labels[cur] || "";
+  document.getElementById("scnt").textContent = "Schritt " + (cur+1) + " von " + T;
+}
+
+function renderNav() {
+  var bb = document.getElementById("bb");
+  var bn = document.getElementById("bn");
+  bb.disabled = (cur === 0);
+  bn.style.display = (cur === T-1) ? "none" : "inline-block";
+  bn.textContent = (cur === T-2) ? "Prompt erstellen →" : "Weiter →";
+}
+
+function toggleField(key) {
+  S[key] = !S[key];
+  render();
+}
+
+function selectField(key, val) {
+  S[key] = val;
+  render();
+}
+
+function render() {
+  renderPips();
+  renderNav();
+  document.getElementById("em").textContent = "";
+  var sc = document.getElementById("sc");
+  var h = "";
+
+  if (cur === T-1) {
+    var promptText = buildPrompt();
+    h = "<div class=\"ey\">DEIN AUSWERTUNGS-PROMPT</div>";
+    h += "<div class=\"st\">Fertig zum Kopieren</div>";
+    h += "<div class=\"rb\">" + esc(promptText) + "</div>";
+    h += "<button class=\"cb\" id=\"cpb\" onclick=\"doCopy()\"><span id=\"cpi\">📋</span> <span id=\"cpl\">Prompt kopieren</span></button>";
+    if (S.aufgabenPrompt.trim()) {
+      h += "<div class=\"tb\">💡 Lade zusammen mit diesem Prompt zwei Dateien hoch: die zusammengeführten Berichte und die zusammengeführten Transkripte. Der Aufgaben-Prompt steckt schon im Text oben — kein dritter Upload nötig.</div>";
+    } else {
+      h += "<div class=\"tb\">💡 Lade zusammen mit diesem Prompt drei Dateien hoch: die zusammengeführten Berichte, die zusammengeführten Transkripte, und den ursprünglichen Aufgaben-Prompt deiner Hausaufgabe.</div>";
+    }
+
+    if (S.artefakte) {
+      var artefaktText = buildArtefaktPrompt();
+      h += "<div class=\"rl2\" style=\"margin-top:22px\">Zweiter Prompt — Übungsmaterial (Grundgerüst)</div>";
+      h += "<div class=\"rb\">" + esc(artefaktText) + "</div>";
+      h += "<button class=\"cb\" id=\"cpb2\" onclick=\"doCopy2()\"><span id=\"cpi2\">📋</span> <span id=\"cpl2\">Prompt kopieren</span></button>";
+      h += "<div class=\"tb\">💡 Diesen Prompt erst NACH der Auswertung oben ins selbe Gespräch einfügen — er baut direkt auf den dort gefundenen Fehlermustern auf.</div>";
+    }
+
+    sc.innerHTML = h;
+    return;
+  }
+
+  if (cur === 0) {
+    h = "<div class=\"ey\">SCHRITT 1 VON " + T + "</div>";
+    h += "<div class=\"st\">Kontext der Aufgabe</div>";
+    h += "<div class=\"sh\">Diese Angaben sorgen dafür, dass der Prompt zu deiner Klasse passt — Niveau bestimmt das Bewertungssystem (falls du Noten aktivierst), Klassengröße die Schwelle, ab wann ein Fehlermuster als klassenweit gilt.</div>";
+
+    h += "<div class=\"fg\"><label>Zielniveau <span class=\"rq\">*</span></label>";
+    h += "<div class=\"niv-grid\">";
+    for (var i = 0; i < NIVEAUS.length; i++) {
+      var niv = NIVEAUS[i];
+      h += "<div class=\"niv-chip" + (S.niveau===niv.c?" sel":"") + "\" onclick=\"selectField('niveau','" + niv.c + "')\">";
+      h += "<div class=\"nc\">" + niv.c + "</div><div class=\"nn\">" + esc(niv.n) + "</div></div>";
+    }
+    h += "</div></div>";
+
+    h += "<div class=\"fg\"><label>Klassengröße (Anzahl Lernender) <span class=\"rq\">*</span></label>";
+    h += "<input class=\"ti\" id=\"klassenInput\" type=\"number\" min=\"1\" max=\"99\" placeholder=\"z. B. 24\" value=\"" + esc(S.klassengroesse) + "\" oninput=\"S.klassengroesse=this.value\"></div>";
+
+    sc.innerHTML = h;
+    return;
+  }
+
+  if (cur === 1) {
+    h = "<div class=\"ey\">SCHRITT 2 VON " + T + "</div>";
+    h += "<div class=\"st\">Bausteine der Auswertung</div>";
+    h += "<div class=\"sh\">Fehlermuster sind immer dabei. Wähle zusätzlich, was du noch brauchst.</div>";
+
+    h += "<div class=\"av\"><p>✓ Immer enthalten: klassenweite Fehlermuster (Grammatik, Wortschatz, Ausdruck, Flüssigkeit).</p></div>";
+
+    h += "<div class=\"rg\" style=\"margin-top:14px\">";
+
+    h += "<div class=\"ro" + (S.vorschlaege?" sel":"") + "\" onclick=\"toggleField('vorschlaege')\">";
+    h += "<input type=\"checkbox\" " + (S.vorschlaege?"checked":"") + " onclick=\"event.stopPropagation()\" onchange=\"toggleField('vorschlaege')\">";
+    h += "<div><div class=\"rl\">Vorschläge für den nächsten Unterricht</div><div class=\"rd\">Sprachlicher Fokus und konkrete Aktivitätsvorschläge, zugeschnitten auf die gefundenen Fehlermuster.</div></div></div>";
+
+    h += "<div class=\"ro" + (S.spannbreite?" sel":"") + "\" onclick=\"toggleField('spannbreite')\">";
+    h += "<input type=\"checkbox\" " + (S.spannbreite?"checked":"") + " onclick=\"event.stopPropagation()\" onchange=\"toggleField('spannbreite')\">";
+    h += "<div><div class=\"rl\">Spannbreite der Klasse</div><div class=\"rd\">Kurzer Überblick über den Abstand zwischen stärksten und schwächsten Lernenden, mit Hinweis auf Differenzierung.</div></div></div>";
+
+    h += "<div class=\"ro" + (S.gruppenbildung?" sel":"") + "\" onclick=\"toggleField('gruppenbildung')\">";
+    h += "<input type=\"checkbox\" " + (S.gruppenbildung?"checked":"") + " onclick=\"event.stopPropagation()\" onchange=\"toggleField('gruppenbildung')\">";
+    h += "<div><div class=\"rl\">Vorschläge zur Gruppenbildung</div><div class=\"rd\">2–4 Paarungen für Partnerarbeit, inklusive Begründung, ob heterogen oder homogen gruppiert wurde.</div></div></div>";
+
+    h += "<div class=\"ro" + (S.noten?" sel":"") + "\" onclick=\"toggleField('noten')\">";
+    h += "<input type=\"checkbox\" " + (S.noten?"checked":"") + " onclick=\"event.stopPropagation()\" onchange=\"toggleField('noten')\">";
+    h += "<div><div class=\"rl\">Orientierungsnoten (optional)</div><div class=\"rd\">Grobe Note je Lernender/Lernendem zur internen Einordnung — nicht für Lernende bestimmt, keine offizielle Note.</div></div></div>";
+
+    h += "</div>";
+
+    if (S.noten) {
+      var krit = NIVEAU_KRITERIEN[S.niveau];
+      h += "<div class=\"section-divider\" style=\"margin-top:18px;padding-top:14px;border-top:1.5px dashed #cbd5e1\">";
+      if (!krit) {
+        h += "<div class=\"av\"><p>Bitte wähle oben in Schritt 1 zuerst ein Niveau — die Kriterien richten sich danach.</p></div>";
+      } else if (krit.typ === "holistisch") {
+        h += "<div class=\"sh\" style=\"margin-bottom:10px\">Für Niveau " + S.niveau + " basiert die Note auf „" + esc(krit.quelle) + "“ — dort gibt es keine A–E-Skala, sondern eine ganzheitliche Einschätzung in drei Stufen.</div>";
+        h += "<div class=\"av\"><p>";
+        for (var hi = 0; hi < krit.stufen.length; hi++) {
+          h += (hi+1) + ". " + esc(krit.stufen[hi].label) + (hi < krit.stufen.length-1 ? "<br><br>" : "");
+        }
+        h += "</p></div>";
+      } else {
+        h += "<div class=\"sh\" style=\"margin-bottom:10px\">Für Niveau " + S.niveau + " basiert die Note auf „" + esc(krit.quelle) + "“: Aufgabenerfüllung und Sprache, je A–E. Aussprache fließt nicht ein (keine Audiodaten).</div>";
+      }
+      h += "<div class=\"fg\"><label>Notenformat</label>";
+      h += "<div class=\"rg\">";
+      h += "<div class=\"ro" + (S.notenformat==="punkte"?" sel":"") + "\" onclick=\"selectField('notenformat','punkte')\">";
+      h += "<input type=\"radio\" " + (S.notenformat==="punkte"?"checked":"") + ">";
+      h += "<div><div class=\"rl\">0–100 Punkte</div></div></div>";
+      h += "<div class=\"ro" + (S.notenformat==="schulnote"?" sel":"") + "\" onclick=\"selectField('notenformat','schulnote')\">";
+      h += "<input type=\"radio\" " + (S.notenformat==="schulnote"?"checked":"") + ">";
+      h += "<div><div class=\"rl\">Schulnote 1–6</div></div></div>";
+      h += "</div></div>";
+      h += "</div>";
+    }
+
+    sc.innerHTML = h;
+    return;
+  }
+
+  if (cur === 2) {
+    h = "<div class=\"ey\">SCHRITT 3 VON " + T + "</div>";
+    h += "<div class=\"st\">Format &amp; Länge</div>";
+    h += "<div class=\"sh\">Wie ausführlich soll die Auswertung sein?</div>";
+
+    h += "<div class=\"rg\">";
+    for (var li = 0; li < LAENGEN.length; li++) {
+      var lo = LAENGEN[li];
+      h += "<div class=\"ro" + (S.laenge===lo.c?" sel":"") + "\" onclick=\"selectField('laenge','" + lo.c + "')\">";
+      h += "<input type=\"radio\" " + (S.laenge===lo.c?"checked":"") + ">";
+      h += "<div><div class=\"rl\">" + esc(lo.n) + "</div><div class=\"rd\">" + esc(lo.d) + "</div></div></div>";
+    }
+    h += "</div>";
+    sc.innerHTML = h;
+    return;
+  }
+
+  if (cur === 3) {
+    h = "<div class=\"ey\">SCHRITT 4 VON " + T + "</div>";
+    h += "<div class=\"st\">Interaktive Übungsmaterialien</div>";
+    h += "<div class=\"sh\">Optional: Ein zweiter Prompt, den du im Anschluss an die Auswertung ins selbe Gespräch einfügen kannst — für interaktive Materialien, mit denen deine Lernenden die klassenweiten Fehlermuster nochmal üben und erklärt bekommen.</div>";
+
+    h += "<div class=\"rg\">";
+    h += "<div class=\"ro" + (S.artefakte?" sel":"") + "\" onclick=\"toggleField('artefakte')\">";
+    h += "<input type=\"checkbox\" " + (S.artefakte?"checked":"") + " onclick=\"event.stopPropagation()\" onchange=\"toggleField('artefakte')\">";
+    h += "<div><div class=\"rl\">Ja, zusätzlichen Prompt dafür erstellen</div><div class=\"rd\">Baut auf der Auswertung von Schritt 1 auf und schlägt Übungen zu den dort gefundenen Fehlermustern vor.</div></div></div>";
+    h += "</div>";
+
+    if (S.artefakte) {
+      h += "<div class=\"av\"><p>🚧 Grundgerüst — die genaue Ausgestaltung (Übungsformen, Umfang, Format) legen wir als Nächstes gemeinsam fest. Aktuell wird ein einfacher Basis-Prompt erzeugt.</p></div>";
+    }
+
+    sc.innerHTML = h;
+    return;
+  }
+
+  if (cur === 4) {
+    h = "<div class=\"ey\">SCHRITT 5 VON " + T + "</div>";
+    h += "<div class=\"st\">Aufgabenbeschreibung</div>";
+    h += "<div class=\"sh\">Optional: Füge den ursprünglichen Prompt ein, den deine Lernenden für die Sprechaufgabe bekommen haben. Damit steckt er direkt im generierten Prompt — du musst ihn dann nicht separat als dritte Datei hochladen.</div>";
+
+    h += "<div class=\"fg\"><label>Ursprünglicher Aufgaben-Prompt</label>";
+    h += "<textarea class=\"ti\" id=\"aufgabenInput\" rows=\"10\" placeholder=\"Hier den vollständigen Prompt einfügen, den die Lernenden bekommen haben ...\" oninput=\"S.aufgabenPrompt=this.value\">" + esc(S.aufgabenPrompt) + "</textarea></div>";
+
+    if (!S.aufgabenPrompt.trim()) {
+      h += "<div class=\"av\"><p>Leer gelassen? Kein Problem — du lädst den Aufgaben-Prompt dann einfach wie gewohnt als eigene, dritte Datei mit hoch.</p></div>";
+    }
+
+    sc.innerHTML = h;
+    return;
+  }
+}
+
+function nav(dir) {
+  if (dir === 1) {
+    var err = validateStep(cur);
+    if (err) { document.getElementById("em").textContent = err; return; }
+  }
+  cur += dir;
+  if (cur < 0) cur = 0;
+  if (cur > T-1) cur = T-1;
+  render();
+}
+
+function validateStep(step) {
+  if (step === 0) {
+    if (!S.niveau) return "Bitte wähle ein Zielniveau.";
+    if (!S.klassengroesse || parseInt(S.klassengroesse,10) < 1) return "Bitte gib eine gültige Klassengröße ein.";
+  }
+  return null;
+}
+
+function schwelle(klassengroesse) {
+  var n = parseInt(klassengroesse, 10) || 10;
+  var t = Math.round(n * 0.3);
+  if (t < 2) t = 2;
+  return { schwelle: t, gesamt: n };
+}
+
+function buildPrompt() {
+  var L = [];
+  var n = parseInt(S.klassengroesse, 10) || 10;
+  var sw = schwelle(n);
+  var hatAufgabenPrompt = S.aufgabenPrompt.trim().length > 0;
+
+  if (hatAufgabenPrompt) {
+    L.push("Ich lade dir zwei Dateien hoch:");
+    L.push("1. Die zusammengeführten ausführlichen Berichte zu allen Lernenden meiner Klasse aus einer Sprech-Hausaufgabe");
+    L.push("2. Die zusammengeführten, dazugehörigen vollständigen Gesprächstranskripte");
+    L.push("");
+    L.push("Das war der Aufgaben-Prompt, den alle Lernenden für dieses Gespräch bekommen haben:");
+    L.push("");
+    L.push("---");
+    L.push(S.aufgabenPrompt.trim());
+    L.push("---");
+  } else {
+    L.push("Ich lade dir drei Dateien hoch:");
+    L.push("1. Die zusammengeführten ausführlichen Berichte zu allen Lernenden meiner Klasse aus einer Sprech-Hausaufgabe");
+    L.push("2. Die zusammengeführten, dazugehörigen vollständigen Gesprächstranskripte");
+    L.push("3. Den ursprünglichen Aufgaben-Prompt, den alle Lernenden für dieses Gespräch bekommen haben");
+  }
+  L.push("");
+  L.push("Kontext: Zielniveau " + S.niveau + ", " + n + " Lernende in der Klasse.");
+  L.push("");
+  L.push("Ich möchte diese Daten nutzen, um meinen nächsten Unterricht gezielt zu planen — nicht um einzelne Lernende zu bewerten, sondern um herauszufinden, was ich als Klasse nochmal wiederholen und trainieren sollte. Formative Auswertung auf Datenbasis ist für mich neu, deshalb bitte ich dich, mir eine klare, direkt nutzbare Struktur zu liefern statt einer rein akademischen Analyse.");
+  L.push("");
+
+  var laengeInfo = LAENGEN.find(function(x){return x.c===S.laenge;}) || LAENGEN[1];
+  L.push("WICHTIG — Fasse dich kurz: Die gesamte Antwort soll maximal " + laengeInfo.limit + " Wörter umfassen" + (S.noten ? " (die Notentabelle zählt separat, da sie zwangsläufig eine Zeile pro Lernender/Lernendem braucht)" : "") + ". Verzichte auf ausführliche Erklärungen, mehrschrittige Beispiele oder Wiederholungen zwischen den Abschnitten. Nutze wo möglich Tabellen und Stichpunkte statt Fließtext.");
+  L.push("");
+  L.push("Bitte werte die Daten wie folgt aus, in genau dieser Reihenfolge:");
+  L.push("");
+
+  var secNum = 0;
+
+  L.push("0. DAS WICHTIGSTE AUF EINEN BLICK");
+  L.push("");
+  L.push("Dieser Abschnitt steht ganz am Anfang deiner Antwort, direkt nach der Überschrift — nicht am Ende, nicht als einzelner Satz. Maximal 4 Stichpunkte: die wichtigsten klassenweiten Muster in absteigender Priorität, jeweils nur mit Anzahl der betroffenen Lernenden (z. B. \"" + sw.schwelle + " von " + n + "\") — ohne Erklärung, die kommt in Abschnitt 1.");
+  L.push("");
+
+  secNum = 1;
+  L.push(secNum + ". KLASSENWEITE FEHLERMUSTER");
+  L.push("");
+  L.push("Nur Muster, die bei mindestens " + sw.schwelle + " von " + n + " Lernenden auftreten (das entspricht ungefähr 30% dieser Klasse). Als Tabelle mit den Spalten: Bereich (Grammatik/Wortschatz/Ausdruck/Flüssigkeit) | Muster | Anzahl | ein Beispielsatz aus den Transkripten (ohne Namen). Keine zusätzliche Fließtext-Erklärung pro Zeile — die Tabelle soll für sich stehen.");
+  L.push("");
+
+  if (S.vorschlaege) {
+    secNum++;
+    L.push(secNum + ". VORSCHLÄGE FÜR DEN NÄCHSTEN UNTERRICHT");
+    L.push("");
+    L.push("Sprachlicher Fokus: maximal 4 Stichpunkte, je ein Satz.");
+    L.push("Aktivitätsvorschläge: maximal 4 Aktivitäten, je Name + ein bis zwei Sätze Beschreibung — keine mehrschrittigen Anleitungen mit Einzelschritten.");
+    L.push("");
+  }
+
+  if (S.spannbreite) {
+    secNum++;
+    L.push(secNum + ". SPANNBREITE DER KLASSE");
+    L.push("");
+    L.push("Maximal 4 Sätze: wie groß ist der Abstand zwischen stärksten und schwächsten Lernenden, und was folgt daraus für die Unterrichtsplanung.");
+    L.push("");
+  }
+
+  if (S.gruppenbildung) {
+    secNum++;
+    L.push(secNum + ". VORSCHLÄGE ZUR GRUPPENBILDUNG");
+    L.push("");
+    L.push("Entscheide dich für eine Strategie — entweder überwiegend heterogene Paarungen (unterschiedliches Niveau, z. B. damit Stärkere als Sprachvorbild dienen) oder überwiegend homogene Paarungen (ähnliches Niveau, z. B. für gemeinsame Vertiefung eines geteilten Schwerpunkts). Nenne diese Wahl und eine kurze Begründung (ein Satz), warum sie für diese Klasse passt, direkt vor der Liste der Paarungen.");
+    L.push("");
+    L.push("2–4 Paarungen, je eine Zeile: Namen — gemeinsamer Schwerpunkt, optional mit maximal einem kurzen Halbsatz Begründung.");
+    L.push("");
+  }
+
+  if (S.noten) {
+    secNum++;
+    var krit = NIVEAU_KRITERIEN[S.niveau];
+    L.push(secNum + ". ORIENTIERUNGSNOTEN (optional — nur zur internen Einordnung, niemals als offizielle Note verwenden)");
+    L.push("");
+
+    if (krit && krit.typ === "holistisch") {
+      L.push("Vergib pro Lernender/Lernendem eine ungefähre Note, angelehnt an das Bewertungsprinzip von \"" + krit.quelle + "\" (Niveau " + S.niveau + "). Dort gibt es keine A–E-Skala, sondern eine einzige, ganzheitliche Einschätzung in drei Stufen:");
+      L.push("");
+      for (var si = 0; si < krit.stufen.length; si++) {
+        var stufe = krit.stufen[si];
+        var wert = (S.notenformat === "schulnote") ? ("Note " + stufe.note) : (stufe.punkte + " Punkte");
+        L.push("— " + stufe.label + " (" + wert + ")");
+      }
+      L.push("");
+      L.push("Stelle das Ergebnis als Tabelle dar: Name | Einschätzung (kurz) | Note.");
+    } else if (krit) {
+      L.push("Vergib pro Lernender/Lernendem eine ungefähre Note, angelehnt an das Bewertungsprinzip des mündlichen Teils von \"" + krit.quelle + "\" (Niveau " + S.niveau + "). Gehe dabei genau so vor:");
+      L.push("");
+      L.push("Bewerte zwei Dimensionen je auf einer Skala A bis E:");
+      L.push("— Aufgabenerfüllung:");
+      L.push("A = " + krit.aufgabenerfuellung.A + " | B = " + krit.aufgabenerfuellung.B + " | C = " + krit.aufgabenerfuellung.C + " | D = " + krit.aufgabenerfuellung.D + " | E = " + krit.aufgabenerfuellung.E);
+      L.push("— Sprache:");
+      L.push("A = " + krit.sprache.A + " | B = " + krit.sprache.B + " | C = " + krit.sprache.C + " | D = " + krit.sprache.D + " | E = " + krit.sprache.E);
+      L.push("");
+      if (S.notenformat === "schulnote") {
+        L.push("Rechne A=1, B=2, C=3, D=5, E=6 (deutsches Schulnotensystem, 1=sehr gut) und bilde den Durchschnitt beider Dimensionen als Note (eine Nachkommastelle).");
+      } else {
+        L.push("Rechne A=100, B=75, C=50, D=25, E=0 und bilde den Durchschnitt beider Dimensionen als Note.");
+      }
+      L.push("Stelle das Ergebnis als Tabelle dar: Name | Aufgabenerfüllung (A–E) | Sprache (A–E) | Note.");
+    } else {
+      L.push("Kein Niveau ausgewählt — bitte in Schritt 1 nachholen, damit die passenden Kriterien geladen werden können.");
+    }
+    L.push("");
+    L.push("Nenne direkt im Anschluss, unübersehbar und ohne sie zu kürzen, folgende Einschränkungen:");
+    L.push("— Aussprache fließt nicht ein (keine Audiodaten vorhanden) — im echten Prüfungssystem ein eigenes, gleichwertiges Kriterium.");
+    L.push("— Die echte Prüfung nutzt mehrere unterschiedliche Aufgabentypen; hier liegt nur ein einziges freies Gespräch vor.");
+    L.push("— Die echte Prüfung wird von zwei unabhängigen, kalibrierten Personen bewertet, bei Abweichung von einer dritten — diese Note stammt von einer einzigen KI-Einschätzung.");
+    L.push("— Diese Zahl ist eine grobe Annäherung zur internen Orientierung, keine Prüfungsnote. Nicht an Lernende weitergeben und nicht offiziell verwenden.");
+    L.push("");
+  }
+
+  secNum++;
+  L.push(secNum + ". EINORDNUNG");
+  L.push("");
+  L.push("Ein bis zwei Sätze: Diese Auswertung basiert auf einer einzigen Hausaufgabe und zeigt Tendenzen, keine endgültige Diagnose.");
+
+  return L.join("\n");
+}
+
+function doCopy() {
+  copyText(buildPrompt(), "cpi", "cpl", "cpb");
+}
+
+function doCopy2() {
+  copyText(buildArtefaktPrompt(), "cpi2", "cpl2", "cpb2");
+}
+
+function copyText(text, idIcon, idLabel, idBtn) {
+  var cpi = document.getElementById(idIcon);
+  var cpl = document.getElementById(idLabel);
+  var cpb = document.getElementById(idBtn);
+  function done() {
+    cpb.classList.add("ok");
+    cpi.textContent = "✓";
+    cpl.textContent = "Kopiert!";
+    setTimeout(function(){
+      cpb.classList.remove("ok");
+      cpi.textContent = "📋";
+      cpl.textContent = "Prompt kopieren";
+    }, 1800);
+  }
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(text).then(done).catch(function(){
+      fallbackCopy(text); done();
+    });
+  } else {
+    fallbackCopy(text); done();
+  }
+}
+
+function buildArtefaktPrompt() {
+  var L = [];
+  L.push("Erstelle mir jetzt, basierend auf der Auswertung, die du mir oben in diesem Gespräch gegeben hast, interaktive Übungsmaterialien für meine Lernenden.");
+  L.push("");
+  L.push("Ziel: Die wichtigsten klassenweiten Fehlermuster aus Abschnitt 1 der Auswertung sollen darin gezielt wiederholt werden, jeweils mit einer kurzen, verständlichen Erklärung.");
+  L.push("");
+  L.push("[Grundgerüst — Details zu Übungsform, Umfang und Format werden noch ergänzt.]");
+  return L.join("\n");
+}
+
+function fallbackCopy(text) {
+  var ta = document.createElement("textarea");
+  ta.value = text;
+  ta.style.position = "fixed";
+  ta.style.left = "-9999px";
+  document.body.appendChild(ta);
+  ta.select();
+  try { document.execCommand("copy"); } catch(e) {}
+  document.body.removeChild(ta);
+}
+
+render();
+</script>
+</body>
+</html>
