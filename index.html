@@ -161,6 +161,11 @@ footer{text-align:center;padding:16px;font-size:11px;color:#94a3b8;border-top:1p
 .video-embed-16-9{padding-top:56.25%;}
 .video-embed-9-16{max-width:280px;margin:0 auto;padding-top:177.7%;}
 .video-embed iframe{position:absolute;top:0;left:0;width:100%;height:100%;border:0;}
+.video-thumb{cursor:pointer;}
+.video-thumb img{position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;object-position:top center;}
+.video-play-btn{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:64px;height:64px;border-radius:50%;background:rgba(0,52,104,.72);display:flex;align-items:center;justify-content:center;transition:all .15s;box-shadow:0 2px 10px rgba(0,0,0,.3);}
+.video-thumb:hover .video-play-btn{background:rgba(0,52,104,.88);transform:translate(-50%,-50%) scale(1.07);}
+.video-play-tri{width:0;height:0;border-style:solid;border-width:12px 0 12px 20px;border-color:transparent transparent transparent #fff;margin-left:4px;}
 .video-list{margin-top:20px;}
 .video-list-cat{font-size:11px;font-weight:700;color:#64748b;letter-spacing:.05em;text-transform:uppercase;margin:16px 0 8px;}
 .video-list-cat:first-child{margin-top:0;}
@@ -596,7 +601,17 @@ function render() {
     if(S.filmFrage) {
       var filmVidId = FILM_TALK_VIDEO_ID[S.lang] || FILM_TALK_VIDEO_ID.en;
       var filmVidLang = (S.lang === "de") ? "de" : "en";
-      h+="<div class=\"video-embed video-embed-16-9\" style=\"margin-top:12px\"><iframe src=\"https://www.youtube.com/embed/"+filmVidId+"?cc_load_policy=1&cc_lang_pref="+filmVidLang+"&hl="+S.lang+"\" title=\""+esc(lb().filmFrageQ)+"\" frameborder=\"0\" allow=\"autoplay; encrypted-media; picture-in-picture\"></iframe></div>";
+      if(!S.filmVidPlay){
+        h+="<div class=\"video-embed video-embed-16-9 video-thumb\" style=\"margin-top:12px\" onclick=\"S.filmVidPlay=true;render();\">";
+        h+="<img src=\"film-video-thumb.jpg\" alt=\""+esc(lb().filmFrageQ)+"\">";
+        h+="<div class=\"video-play-btn\"><div class=\"video-play-tri\"></div></div>";
+        h+="</div>";
+      } else {
+        // NOTE FOR LAUNCH: this still loads FILM_TALK_VIDEO_ID (the placeholder) until the
+        // real German/English explainer videos are recorded; only the static cover image
+        // (film-video-thumb.jpg) shown before the click has been replaced so far.
+        h+="<div class=\"video-embed video-embed-16-9\" style=\"margin-top:12px\"><iframe src=\"https://www.youtube.com/embed/"+filmVidId+"?cc_load_policy=1&cc_lang_pref="+filmVidLang+"&hl="+S.lang+"&autoplay=1\" title=\""+esc(lb().filmFrageQ)+"\" frameborder=\"0\" allow=\"autoplay; encrypted-media; picture-in-picture\"></iframe></div>";
+      }
       h+="<div class=\"sh\" style=\"margin:12px 0 10px\">"+esc(lb().filmResHint)+"</div>";
       h+="<div class=\"fg\"><label>💬 "+esc(lb().filmResUntertitelL)+"</label><div class=\"ch\"><a class=\"chip\" href=\"https://www.opensubtitles.org\" target=\"_blank\" rel=\"noopener\">opensubtitles.org ↗</a></div></div>";
       h+="<div class=\"fg\"><label>📜 "+esc(lb().filmResDrehbuecherL)+"</label><div class=\"ch\"><a class=\"chip\" href=\"https://www.scriptslug.com\" target=\"_blank\" rel=\"noopener\">scriptslug.com ↗</a><a class=\"chip\" href=\"https://imsdb.com\" target=\"_blank\" rel=\"noopener\">imsdb.com ↗</a></div></div>";
