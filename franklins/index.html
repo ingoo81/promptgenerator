@@ -404,7 +404,7 @@ var VIDEO_LIBRARY = {"de":[{"id":"intro","category":"Grundlagen","title":"So fun
 // NOTE FOR LAUNCH: replace the placeholder YouTube ID "jNQXAC9IVRw" above with the real
 // 16:9 and 9:16 video IDs once recorded (four IDs total: intro x2 formats, live_mode x2 formats).
 
-var FILM_TALK_VIDEO_ID = {"de":"EqTW4yQgHmU","en":"eFEpnrx2sFU"};
+var FILM_TALK_VIDEO_ID = {"de":"_nKDRn0zOrg","en":"fJuve-Na7BE"};
 // Real tutorial videos. "de" plays only when the menu language (S.lang) is German;
 // every other menu language falls back to "en". The English video has YouTube captions
 // uploaded in every site language, selected via cc_lang_pref=S.lang below.
@@ -602,13 +602,18 @@ function render() {
     h+="<div class=\"lc"+(S.filmFrage?" sel":"")+"\" style=\"padding:10px\" onclick=\"setFilmFrage(true)\">"+esc(lb().medienYes)+"</div>";
     h+="</div>";
     if(S.filmFrage) {
-      // NOTE (legal takedown 2026-09-29): video unlinked pending re-shoot; thumbnail
-      // (film-video-thumb.jpg) kept in place for reuse once new video IDs arrive.
-      // FILM_TALK_VIDEO_ID left defined above for easy re-linking later.
-      var filmThumbSrc = FILM_TALK_THUMB[S.lang] || FILM_TALK_THUMB.en;
-        h+="<div class=\"video-embed video-embed-16-9 video-thumb\" style=\"margin-top:12px\">";
+      // Re-linked 2026-10-01: new videos (de: _nKDRn0zOrg, en: fJuve-Na7BE) recorded
+      // after the 2026-09-29 legal takedown. Same thumbnail (film-video-thumb.jpg) reused.
+      var filmVidId = FILM_TALK_VIDEO_ID[S.lang] || FILM_TALK_VIDEO_ID.en;
+      if(!S.filmVidPlay){
+        var filmThumbSrc = FILM_TALK_THUMB[S.lang] || FILM_TALK_THUMB.en;
+        h+="<div class=\"video-embed video-embed-16-9 video-thumb\" style=\"margin-top:12px\" onclick=\"S.filmVidPlay=true;render();\">";
         h+="<img src=\""+filmThumbSrc+"\" alt=\""+esc(lb().filmFrageQ)+"\">";
+        h+="<div class=\"video-play-btn\"><div class=\"video-play-tri\"></div></div>";
         h+="</div>";
+      } else {
+        h+="<div class=\"video-embed video-embed-16-9\" style=\"margin-top:12px\"><iframe src=\"https://www.youtube.com/embed/"+filmVidId+"?cc_load_policy=1&cc_lang_pref="+S.lang+"&hl="+S.lang+"&autoplay=1\" title=\""+esc(lb().filmFrageQ)+"\" frameborder=\"0\" allow=\"autoplay; encrypted-media; picture-in-picture\"></iframe></div>";
+      }
       h+="<div class=\"sh\" style=\"margin:12px 0 10px\">"+esc(lb().filmResHint)+"</div>";
       h+="<div class=\"fg\"><label>🎬 "+esc(lb().filmResAllgemeinL)+"</label><div class=\"ch\"><a class=\"chip\" href=\"https://www.imdb.com\" target=\"_blank\" rel=\"noopener\">imdb.com ⇗</a><a class=\"chip\" href=\"https://www.wikipedia.org\" target=\"_blank\" rel=\"noopener\">wikipedia.org ⇗</a></div></div>";
       h+="<div class=\"fg\"><label>⭐ "+esc(lb().filmResKritikL)+"</label><div class=\"ch\"><a class=\"chip\" href=\"https://www.rottentomatoes.com\" target=\"_blank\" rel=\"noopener\">rottentomatoes.com ↗</a><a class=\"chip\" href=\"https://www.rogerebert.com\" target=\"_blank\" rel=\"noopener\">rogerebert.com ↗</a></div></div>";
