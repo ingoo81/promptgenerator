@@ -3,19 +3,18 @@
 <head>
 <meta charset="UTF-8">
 <title>Prompt Generator für Lehrkräfte</title>
-<meta name="description" content="Führt Lehrkräfte Schritt für Schritt zu einem passenden Auswertungs-Prompt für Sprech-Hausaufgaben.">
+<meta name="description" content="Baue dir in wenigen Schritten Prompts, mit denen eine KI Sprech-Hausaufgaben deiner Klasse auswertet – mit Feedback, Übungen und Unterrichtsvorschlägen.">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <style>
-:root{--p:#a5c500;--d:#003468;--w:#fef3c7;--wb:#fcd34d;--wt:#92400e;--ib:#eff6ff;--ibb:#bfdbfe;--it:#1e40af;--selbg:#f0f8d8;--selbg-hover:#f6faeb;}
+:root{--p:#a5c500;--d:#003468;--w:#fef3c7;--wb:#fcd34d;--wt:#92400e;--ib:#eff6ff;--ibb:#bfdbfe;--it:#1e40af;--selbg:#f0f8d8;--selbg-hover:#f6faeb;--ok:#15803d;--err:#b91c1c;}
 *{box-sizing:border-box;margin:0;padding:0;}
-body{background:#f8fafc;font-family:'Segoe UI',Arial,sans-serif;}
+body{background:#f8fafc;font-family:'Segoe UI',Arial,sans-serif;color:#1e293b;}
 .gh{background:var(--d);}
 .hi{max-width:780px;margin:0 auto;padding:16px 24px;display:flex;align-items:center;gap:16px;}
 .ht{flex:1;}.ht h1{font-size:26px;font-weight:800;color:white;margin-bottom:3px;letter-spacing:-.01em;}
-.ht .sub{color:var(--p);font-size:12px;font-weight:500;}
 .hbadge{width:56px;height:56px;border-radius:50%;background:var(--p);color:var(--d);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:22px;flex-shrink:0;border:3px solid rgba(255,255,255,.25);}
 .hs{background:linear-gradient(135deg,var(--d) 0%,#005a8e 100%);padding:9px 24px;display:flex;align-items:center;justify-content:center;border-bottom:3px solid var(--p);}
-.hs span{color:rgba(255,255,255,.85);font-size:13px;font-style:italic;}
+.hs span{color:rgba(255,255,255,.85);font-size:13px;font-style:italic;text-align:center;}
 .ww{max-width:780px;margin:0 auto;padding:26px 20px 50px;}
 .pp{display:flex;gap:3px;margin-bottom:4px;}
 .pip{height:4px;flex:1;border-radius:2px;background:#e2e8f0;transition:background .3s;}
@@ -25,46 +24,89 @@ body{background:#f8fafc;font-family:'Segoe UI',Arial,sans-serif;}
 .ey{font-size:11px;font-weight:700;color:var(--p);text-transform:uppercase;letter-spacing:.08em;margin-bottom:6px;}
 .st{font-size:19px;font-weight:800;color:var(--d);margin-bottom:5px;}
 .sh{font-size:13px;color:#64748b;line-height:1.55;margin-bottom:20px;}
-.fg{margin-bottom:14px;}.fg label{display:block;font-size:13px;font-weight:600;color:var(--d);margin-bottom:5px;}
+.blk{margin-bottom:22px;}
+.blk:last-child{margin-bottom:0;}
+.bl{display:block;font-size:13.5px;font-weight:700;color:var(--d);margin-bottom:4px;}
+.bh{display:block;font-size:12px;color:#64748b;margin-bottom:8px;line-height:1.45;}
 .rq{color:#ef4444;}
 input.ti,textarea.ti{width:100%;border:2px solid #e2e8f0;border-radius:10px;padding:10px 13px;font-size:14px;color:#1e293b;background:#f8fafc;font-family:inherit;transition:border-color .18s;}
 input.ti:focus,textarea.ti:focus{outline:none;border-color:var(--p);background:white;box-shadow:0 0 0 3px rgba(165,197,0,.15);}
+textarea.ti{resize:vertical;}
+.chips{display:flex;flex-wrap:wrap;gap:8px;}
+.chip{padding:8px 16px;border-radius:20px;border:2px solid #e2e8f0;font-size:13.5px;cursor:pointer;background:#f8fafc;color:#334155;transition:all .15s;user-select:none;font-family:inherit;}
+.chip:hover{border-color:var(--p);background:var(--selbg);}
+.chip.sel{background:var(--p);border-color:var(--p);color:var(--d);font-weight:700;}
+.niv-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:8px;}
+.niv-chip{padding:10px 4px;border-radius:12px;border:2px solid #e2e8f0;cursor:pointer;text-align:center;background:#f8fafc;transition:all .15s;}
+.niv-chip:hover{border-color:var(--p);background:var(--selbg);}
+.niv-chip.sel{border-color:var(--p);background:var(--selbg);}
+.niv-chip .nc{font-size:16px;font-weight:800;color:var(--d);}
+.niv-chip .nn{font-size:10px;color:#64748b;margin-top:2px;line-height:1.2;}
 .rg{display:flex;flex-direction:column;gap:8px;}
 .ro{display:flex;align-items:flex-start;gap:12px;padding:11px 14px;border-radius:12px;border:2px solid #e2e8f0;cursor:pointer;background:#f8fafc;transition:all .15s;}
 .ro:hover{border-color:var(--p);background:var(--selbg);}
 .ro.sel{border-color:var(--p);background:var(--selbg);}
-.ro input[type=radio],.ro input[type=checkbox]{margin-top:3px;accent-color:var(--d);flex-shrink:0;}
+.ro:focus-visible,.chip:focus-visible,.niv-chip:focus-visible{outline:3px solid rgba(165,197,0,.5);outline-offset:2px;}
+.ro input{margin-top:3px;accent-color:var(--d);flex-shrink:0;pointer-events:none;}
 .rl{font-size:13px;font-weight:600;color:var(--d);}
-.rd{font-size:12px;color:#64748b;margin-top:2px;line-height:1.4;}
-.niv-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:4px;}
-.niv-chip{padding:12px 8px;border-radius:12px;border:2px solid #e2e8f0;cursor:pointer;text-align:center;background:#f8fafc;transition:all .15s;}
-.niv-chip:hover{border-color:var(--p);background:var(--selbg);}
-.niv-chip.sel{border-color:var(--p);background:var(--selbg);}
-.niv-chip .nc{font-size:16px;font-weight:800;color:var(--d);}
-.niv-chip .nn{font-size:10.5px;color:#64748b;margin-top:2px;}
-.nr{display:flex;justify-content:space-between;align-items:center;margin-top:22px;}
+.rd{font-size:12px;color:#64748b;margin-top:2px;line-height:1.45;}
+.rd a{color:var(--d);}
+.sub{margin:8px 0 2px 30px;display:flex;flex-direction:column;gap:6px;}
+.sub .ro{padding:8px 12px;background:white;}
+.inl{margin-top:8px;}
+.nr{display:flex;justify-content:space-between;align-items:center;margin-top:22px;gap:10px;}
 .bb{background:white;border:2px solid #e2e8f0;color:#64748b;border-radius:10px;padding:10px 20px;font-size:13px;font-weight:600;cursor:pointer;transition:all .15s;font-family:inherit;}
 .bb:hover{border-color:#94a3b8;color:#334155;}
 .bb:disabled{opacity:.4;cursor:default;}
 .bn{background:var(--d);color:white;border:none;border-radius:10px;padding:10px 24px;font-size:14px;font-weight:700;cursor:pointer;transition:all .18s;font-family:inherit;}
 .bn:hover{background:#004d8c;transform:translateY(-1px);}
-.bn.gen{background:var(--p);color:var(--d);font-size:15px;padding:12px 28px;}
-.bn.gen:hover{background:#8fb000;}
-.em{font-size:12px;color:#ef4444;text-align:center;min-height:18px;margin-top:8px;}
-.rb{background:#f0f4f8;border:2px solid #e2e8f0;border-radius:12px;padding:16px 18px;font-size:13px;line-height:1.75;color:#1e293b;max-height:460px;overflow-y:auto;margin-bottom:14px;white-space:pre-wrap;}
-.rl2{font-size:11px;font-weight:700;color:var(--d);text-transform:uppercase;letter-spacing:.06em;margin:10px 0 3px;display:block;}
-.cb{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;padding:13px 20px;background:var(--p);color:var(--d);font-size:14px;font-weight:800;border:none;border-radius:12px;cursor:pointer;transition:all .2s;box-shadow:0 3px 10px rgba(165,197,0,.35);font-family:inherit;}
-.cb:hover{background:#8fb000;transform:translateY(-1px);}
+.em{font-size:12.5px;color:#ef4444;text-align:center;min-height:18px;margin-top:8px;}
+.av{background:#f0f4f8;border:2px dashed #cbd5e1;border-radius:12px;padding:12px 15px;}
+.av p,.av li{font-size:12.5px;color:#475569;line-height:1.55;}
+.av ul{margin:4px 0 0 18px;}
+.tb{background:var(--ib);border:1.5px solid var(--ibb);border-radius:10px;padding:11px 14px;font-size:12.5px;color:var(--it);margin-top:14px;line-height:1.55;}
+.tb a{color:var(--it);}
+.wb2{background:var(--w);border:1.5px solid var(--wb);border-radius:10px;padding:11px 14px;font-size:12.5px;color:var(--wt);margin-top:14px;line-height:1.55;}
+.wb2 a{color:var(--wt);}
+details.fold{margin-top:10px;border:2px solid #e2e8f0;border-radius:12px;background:#f8fafc;overflow:hidden;}
+details.fold summary{padding:10px 14px;cursor:pointer;font-size:12.5px;font-weight:700;color:var(--d);list-style:none;}
+details.fold summary::-webkit-details-marker{display:none;}
+details.fold summary:hover{background:var(--selbg);}
+details.fold summary:before{content:"▸ ";color:#94a3b8;}
+details.fold[open] summary:before{content:"▾ ";}
+details.fold .fb{padding:4px 16px 14px;font-size:12.5px;color:#475569;line-height:1.6;}
+details.fold .fb ol,details.fold .fb ul{margin:4px 0 0 18px;}
+details.fold .fb li{margin-bottom:5px;}
+details.fold .fb textarea{margin-top:6px;}
+code{background:#e8edf3;border-radius:4px;padding:1px 5px;font-size:11.5px;font-family:Consolas,Monaco,monospace;}
+.fstat{font-size:12px;margin-top:6px;line-height:1.45;}
+.fstat.ok{color:var(--ok);}.fstat.err{color:var(--err);}.fstat.leer{color:#64748b;}
+.chain{display:flex;flex-direction:column;gap:18px;margin-top:6px;}
+.ci{border:2px solid #e2e8f0;border-radius:14px;padding:14px 14px 12px;background:#fcfdfe;}
+.ch{display:flex;gap:10px;align-items:flex-start;margin-bottom:8px;}
+.cn{width:28px;height:28px;border-radius:50%;background:var(--d);color:white;font-weight:800;font-size:14px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.ct{font-size:14px;font-weight:800;color:var(--d);}
+.chh{font-size:12px;color:#64748b;margin-top:2px;line-height:1.45;}
+.rb{background:#f0f4f8;border:2px solid #e2e8f0;border-radius:12px;padding:14px 16px;font-size:12.5px;line-height:1.65;color:#1e293b;max-height:340px;overflow-y:auto;margin-bottom:10px;white-space:pre-wrap;word-break:break-word;}
+.cb{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;padding:12px 20px;background:var(--p);color:var(--d);font-size:14px;font-weight:800;border:none;border-radius:12px;cursor:pointer;transition:all .2s;box-shadow:0 3px 10px rgba(165,197,0,.35);font-family:inherit;}
+.cb:hover{background:#8fb000;}
 .cb.ok{background:#22c55e;color:white;}
-.tb{background:var(--ib);border:1.5px solid var(--ibb);border-radius:10px;padding:11px 14px;font-size:12px;color:var(--it);margin-top:14px;line-height:1.5;}
-.wb2{background:var(--w);border:1.5px solid var(--wb);border-radius:10px;padding:10px 14px;font-size:12px;color:var(--wt);margin-top:12px;line-height:1.5;}
-.av{background:#f0f4f8;border:2px dashed #cbd5e1;border-radius:12px;padding:14px 16px;margin-top:4px;}
-.av p{font-size:12px;color:#64748b;line-height:1.5;}
+.dl{display:inline-flex;align-items:center;gap:8px;margin-top:10px;padding:9px 16px;border-radius:10px;border:2px solid var(--d);color:var(--d);font-weight:700;font-size:13px;text-decoration:none;background:white;}
+.dl:hover{background:var(--selbg);}
+.sect{margin-top:22px;}
+.sect-t{font-size:12px;font-weight:800;color:var(--d);text-transform:uppercase;letter-spacing:.05em;margin-bottom:8px;}
+.foot-ctrl{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between;margin-top:22px;padding-top:16px;border-top:1.5px dashed #cbd5e1;}
+.foot-ctrl .ro{flex:1;min-width:240px;}
+.lang-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+.lc{padding:18px 16px;border-radius:14px;border:2px solid #e2e8f0;cursor:pointer;text-align:center;background:#f8fafc;}
+.lc:hover{border-color:var(--p);background:var(--selbg);}
+.lc .fl{font-size:28px;margin-bottom:4px;}.lc .ln{font-size:15px;font-weight:700;color:var(--d);}
 footer{text-align:center;padding:16px;font-size:11px;color:#94a3b8;border-top:1px solid #e2e8f0;margin-top:10px;}
-@media (max-width: 600px) {
+footer a{color:inherit;opacity:.8;text-decoration:none;}
+footer a:hover{text-decoration:underline;}
+@media (max-width: 600px){
   .hi{padding:12px 16px;gap:10px;}
   .ht h1{font-size:18px;}
-  .ht .sub{font-size:11px;}
   .hbadge{width:44px;height:44px;font-size:17px;}
   .hs{padding:7px 16px;}
   .hs span{font-size:12px;}
@@ -74,572 +116,1053 @@ footer{text-align:center;padding:16px;font-size:11px;color:#94a3b8;border-top:1p
   .sh{font-size:14px;}
   .niv-grid{grid-template-columns:repeat(3,1fr);gap:6px;}
   .bb,.bn{padding:11px 16px;font-size:14px;}
-  .rb{font-size:14px;line-height:1.65;padding:14px 14px;}
-  .tb{font-size:13px;padding:10px 12px;}
+  .rb{font-size:13px;}
+  .sub{margin-left:12px;}
 }
 </style>
+<!-- Privacy-friendly analytics by Plausible (cookiefrei, siehe /datenschutz) -->
+<script async src="https://plausible.io/js/pa-pLLCcRs9HZiALAoSFiyhE.js"></script>
+<script>
+  window.plausible=window.plausible||function(){(plausible.q=plausible.q||[]).push(arguments)},plausible.init=plausible.init||function(i){plausible.o=i||{}};
+  plausible.init()
+</script>
 </head>
 <body>
 <header class="gh">
   <div class="hi">
-    <div class="ht"><h1>Prompt Generator für Lehrkräfte</h1></div>
-    <div class="hbadge">👩‍🏫</div>
+    <div class="ht"><h1 id="appTitle">Prompt Generator für Lehrkräfte</h1></div>
+    <div class="hbadge" aria-hidden="true">👩‍🏫</div>
   </div>
 </header>
-<div class="hs"><span>✦ Baue dir in wenigen Schritten einen Auswertungs-Prompt für Sprech-Hausaufgaben.</span></div>
+<div class="hs"><span id="tagline"></span></div>
 <div class="ww">
   <div class="pp" id="pips"></div>
   <div class="pi"><span id="slbl"></span><span id="scnt"></span></div>
   <div class="sc" id="sc"></div>
-  <div class="em" id="em"></div>
-  <div class="nr">
-    <button class="bb" id="bb" onclick="nav(-1)">← Zurück</button>
-    <button class="bn" id="bn" onclick="nav(1)">Weiter →</button>
+  <div class="em" id="em" role="alert"></div>
+  <div class="nr" id="navrow">
+    <button class="bb" id="bb" onclick="nav(-1)"></button>
+    <button class="bn" id="bn" onclick="nav(1)"></button>
   </div>
 </div>
-<footer>Prompt Generator für Lehrkräfte · promptgenerator.site/teachers</footer>
+<footer id="footer"></footer>
 
 <script>
-var NIVEAUS = [
-  {c:"A1", n:"Einstieg"}, {c:"A2", n:"Grundlagen"}, {c:"B1", n:"Mittelstufe"},
-  {c:"B2", n:"Oberstufe"}, {c:"C1", n:"Fortgeschritten"}, {c:"C2", n:"Nahezu muttersprachlich"}
-];
+/* ======================================================================
+   Prompt Generator für Lehrkräfte
+   ----------------------------------------------------------------------
+   Aufbau dieser Datei
+   1. CONFIG        – Einstellungen, die du ohne Programmierkenntnisse
+                      anpassen kannst (Sprachen mit Skript, Pfade, Links).
+   2. LANG_PACKS    – alle Texte je Oberflächensprache: Beschriftungen (ui),
+                      Bewertungskriterien und die Bausteine der Prompts.
+                      Eine neue Oberflächensprache = einen neuen Block
+                      anlegen (z. B. LANG_PACKS.en) – sobald es mehr als
+                      einen Block gibt, erscheint automatisch ein
+                      Startbildschirm zur Sprachwahl.
+   3. Zustand, Speichern, Prüfungen
+   4. Oberfläche (render…)
+   ====================================================================== */
 
-// Bewertungskriterien je Niveau, destilliert aus den offiziellen Goethe-Modellsätzen
-// (Bewertungskriterien Sprechen), vereinfacht auf zwei Dimensionen (Aufgabenerfüllung,
-// Sprache) und angepasst an ein freies Gespräch statt einer mehrteiligen Prüfung.
-// Aussprache fließt bewusst nirgends ein (keine Audiodaten vorhanden).
-// A1 (Start Deutsch 1) nutzt im Original eine holistische 3-Stufen-Skala statt A-E
-// und wird deshalb als Sonderfall behandelt (typ: "holistisch").
-var NIVEAU_KRITERIEN = {
-  A1: {
-    typ: "holistisch",
-    quelle: "Start Deutsch 1",
-    stufen: [
-      { label: "Aufgabe voll erfüllt und verständlich", punkte: 100, note: 1 },
-      { label: "Aufgabe wegen sprachlicher oder inhaltlicher Mängel nur teilweise erfüllt", punkte: 50, note: 4 },
-      { label: "Aufgabe nicht erfüllt und/oder unverständlich", punkte: 0, note: 6 }
-    ]
-  },
-  A2: {
-    typ: "zweidimensional",
-    quelle: "Goethe-Zertifikat A2",
-    aufgabenerfuellung: {
-      A: "durchgängig angemessen",
-      B: "überwiegend angemessen",
-      C: "teilweise angemessen",
-      D: "kaum angemessen",
-      E: "nicht bewertbar"
-    },
-    sprache: {
-      A: "angemessen/differenziert, vereinzelte Fehlgriffe ohne Beeinträchtigung",
-      B: "überwiegend angemessen, mehrere Fehlgriffe ohne Beeinträchtigung",
-      C: "teilweise angemessen, Fehlgriffe beeinträchtigen teilweise",
-      D: "kaum angemessen, Fehlgriffe beeinträchtigen erheblich",
-      E: "durchgängig unangemessen"
-    }
-  },
-  B1: {
-    typ: "zweidimensional",
-    quelle: "Goethe-Zertifikat B1",
-    aufgabenerfuellung: {
-      A: "Sprachfunktionen in Inhalt und Umfang angemessen behandelt; Gespräch angemessen begonnen, in Gang gehalten und beendet",
-      B: "überwiegend angemessen",
-      C: "teilweise angemessen",
-      D: "kaum angemessen",
-      E: "Gesprächsanteil nicht bewertbar"
-    },
-    sprache: {
-      A: "Register situations- und partneradäquat; Wortschatz und Strukturen differenziert, vereinzelte Fehlgriffe beeinträchtigen das Verständnis nicht",
-      B: "noch weitgehend situations- und partneradäquat; überwiegend angemessen, mehrere Fehlgriffe beeinträchtigen das Verständnis noch nicht",
-      C: "ansatzweise situations- und partneradäquat; teilweise angemessen oder begrenzt, mehrere Fehlgriffe beeinträchtigen das Verständnis teilweise",
-      D: "nicht mehr situations- und partneradäquat; kaum vorhanden, mehrere Fehlgriffe beeinträchtigen das Verständnis erheblich",
-      E: "Äußerung größtenteils unverständlich"
-    }
-  },
-  B2: {
-    typ: "zweidimensional",
-    quelle: "Goethe-Zertifikat B2",
-    aufgabenerfuellung: {
-      A: "Sprachfunktionen angemessen; Gespräch angemessen begonnen, in Gang gehalten und beendet; Register situations- und partneradäquat",
-      B: "überwiegend angemessen",
-      C: "in Teilen angemessen",
-      D: "kaum noch angemessen",
-      E: "nicht mehr verständlich"
-    },
-    sprache: {
-      A: "Wortschatz/Strukturen differenziert, vereinzelte Fehlgriffe beeinträchtigen das Verständnis nicht; Sätze angemessen verknüpft, natürliche Sprechweise",
-      B: "überwiegend angemessen, mehrere Fehlgriffe beeinträchtigen das Verständnis noch nicht; überwiegend angemessen verknüpft, verlangsamte aber flüssige Sprechweise",
-      C: "Repertoire begrenzt, mehrere Fehlgriffe beeinträchtigen das Verständnis stellenweise; teilweise verknüpft, stockende Sprechweise beeinträchtigt das Verständnis stellenweise",
-      D: "kaum Repertoire vorhanden, Fehlgriffe beeinträchtigen das Verständnis durchgehend; kaum verknüpft, stockende Sprechweise beeinträchtigt das Verständnis durchgehend",
-      E: "Äußerung unverständlich"
-    }
-  },
-  C1: {
-    typ: "zweidimensional",
-    quelle: "Goethe-Zertifikat C1",
-    aufgabenerfuellung: {
-      A: "sehr gut und sehr ausführlich, sehr interaktiv",
-      B: "gut und ausführlich, gut interaktiv",
-      C: "gut und ausführlich genug; Gesprächsfähigkeit vorhanden, aber nicht sehr aktiv",
-      D: "unvollständig und zu kurz; Beteiligung nur auf Anfrage",
-      E: "viel zu kurz bzw. Thema verfehlt; große Schwierigkeiten, sich überhaupt zu beteiligen"
-    },
-    sprache: {
-      A: "klar zusammenhängend, angemessenes Sprechtempo; wenig Umschreibungen/Wortsuche; nur vereinzelte Regelverstöße",
-      B: "zusammenhängend, angemessenes Sprechtempo; über weite Strecken angemessene Ausdrucksweise; stellenweise Regelverstöße mit Neigung zur Selbstkorrektur",
-      C: "nicht immer zusammenhängend; vage/allgemeine Ausdrucksweise; häufige Regelverstöße, die das Verständnis noch nicht beeinträchtigen",
-      D: "stockende, bruchstückhafte Sprechweise; situations-unspezifische Ausdrucksweise mit größerer Zahl an Fehlgriffen; Regelverstöße beeinträchtigen das Verständnis erheblich",
-      E: "abgehackte Sprechweise, zentrale Aussagen bleiben unklar; Regelverstöße verhindern das Verständnis weitgehend"
-    }
-  },
-  C2: {
-    typ: "zweidimensional",
-    quelle: "Goethe-Zertifikat C2",
-    aufgabenerfuellung: {
-      A: "strukturiert, adressatenbezogen, ausführlich; souveräne, situations- und partneradäquate Gesprächsführung",
-      B: "größtenteils strukturiert, Umfang angemessen; situations- und partneradäquate Gesprächsführung",
-      C: "Struktur erkennbar, einzelne Aspekte unklar oder knapp; an mehreren Stellen nicht situations- und partneradäquat",
-      D: "Struktur kaum erkennbar, viele Aspekte unklar oder zu knapp; wenig initiativ im Gespräch",
-      E: "Thema verfehlt, Umfang nicht ausreichend; keine erkennbare Gesprächsführung"
-    },
-    sprache: {
-      A: "Verknüpfungsmittel komplex, variabel und flexibel eingesetzt; breites Spektrum, flexibel/differenziert, natürliche Kommunikation trotz höchstens vereinzelter Abweichungen",
-      B: "verschiedene Verknüpfungsmittel angemessen eingesetzt; Spektrum angemessen, Fehlgriffe/Regelverstöße stören die Kommunikation nicht",
-      C: "wenige, wenig abwechslungsreiche Verknüpfungsmittel; Spektrum angemessen mit einzelnen störenden Fehlgriffen, oder Spektrum begrenzt mit häufigeren, noch nicht störenden Fehlgriffen",
-      D: "einfach strukturierte, unverbundene Sätze; kaum Spektrum vorhanden, Fehlgriffe/Regelverstöße behindern die Kommunikation",
-      E: "Äußerung inkohärent bzw. unverständlich"
-    }
-  }
+/* ---------------------------------------------------------------- 1 -- */
+var CONFIG = {
+  /* Zielsprachen, für die es ein Transkriptionsskript gibt. Nur bei diesen
+     erscheinen die Quellen „ALLE_TRANSKRIPTE.txt“ und „Einzelanalyse“. */
+  SKRIPT_SPRACHEN: ["de"],
+  /* Wortlisten zum Download: Datei <Pfad><sprache>_<niveau>.txt, z. B.
+     /teachers/wortlisten/de_A2.txt. Fehlt eine Datei, erscheint kein Button. */
+  WORTLISTE_NIVEAUS: ["A1", "A2", "B1"],
+  WORTLISTE_PFAD: "/teachers/wortlisten/",
+  KURS_URL: "https://courses.promptgenerator.site/transcription/",
+  KURS_DATENSCHUTZ_URL: "https://courses.promptgenerator.site/transcription/nutzen",
+  STORAGE_KEY: "pgTeachers.settings.v1",
+  /* Höchstlänge der Ergebnisdaten im vorausgefüllten Formular-Link (getestet: 1.475 Zeichen) */
+  FORM_DATEN_MAX: 1500,
+  FEEDBACK_RUNDE: 5
 };
 
-var LAENGEN = [
-  {c:"knapp", n:"Knapp", d:"ca. 600 Wörter — nur das Nötigste", limit:600},
-  {c:"mittel", n:"Mittel", d:"ca. 1200 Wörter — ausgewogen", limit:1200},
-  {c:"ausfuehrlich", n:"Ausführlich", d:"ca. 1800 Wörter — mit mehr Erklärung", limit:1800}
-];
+var ZIELSPRACHEN = ["de", "en", "fr", "es"];
+var NIVEAUS = ["A1", "A2", "B1", "B2", "C1", "C2"];
 
-var S = {
-  niveau: "",
-  klassengroesse: "",
-  vorschlaege: true,
-  spannbreite: true,
-  gruppenbildung: true,
-  noten: false,
-  notenformat: "punkte",
-  laenge: "mittel",
-  artefakte: false,
-  aufgabenPrompt: ""
+/* ---------------------------------------------------------------- 2 -- */
+var LANG_PACKS = {};
+
+LANG_PACKS.de = {
+  name: "Deutsch",
+  flag: "🇩🇪",
+  ui: {
+    title: "Prompt Generator für Lehrkräfte",
+    tagline: "✦ Lass eine KI die Sprech-Hausaufgaben deiner Klasse auswerten – mit Feedback, Übungen und Ideen für den Unterricht.",
+    langScreenTitle: "Wähle deine Sprache",
+    langScreenHint: "In dieser Sprache siehst du das Tool und bekommst die Auswertung.",
+    back: "← Zurück",
+    next: "Weiter →",
+    toResult: "Prompts erstellen →",
+    stepOf: "Schritt {n} von {t}",
+    steps: ["Kontext", "Ergebnisse", "Schwerpunkte", "Feinjustierung", "Ergebnis"],
+    footer: "Prompt Generator für Lehrkräfte",
+    impressum: "Impressum", datenschutz: "Datenschutz", nutzung: "Nutzungsbedingungen",
+
+    sprachen: { de: "Deutsch", en: "Englisch", fr: "Französisch", es: "Spanisch" },
+    niveauNamen: { A1: "Einstieg", A2: "Grundlagen", B1: "Mittelstufe", B2: "Obere Mittelstufe", C1: "Fortgeschritten", C2: "Sehr fortgeschritten" },
+
+    s1Title: "Kontext der Aufgabe",
+    s1Hint: "Diese Angaben stehen nicht in den Transkripten – ohne sie bewertet die KI nach eigenen Maßstäben.",
+    s1Sprache: "Welche Sprache unterrichtest du?",
+    s1Niveau: "Zielniveau",
+    s1Aufgabe: "Was war die Aufgabe?",
+    s1AufgabeHint: "1–2 Sätze reichen.",
+    s1AufgabePH: "z. B. Rollenspiel: Im Restaurant bestellen und sich über das Essen beschweren.",
+    s1AufgabeFull: "Vollständigen Aufgaben-Prompt einfügen (optional)",
+    s1AufgabeFullHint: "Falls deine Lernenden einen Prompt bekommen haben (z. B. aus dem Prompt Generator), füge ihn hier ein. Er wird in den Auswertungs-Prompt übernommen – du musst ihn nicht extra hochladen.",
+    s1AufgabeFullPH: "Hier den Prompt einfügen, den die Lernenden bekommen haben …",
+    s1Quelle: "Woher stammen die Transkripte?",
+    qAlle: "ALLE_TRANSKRIPTE.txt aus dem Transkriptionsskript",
+    qAlleD: "Eine Datei mit allen Aufnahmen deiner Gruppe – mit Pausen, Zeitangaben und Kennzahlen. Lernende erscheinen als Codes.",
+    qEinzel: "Einzelanalyse aus dem Transkriptionsskript",
+    qEinzelD: "Die Datei „Aufnahme_…_analyse.txt“ zu einer einzelnen Person.",
+    qApp: "Transkripte aus der KI-App",
+    qAppD: "Die Texte, die die KI-App (z. B. Gemini, ChatGPT) beim Sprechen erstellt hat und die dir deine Lernenden geschickt haben.",
+    qAppKurs: "Transkripte mit Pausen und Sprechtempo? → So geht's",
+    qNurApp: "Das Transkriptionsskript gibt es bisher nur für Deutsch – für {sprache} bleibt der Weg über die KI-App.",
+    errSprache: "Bitte wähle die Sprache, die du unterrichtest.",
+    errNiveau: "Bitte wähle ein Zielniveau.",
+    errAufgabe: "Bitte beschreibe kurz die Aufgabe.",
+    errQuelle: "Bitte wähle, woher die Transkripte stammen.",
+
+    s2Title: "Was soll herauskommen?",
+    s2Hint: "Mehrfachauswahl möglich. Je nach Auswahl bekommst du einen oder mehrere Prompts, die du nacheinander in denselben Chat einfügst.",
+    oGruppe: "Überblick über die Gruppe",
+    oGruppeD: "Das Wichtigste auf einen Blick und die Fehlermuster, die bei vielen auftreten.",
+    oSpann: "Spannbreite der Gruppe",
+    oSpannD: "Wie weit liegen die Stärksten und die Schwächsten auseinander – und was folgt daraus?",
+    oBildung: "Vorschläge zur Gruppenbildung",
+    oBildungD: "2–4 Paarungen für Partnerarbeit, mit Begründung.",
+    oUnterricht: "Unterrichtsvorschläge",
+    oUnterrichtD: "Sprachlicher Fokus und Aktivitäten für deine nächste Stunde.",
+    oFoerder: "Förderempfehlungen",
+    oFoerderD: "Woran diese Person als Nächstes arbeiten sollte – für dich als Lehrkraft.",
+    oNoten: "Orientierungsnoten",
+    oNotenD: "Grobe Einordnung je Person – nur für dich, keine offizielle Note.",
+    oFeedback: "Feedback für jede/n Lernende/n",
+    oFeedbackEinzel: "Feedback für diese Person",
+    oFeedbackD: "Zum direkten Weitergeben: Stärken, Verbesserungen mit Beispiel aus dem eigenen Transkript, ein Tipp.",
+    oFbUeb: "+ 2 Übungen zu den eigenen Fehlern",
+    oFbUebD: "Nur Fehler, die diese Person selbst gemacht hat.",
+    oUebGruppe: "Übungen für die ganze Gruppe",
+    oUebGruppeD: "Aus allen Transkripten: Übungen zu den 4–6 häufigsten Fehlerbereichen.",
+    errOut: "Bitte wähle mindestens ein Ergebnis.",
+
+    s3Title: "Worauf soll die Auswertung achten?",
+    s3Hint: "Alles hier ist optional. Ein Lernziel macht die Auswertung deutlich konkreter.",
+    s3Lernziel: "Lernziel dieser Aufgabe",
+    s3LernzielHint: "Was hast du zuletzt eingeführt? Die Auswertung prüft dann, ob es angekommen ist – und was die Lernenden stattdessen verwenden.",
+    s3Struktur: "Zielstruktur(en)",
+    s3StrukturHint: "Grammatik, die dran war. Mehrere durch Komma trennen.",
+    s3StrukturPH: "z. B. Perfekt mit sein, Nebensätze mit weil",
+    s3Wortschatz: "Zielwortschatz und Wendungen",
+    s3WortschatzHint: "Ein Eintrag pro Zeile oder durch Komma getrennt.",
+    s3WortschatzPH: "z. B.\ndie Mülltrennung\nnachhaltig\nIch finde, dass …",
+    s3Kennzahlen: "Kennzahlen aus dem Skript",
+    kErklaeren: "In verständlichen Worten erklären",
+    kErklaerenD: "Die KI ordnet Sprechtempo, Pausen und Co. für dich ein – ohne Fachjargon.",
+    kIgnorieren: "Ignorieren",
+    kIgnorierenD: "Die Auswertung stützt sich nur auf den Wortlaut der Gespräche.",
+    s3Fluss: "Auffällig flüssige Aufnahmen markieren",
+    s3FlussD: "Hinweis zum Nachhören, falls eine Aufnahme wie vorgelesen wirkt – kein Vorwurf.",
+    s3Immer: "Immer automatisch im Prompt:",
+    s3ImmerSkript: ["Nur die Äußerungen der Lernenden werden bewertet, nie die der KI.", "Die Lesehinweise der Datei werden befolgt (z. B. geglättete Endungen nicht als Lernerfolg werten).", "Unsichere Aufnahmen („BITTE PRÜFEN“) werden gekennzeichnet und nicht in Vergleiche eingerechnet.", "Codes statt Namen; entfernte Daten wie [NAME] werden nicht kommentiert."],
+    s3ImmerApp: ["Nur die Äußerungen der Lernenden werden bewertet, nie die der KI.", "Keine Aussagen zu Sprechtempo oder Pausen – die App-Transkripte enthalten keine Zeitangaben.", "Hinweis, dass App-Transkripte geglättet oder nachbearbeitet sein können."],
+
+    s4Title: "Feinjustierung",
+    s4Hint: "Hier siehst du nur, was zu deiner Auswahl gehört. Die Voreinstellungen passen meistens.",
+    s4Umfang: "Umfang der Auswertung",
+    uKnapp: "Knapp", uKnappD: "Nur Tabellen und Stichpunkte.",
+    uMittel: "Mittel", uMittelD: "Tabellen mit einem Satz Einordnung je Abschnitt.",
+    uAus: "Ausführlich", uAusD: "Mit Erklärungen und Beispielen.",
+    s4Zeit: "Wie viel Zeit hast du in der nächsten Stunde dafür?",
+    min: "Minuten",
+    s4Lernende: "Für deine Lernenden",
+    s4LernendeHint: "Gilt für Feedback und Übungen.",
+    s4Sprache: "Sprache",
+    fsZiel: "{sprache}, auf Niveau {niveau} formuliert",
+    fsAndere: "Andere Sprache",
+    fsAnderePH: "z. B. Englisch, Arabisch, Ukrainisch …",
+    s4Anrede: "Anrede",
+    aDu: "du", aSie: "Sie",
+    s4FbUmfang: "Länge des Feedbacks",
+    fuKurz: "Kurz", fuKurzD: "3–4 Sätze plus Beispiele.",
+    fuAus: "Ausführlich", fuAusD: "Mit kurzen Erklärungen.",
+    s4Formate: "Format der Übungen",
+    s4FormateHint: "Mehrere möglich.",
+    fBlatt: "Arbeitsblatt", fBlattD: "Zum Kopieren oder Ausdrucken, Lösungen am Ende.",
+    fPrompt: "Übungs-Prompt für Lernende", fPromptD: "Ein fertiger Prompt, den Lernende in ihre eigene KI einfügen – die KI fragt die Übungen ab und korrigiert sofort.",
+    fHtml: "Interaktive Übungsseite", fHtmlD: "Eine HTML-Seite mit sofortiger Rückmeldung. Bei individuellen Übungen: eine Seite für alle, Lernende geben ihren Code ein.",
+    fMoodle: "Moodle-Quiz (zum Import)", fMoodleD: "Fragen im GIFT-Format – Moodle erfasst die Ergebnisse je Person. Nur für Gruppenübungen.",
+    s4Form: "Ergebnisse einsammeln (optional)",
+    s4FormHint: "Mit einem eigenen Google-Formular landen die Ergebnisse der Übungsseite automatisch bei dir – je Übung: richtig/falsch, Versuche und falsche Eingaben.",
+    s4FormPH: "Vorausgefüllten Link deines Formulars hier einfügen",
+    formLeer: "Ohne Formular zeigt die Seite am Ende einen Abschluss-Code, den die Lernenden dir per Screenshot schicken.",
+    formOk: "✓ Formular erkannt. Die Ergebnisse findest du in deinem Formular unter „Antworten“ (Responses) – exportierbar über „Link to Sheets“.",
+    formErrUrl: "Das ist kein gültiger Link.",
+    formErrGoogle: "Das ist kein Google-Formular-Link (docs.google.com/forms/…). Kurzlinks wie forms.gle funktionieren nicht – nimm den Link aus „Pre-fill form“.",
+    formErrEntries: "Im Link stecken {n} Formularfelder statt 2. Prüfe, ob das Formular genau zwei Fragen hat und ob du in beide etwas eingetragen hast, bevor du „Get link“ geklickt hast.",
+    formGuide: "So legst du das Formular an (einmalig, ca. 3 Minuten)",
+    formSteps: [
+      "Auf <a href=\"https://forms.google.com\" target=\"_blank\" rel=\"noopener\">forms.google.com</a> ein neues, leeres Formular anlegen und benennen, z. B. „Übungsergebnisse 3b“.",
+      "Genau zwei Fragen anlegen, in dieser Reihenfolge: <b>„Code“</b> als Kurzantwort (<i>Short answer</i>) und <b>„Ergebnisdaten“</b> als Absatz (<i>Paragraph</i>).",
+      "Reiter <i>Settings</i> → <i>Responses</i>: <i>Collect email addresses</i> = <i>Do not collect</i>, <i>Limit to 1 response</i> = aus. So brauchen Lernende kein Google-Konto.",
+      "Optional: <i>Presentation</i> → <i>Confirmation message</i>, z. B. „Danke! Dein Ergebnis ist angekommen.“",
+      "Oben rechts <i>Publish</i>. Bei <i>Responders</i> steht <i>Anyone with the link</i>. Die Bearbeitung (<i>Editor view</i>) bleibt <i>Restricted</i> – nie für alle zum Bearbeiten freigeben.",
+      "Drei Punkte ⋮ → <i>Pre-fill form</i> → in beide Felder irgendetwas eintragen → <i>Get link</i> → <i>Copy link</i> → hier einfügen."
+    ],
+    s4Noten: "Notenformat",
+    nPunkte: "0–100 Punkte", nSchul: "Schulnote 1–6",
+    s4NotenRegel: "Die Note richtet sich nach der schwächeren der beiden Bewertungsdimensionen – gute Sprache gleicht eine schwache Aufgabenerfüllung nicht einfach aus.",
+    s4NotenA1: "Für A1 gibt es eine ganzheitliche Einschätzung in drei Stufen (wie bei Start Deutsch 1).",
+    errFbSprache: "Bitte gib die Sprache für die Lernenden an.",
+    errFormate: "Bitte wähle mindestens ein Format für die Übungen.",
+    errForm: "Der Formular-Link ist noch nicht in Ordnung – korrigiere ihn oder lass das Feld leer.",
+
+    s5Ey: "DEINE PROMPTS",
+    s5Title: "So gehst du vor",
+    upAlle: "Öffne einen neuen Chat (z. B. in Gemini), füge Prompt ① ein und lade die Datei <code>ALLE_TRANSKRIPTE.txt</code> aus dem Ordner „Ergebnisse“ hoch (Plus- bzw. Büroklammer-Symbol). <b>Die Datei <code>ZUORDNUNG_NICHT_HOCHLADEN.txt</code> bleibt immer auf deinem Computer.</b>",
+    upAlleGrenze: "Kostenlose KI-Versionen verarbeiten nur eine begrenzte Textmenge. Bei mehr als etwa 15 Aufnahmen kann ALLE_TRANSKRIPTE.txt zu groß sein – die Zählkontrolle am Anfang der Antwort zeigt dir, ob alle Aufnahmen gelesen wurden. Wenn nicht: die Aufnahmen auf zwei Ordner aufteilen und zweimal auswerten.",
+    upEinzel: "Öffne einen neuen Chat (z. B. in Gemini), füge Prompt ① ein und lade die Datei <code>Aufnahme_…_analyse.txt</code> hoch (Plus- bzw. Büroklammer-Symbol). <b>Die Datei <code>ZUORDNUNG_NICHT_HOCHLADEN.txt</code> bleibt immer auf deinem Computer.</b>",
+    upApp: "Öffne einen neuen Chat (z. B. in Gemini), füge Prompt ① ein und lade die Transkripte deiner Lernenden hoch – als eine zusammengeführte Datei oder als mehrere Dateien.",
+    mergeTitle: "Wie führe ich die Transkripte zu einer Datei zusammen?",
+    mergeSteps: [
+      "Lass dir von jeder Person das <b>reine Transkript</b> schicken – ohne Korrekturen oder Kommentare der KI.",
+      "Öffne eine leere Textdatei und füge alle Transkripte nacheinander ein. Setze vor jedes eine Trennzeile mit dem Namen, z. B. <code>===== Amina =====</code>",
+      "Als <code>.txt</code> speichern und diese eine Datei hochladen.",
+      "Kürzer: Die meisten KI-Apps nehmen auch mehrere Dateien auf einmal. Dann muss nur jeder Dateiname mit dem Namen der Person beginnen, z. B. <code>Amina.txt</code>."
+    ],
+    chainMainT: "Auswertung",
+    chainMainH: "Zuerst einfügen und die Datei hochladen.",
+    chainMainOnlyH: "Einfügen und die Datei hochladen.",
+    chainFbT: "Feedback für jede/n Lernende/n",
+    chainFbH: "Im selben Chat einfügen, wenn ① fertig ist. Die KI arbeitet in Runden zu je {n} Personen – schreib jeweils „weiter“.",
+    chainIndT: "Interaktive Übungsseite (individuell)",
+    chainIndH: "Erst einfügen, wenn alle Feedback-Runden fertig sind.",
+    chainIndAppH: "Erst einfügen, wenn alle Feedback-Runden fertig sind. Die KI vergibt jeder Person einen Code und gibt dir die Liste Name → Code. Verteile die Codes einzeln.",
+    chainGrT: "Übungen für die ganze Gruppe",
+    chainGrH: "Im selben Chat einfügen. Bei mehreren Formaten liefert die KI sie nacheinander – schreib jeweils „weiter“.",
+    chainEinzelUebT: "Übungen für diese Person",
+    chainEinzelUebH: "Im selben Chat einfügen, wenn ① fertig ist.",
+    copy: "Prompt kopieren", copied: "Kopiert! ✓",
+    wortliste: "Wortliste {niveau} {sprache} herunterladen (.txt)",
+    wortlisteHint: "Lade die Wortliste zusammen mit dem Übungs-Prompt hoch, dann verwendet die KI in den Übungen nur diese Wörter.",
+    moodleTitle: "Moodle: So importierst du das Quiz",
+    moodleSteps: [
+      "Den GIFT-Text aus der Antwort der KI kopieren und als <code>.txt</code> speichern (Zeichenkodierung UTF-8).",
+      "In deinem Moodle-Kurs: <i>Fragensammlung</i> → <i>Import</i> → Format <i>GIFT</i> → Datei hochladen → <i>Import</i>. Meldet Moodle einen Fehler, zeig die Meldung der KI – sie korrigiert die Stelle.",
+      "Einen <i>Test</i> anlegen und die importierten Fragen hinzufügen.",
+      "Nach der Bearbeitung: Ergebnisse je Person unter <i>Bewertungen</i>, je Frage unter <i>Statistik</i> – beides als Excel/CSV exportierbar."
+    ],
+    htmlHint: "Die KI erstellt die Übungsseite als HTML. In Gemini erscheint sie meist als „Canvas“ – über „Teilen“ bekommst du einen Link für deine Lernenden. Bei Schulkonten kann das Teilen gesperrt sein; dann den Code als <code>.html</code>-Datei speichern und z. B. über Moodle oder Teams verteilen. Probiere die Seite vorher selbst einmal durch.",
+    lesen: "Lies Feedback und Übungen, bevor du sie weitergibst. Du kennst deine Lernenden – die KI nicht.",
+    dsTitle: "Datenschutz",
+    dsItems: ["Informiere deine Lernenden vorher und hol ihr Einverständnis ein – und beachte die Regeln deiner Schule oder Einrichtung.", "Lies die Transkripte vor dem Hochladen gegen: Das Skript entfernt nicht alle persönlichen Daten.", "In Gemini unter <i>Einstellungen → Aktivitäten</i> das Speichern ausschalten: Dann werden neue Chats nach 72 Stunden gelöscht und nicht zum Training genutzt."],
+    dsLink: "Mehr dazu im Kurs, Kapitel 3, Schritt 3.3",
+    merken: "Einstellungen auf diesem Gerät merken",
+    merkenD: "Beim nächsten Besuch sind deine Einstellungen vorausgefüllt – nur Aufgabe und Lernziel gibst du neu ein. Gespeichert wird nur in deinem Browser.",
+    reset: "Alles zurücksetzen",
+    neu: "Neu starten"
+  },
+
+  /* Bewertungskriterien je Niveau – destilliert aus den Goethe-Modellsätzen
+     (Sprechen), vereinfacht auf zwei Dimensionen. Aussprache fließt nicht ein. */
+  kriterien: {
+    A1: { typ: "holistisch", quelle: "Start Deutsch 1",
+      stufen: [
+        { label: "Aufgabe voll erfüllt und verständlich", punkte: 100, note: 1 },
+        { label: "Aufgabe wegen sprachlicher oder inhaltlicher Mängel nur teilweise erfüllt", punkte: 50, note: 4 },
+        { label: "Aufgabe nicht erfüllt und/oder unverständlich", punkte: 0, note: 6 }
+      ] },
+    A2: { typ: "zweidimensional", quelle: "Goethe-Zertifikat A2",
+      aufgabe: { A: "durchgängig angemessen", B: "überwiegend angemessen", C: "teilweise angemessen", D: "kaum angemessen", E: "nicht bewertbar" },
+      sprache: { A: "angemessen/differenziert, vereinzelte Fehlgriffe ohne Beeinträchtigung", B: "überwiegend angemessen, mehrere Fehlgriffe ohne Beeinträchtigung", C: "teilweise angemessen, Fehlgriffe beeinträchtigen teilweise", D: "kaum angemessen, Fehlgriffe beeinträchtigen erheblich", E: "durchgängig unangemessen" } },
+    B1: { typ: "zweidimensional", quelle: "Goethe-Zertifikat B1",
+      aufgabe: { A: "Sprachfunktionen in Inhalt und Umfang angemessen behandelt; Gespräch angemessen begonnen, in Gang gehalten und beendet", B: "überwiegend angemessen", C: "teilweise angemessen", D: "kaum angemessen", E: "Gesprächsanteil nicht bewertbar" },
+      sprache: { A: "Register situations- und partneradäquat; Wortschatz und Strukturen differenziert, vereinzelte Fehlgriffe beeinträchtigen das Verständnis nicht", B: "noch weitgehend situations- und partneradäquat; überwiegend angemessen, mehrere Fehlgriffe beeinträchtigen das Verständnis noch nicht", C: "ansatzweise situations- und partneradäquat; teilweise angemessen oder begrenzt, mehrere Fehlgriffe beeinträchtigen das Verständnis teilweise", D: "nicht mehr situations- und partneradäquat; kaum vorhanden, mehrere Fehlgriffe beeinträchtigen das Verständnis erheblich", E: "Äußerung größtenteils unverständlich" } },
+    B2: { typ: "zweidimensional", quelle: "Goethe-Zertifikat B2",
+      aufgabe: { A: "Sprachfunktionen angemessen; Gespräch angemessen begonnen, in Gang gehalten und beendet; Register situations- und partneradäquat", B: "überwiegend angemessen", C: "in Teilen angemessen", D: "kaum noch angemessen", E: "nicht mehr verständlich" },
+      sprache: { A: "Wortschatz/Strukturen differenziert, vereinzelte Fehlgriffe beeinträchtigen das Verständnis nicht; Sätze angemessen verknüpft, natürliche Sprechweise", B: "überwiegend angemessen, mehrere Fehlgriffe beeinträchtigen das Verständnis noch nicht; überwiegend angemessen verknüpft, verlangsamte aber flüssige Sprechweise", C: "Repertoire begrenzt, mehrere Fehlgriffe beeinträchtigen das Verständnis stellenweise; teilweise verknüpft, stockende Sprechweise beeinträchtigt das Verständnis stellenweise", D: "kaum Repertoire vorhanden, Fehlgriffe beeinträchtigen das Verständnis durchgehend; kaum verknüpft, stockende Sprechweise beeinträchtigt das Verständnis durchgehend", E: "Äußerung unverständlich" } },
+    C1: { typ: "zweidimensional", quelle: "Goethe-Zertifikat C1",
+      aufgabe: { A: "sehr gut und sehr ausführlich, sehr interaktiv", B: "gut und ausführlich, gut interaktiv", C: "gut und ausführlich genug; Gesprächsfähigkeit vorhanden, aber nicht sehr aktiv", D: "unvollständig und zu kurz; Beteiligung nur auf Anfrage", E: "viel zu kurz bzw. Thema verfehlt; große Schwierigkeiten, sich überhaupt zu beteiligen" },
+      sprache: { A: "klar zusammenhängend, angemessenes Sprechtempo; wenig Umschreibungen/Wortsuche; nur vereinzelte Regelverstöße", B: "zusammenhängend, angemessenes Sprechtempo; über weite Strecken angemessene Ausdrucksweise; stellenweise Regelverstöße mit Neigung zur Selbstkorrektur", C: "nicht immer zusammenhängend; vage/allgemeine Ausdrucksweise; häufige Regelverstöße, die das Verständnis noch nicht beeinträchtigen", D: "stockende, bruchstückhafte Sprechweise; situations-unspezifische Ausdrucksweise mit größerer Zahl an Fehlgriffen; Regelverstöße beeinträchtigen das Verständnis erheblich", E: "abgehackte Sprechweise, zentrale Aussagen bleiben unklar; Regelverstöße verhindern das Verständnis weitgehend" } },
+    C2: { typ: "zweidimensional", quelle: "Goethe-Zertifikat C2",
+      aufgabe: { A: "strukturiert, adressatenbezogen, ausführlich; souveräne, situations- und partneradäquate Gesprächsführung", B: "größtenteils strukturiert, Umfang angemessen; situations- und partneradäquate Gesprächsführung", C: "Struktur erkennbar, einzelne Aspekte unklar oder knapp; an mehreren Stellen nicht situations- und partneradäquat", D: "Struktur kaum erkennbar, viele Aspekte unklar oder zu knapp; wenig initiativ im Gespräch", E: "Thema verfehlt, Umfang nicht ausreichend; keine erkennbare Gesprächsführung" },
+      sprache: { A: "Verknüpfungsmittel komplex, variabel und flexibel eingesetzt; breites Spektrum, flexibel/differenziert, natürliche Kommunikation trotz höchstens vereinzelter Abweichungen", B: "verschiedene Verknüpfungsmittel angemessen eingesetzt; Spektrum angemessen, Fehlgriffe/Regelverstöße stören die Kommunikation nicht", C: "wenige, wenig abwechslungsreiche Verknüpfungsmittel; Spektrum angemessen mit einzelnen störenden Fehlgriffen, oder Spektrum begrenzt mit häufigeren, noch nicht störenden Fehlgriffen", D: "einfach strukturierte, unverbundene Sätze; kaum Spektrum vorhanden, Fehlgriffe/Regelverstöße behindern die Kommunikation", E: "Äußerung inkohärent bzw. unverständlich" } }
+  },
+
+  /* ------------------------------------------------------------------
+     Prompt-Bausteine (Deutsch). Jede Funktion bekommt den Zustand S und
+     gibt Text zurück. Für eine neue Oberflächensprache diesen Block
+     kopieren und übersetzen.
+     ------------------------------------------------------------------ */
+  prompt: {}
 };
 
-var cur = 0;
-var T = 6; // 5 Inhaltsschritte + 1 Ergebnisschritt
-
-function esc(s) {
-  return String(s == null ? "" : s)
-    .replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;")
-    .replace(/"/g,"&quot;").replace(/'/g,"&#39;");
-}
-
-function renderPips() {
-  var pips = document.getElementById("pips");
-  var h = "";
-  for (var i = 0; i < T; i++) {
-    var cls = "pip";
-    if (i < cur) cls += " done";
-    if (i === cur) cls += " active";
-    h += "<div class=\"" + cls + "\"></div>";
+(function (P) {
+  var ui = LANG_PACKS.de.ui;
+  function zs(S) { return ui.sprachen[S.zielsprache]; }
+  function kennung(S) { return isSkript(S) ? "Code" : "Name"; }
+  function kennungen(S) { return isSkript(S) ? "Codes" : "Namen"; }
+  function liste(arr) { return arr.map(function (x) { return "- " + x; }).join("\n"); }
+  function erklSprache(S) {
+    if (S.fbSprache === "andere" && S.fbSpracheAndere.trim()) return "auf " + S.fbSpracheAndere.trim();
+    return "auf " + zs(S) + ", so einfach formuliert, dass eine Person auf Niveau " + S.niveau + " sie versteht";
   }
-  pips.innerHTML = h;
-  var labels = ["Kontext","Bausteine","Format & Länge","Übungsmaterial","Aufgabenbeschreibung","Ergebnis"];
-  document.getElementById("slbl").textContent = labels[cur] || "";
-  document.getElementById("scnt").textContent = "Schritt " + (cur+1) + " von " + T;
-}
+  function anrede(S) { return S.anrede === "sie" ? "Sprich die Lernenden mit „Sie“ an." : "Sprich die Lernenden mit „du“ an."; }
+  function lernzielZeilen(S) {
+    var z = [], st = S.zielstruktur.trim(), w = wortschatzListe(S);
+    if (st) z.push("Zielstruktur(en): " + st);
+    if (w.length) z.push("Zielwortschatz und Wendungen: " + w.join(", "));
+    return z;
+  }
+  function wortlisteSatz(S) {
+    return CONFIG.WORTLISTE_NIVEAUS.indexOf(S.niveau) >= 0
+      ? "Falls ich eine Wortliste hochlade, verwende in den Übungen nur Wörter daraus.\n" : "";
+  }
+  function endungenUebSatz(S) {
+    return isSkript(S)
+      ? "Beachte: Die Spracherkennung glättet Endungen. Endungsfehler können deshalb im Transkript fehlen. Wenn Endungen für dieses Niveau wichtig sind, darfst du dazu eine Übung aufnehmen, auch wenn sie im Transkript selten vorkommen.\n" : "";
+  }
 
-function renderNav() {
-  var bb = document.getElementById("bb");
-  var bn = document.getElementById("bn");
-  bb.disabled = (cur === 0);
-  bn.style.display = (cur === T-1) ? "none" : "inline-block";
-  bn.textContent = (cur === T-2) ? "Prompt erstellen →" : "Weiter →";
-}
+  /* ---------- Hauptprompt ---------- */
+  P.main = function (S) {
+    var L = [], o = effOut(S), skript = isSkript(S), gruppe = S.quelle !== "einzel";
+    var chainLen = buildChainMeta(S).length;
 
-function toggleField(key) {
-  S[key] = !S[key];
-  render();
-}
-
-function selectField(key, val) {
-  S[key] = val;
-  render();
-}
-
-function render() {
-  renderPips();
-  renderNav();
-  document.getElementById("em").textContent = "";
-  var sc = document.getElementById("sc");
-  var h = "";
-
-  if (cur === T-1) {
-    var promptText = buildPrompt();
-    h = "<div class=\"ey\">DEIN AUSWERTUNGS-PROMPT</div>";
-    h += "<div class=\"st\">Fertig zum Kopieren</div>";
-    h += "<div class=\"rb\">" + esc(promptText) + "</div>";
-    h += "<button class=\"cb\" id=\"cpb\" onclick=\"doCopy()\"><span id=\"cpi\">📋</span> <span id=\"cpl\">Prompt kopieren</span></button>";
-    if (S.aufgabenPrompt.trim()) {
-      h += "<div class=\"tb\">💡 Lade zusammen mit diesem Prompt zwei Dateien hoch: die zusammengeführten Berichte und die zusammengeführten Transkripte. Der Aufgaben-Prompt steckt schon im Text oben — kein dritter Upload nötig.</div>";
+    // Datenlage
+    if (S.quelle === "alle") {
+      L.push("Ich lade dir die Datei ALLE_TRANSKRIPTE.txt hoch. Sie wurde mit einem Transkriptionsskript aus Sprachaufnahmen meiner Lernenden erstellt – meist Gespräche zwischen einer lernenden Person und einer KI. Aufbau: oben eine Gesamtübersicht mit LESEHINWEISEN und den Kennzahlen im Vergleich, darunter je Aufnahme ein Abschnitt, der mit „===== Aufnahme A-XXXXXX =====“ beginnt. Die Lernenden sind nur über diese Codes erkennbar.");
+    } else if (S.quelle === "einzel") {
+      L.push("Ich lade dir eine Einzelanalyse hoch (Datei „Aufnahme_A-XXXXXX_analyse.txt“). Sie wurde mit einem Transkriptionsskript aus der Sprachaufnahme einer lernenden Person erstellt – meist ein Gespräch mit einer KI. Sie enthält Kennzahlen, das Gespräch mit Zeitangaben und Pausen und einen Abschnitt nur mit den Äußerungen der lernenden Person ohne Pausen. Die Person ist nur über ihren Code erkennbar.");
     } else {
-      h += "<div class=\"tb\">💡 Lade zusammen mit diesem Prompt drei Dateien hoch: die zusammengeführten Berichte, die zusammengeführten Transkripte, und den ursprünglichen Aufgaben-Prompt deiner Hausaufgabe.</div>";
+      L.push("Ich lade dir die Gesprächstranskripte meiner Lernenden hoch. Sie haben mit einer KI-App (z. B. Gemini oder ChatGPT) gesprochen und mir das Transkript geschickt, das die App dabei erstellt hat. Jede Person ist mit ihrem Namen gekennzeichnet – durch eine Trennzeile wie „===== Name =====“ in einer gemeinsamen Datei oder durch den Dateinamen.");
+    }
+    L.push("");
+    L.push("KONTEXT");
+    L.push("- Gelernte Sprache: " + zs(S));
+    L.push("- Zielniveau: " + S.niveau);
+    L.push("- Aufgabe der Lernenden: " + S.aufgabe.trim());
+    if (S.aufgabePrompt.trim()) {
+      L.push("- Diesen Prompt haben die Lernenden für das Gespräch bekommen:");
+      L.push("---");
+      L.push(S.aufgabePrompt.trim());
+      L.push("---");
+    }
+    var lz = lernzielZeilen(S);
+    if (lz.length) { L.push("- Lernziel dieser Einheit:"); lz.forEach(function (x) { L.push("  " + x); }); }
+    L.push("");
+
+    // Grundregeln
+    var R = [];
+    if (skript) R.push("Bewerte ausschließlich die Zeilen mit „LERNENDE:“. Zeilen mit „KI:“ sind nur Kontext und werden nicht bewertet.");
+    else R.push("Bewerte ausschließlich, was die Lernenden selbst sagen. Die Beiträge der KI sind nur Kontext und werden nicht bewertet.");
+    if (skript) {
+      R.push("Befolge die LESEHINWEISE in der Datei. Besonders wichtig: Die Spracherkennung glättet Lernersprache teilweise, vor allem Endungen. Werte korrekt aussehende Endungen deshalb nicht als Lernerfolg. Fehler im Transkript sind meist echt, können aber Erkennungsfehler sein – formuliere sie dann mit „wahrscheinlich“.");
+      if (S.quelle === "alle") R.push("Aufnahmen, die unter „BITTE PRÜFEN“ stehen oder eine HINWEIS-Zeile haben, kennzeichnest du mit ⚠, bewertest sie vorsichtig und rechnest sie nicht in Zählungen oder Gruppenvergleiche ein.");
+      else R.push("Steht in der Datei ein HINWEIS (unsichere Stimmenzuordnung oder sehr kurze Aufnahme), bewerte vorsichtig und weise mich darauf hin.");
+      R.push("Sprich von den Lernenden nur mit ihren Codes. Erfrage oder erfinde keine Namen. Platzhalter wie [NAME], [NAME/ORT], [TELEFON] oder [EMAIL] sind entfernte persönliche Daten – kommentiere sie nicht und werte sie nicht als Fehler.");
+      R.push("Vergleiche nur Dateien, die mit demselben Spracherkennungsmodell erstellt wurden (es steht oben in der Datei).");
+      if (S.kennzahlen === "ignorieren") R.push("Ignoriere die Abschnitte mit Kennzahlen. Die Pausenmarkierungen im Gespräch darfst du für Aussagen zur Flüssigkeit nutzen.");
+      else R.push("Die Kennzahlen dienen dem Vergleich innerhalb dieser Gruppe und über die Zeit – leite aus Zahlen keine Niveaustufe ab.");
+    } else {
+      R.push("Die Transkripte enthalten keine Zeitangaben und keine Pausen. Mache deshalb keine Aussagen über Sprechtempo, Pausenlängen, Sprechdauer oder Antwortzeiten – auch nicht geschätzt. Flüssigkeit beurteilst du nur am Wortlaut: abgebrochene oder neu begonnene Sätze, Selbstkorrekturen, Füllwörter, sehr kurze Antworten auf offene Fragen. Lässt sich dazu nichts Belastbares sagen, schreib das.");
+      R.push("Die Spracherkennung der App glättet Fehler teilweise, und Lernende können ihr Transkript vor dem Abschicken bearbeitet haben. Behandle die Transkripte deshalb nicht als exakten Beleg dafür, was gesagt wurde.");
+      R.push("Bezeichne die Lernenden mit den Namen aus den Transkripten.");
+    }
+    R.push("Schreib deine Auswertung auf Deutsch. Beispiele aus den Transkripten zitierst du im Original.");
+    var umf = { knapp: "Antworte knapp: nur Tabellen und Stichpunkte, keine erklärenden Absätze.",
+      mittel: "Antworte kompakt: Tabellen und Stichpunkte, pro Abschnitt höchstens ein Satz Einordnung.",
+      ausfuehrlich: "Du darfst ausführlicher antworten: Tabellen und Stichpunkte, dazu kurze Erklärungen und Beispiele, wo sie beim Verstehen helfen." };
+    R.push(umf[S.umfang] || umf.mittel);
+    L.push("GRUNDREGELN (gelten für alle weiteren Aufträge in diesem Chat)");
+    L.push(liste(R));
+    L.push("");
+
+    // Zählkontrolle
+    if (S.quelle === "alle") L.push("ZUERST: Nenne in einer Zeile, wie viele Aufnahmen du ausgewertet hast, und liste ihre Codes auf. Sind es weniger, als in der Gesamtübersicht angegeben, schreib das deutlich dazu – dann war die Datei vermutlich zu lang.");
+    if (S.quelle === "app") L.push("ZUERST: Nenne in einer Zeile, wie viele Lernende du in den Transkripten erkannt hast, und liste ihre Namen auf. Ist die Abgrenzung zwischen zwei Personen unklar, schreib das.");
+    if (S.quelle !== "einzel") L.push("");
+
+    var hatHaupt = gruppe ? (o.gruppe || o.unterricht || o.noten) : true;
+    if (!hatHaupt) {
+      L.push("Gib danach noch keine Auswertung aus. Bestätige nur kurz, dass du alle Transkripte gelesen hast, und warte auf meinen nächsten Auftrag.");
+      return L.join("\n");
     }
 
-    if (S.artefakte) {
-      var artefaktText = buildArtefaktPrompt();
-      h += "<div class=\"rl2\" style=\"margin-top:22px\">Zweiter Prompt — Übungsmaterial (Grundgerüst)</div>";
-      h += "<div class=\"rb\">" + esc(artefaktText) + "</div>";
-      h += "<button class=\"cb\" id=\"cpb2\" onclick=\"doCopy2()\"><span id=\"cpi2\">📋</span> <span id=\"cpl2\">Prompt kopieren</span></button>";
-      h += "<div class=\"tb\">💡 Diesen Prompt erst NACH der Auswertung oben ins selbe Gespräch einfügen — er baut direkt auf den dort gefundenen Fehlermustern auf.</div>";
+    L.push(gruppe ? "Werte danach in genau dieser Reihenfolge aus:" : "Werte in genau dieser Reihenfolge aus:");
+    L.push("");
+    var n = 0;
+    function sec(t) { n++; L.push(n + ". " + t); L.push(""); }
+
+    if (gruppe && !o.gruppe) {
+      L.push("Werte die Transkripte zunächst für dich aus. Gib die Fehleranalyse nicht ausführlich aus, sondern nur das, was in den folgenden Abschnitten verlangt ist.");
+      L.push("");
     }
 
-    sc.innerHTML = h;
-    return;
-  }
-
-  if (cur === 0) {
-    h = "<div class=\"ey\">SCHRITT 1 VON " + T + "</div>";
-    h += "<div class=\"st\">Kontext der Aufgabe</div>";
-    h += "<div class=\"sh\">Diese Angaben sorgen dafür, dass der Prompt zu deiner Klasse passt — Niveau bestimmt das Bewertungssystem (falls du Noten aktivierst), Klassengröße die Schwelle, ab wann ein Fehlermuster als klassenweit gilt.</div>";
-
-    h += "<div class=\"fg\"><label>Zielniveau <span class=\"rq\">*</span></label>";
-    h += "<div class=\"niv-grid\">";
-    for (var i = 0; i < NIVEAUS.length; i++) {
-      var niv = NIVEAUS[i];
-      h += "<div class=\"niv-chip" + (S.niveau===niv.c?" sel":"") + "\" onclick=\"selectField('niveau','" + niv.c + "')\">";
-      h += "<div class=\"nc\">" + niv.c + "</div><div class=\"nn\">" + esc(niv.n) + "</div></div>";
+    if (gruppe && o.gruppe) {
+      sec("DAS WICHTIGSTE AUF EINEN BLICK");
+      L.push("Höchstens 4 Stichpunkte: die wichtigsten Befunde in absteigender Wichtigkeit, jeweils mit der Zahl der betroffenen Lernenden (z. B. „7 von 21“). Keine Erklärungen – die folgen unten.");
+      L.push("");
     }
-    h += "</div></div>";
+    if (!gruppe) {
+      sec("ÜBERBLICK ÜBER DIESE AUFNAHME");
+      L.push("Stärken: höchstens 3 Stichpunkte, je mit einem kurzen Zitat.");
+      L.push("Schwierigkeiten: Tabelle mit den Spalten Bereich (Grammatik / Wortschatz / Ausdruck / Flüssigkeit) | Muster | Beispiel aus dem Transkript | richtige Form.");
+      if (skript) L.push("Für die Flüssigkeit darfst du die Pausenmarkierungen und Kennzahlen nutzen, wie in den Lesehinweisen beschrieben.");
+      L.push("");
+    }
 
-    h += "<div class=\"fg\"><label>Klassengröße (Anzahl Lernender) <span class=\"rq\">*</span></label>";
-    h += "<input class=\"ti\" id=\"klassenInput\" type=\"number\" min=\"1\" max=\"99\" placeholder=\"z. B. 24\" value=\"" + esc(S.klassengroesse) + "\" oninput=\"S.klassengroesse=this.value\"></div>";
-
-    sc.innerHTML = h;
-    return;
-  }
-
-  if (cur === 1) {
-    h = "<div class=\"ey\">SCHRITT 2 VON " + T + "</div>";
-    h += "<div class=\"st\">Bausteine der Auswertung</div>";
-    h += "<div class=\"sh\">Fehlermuster sind immer dabei. Wähle zusätzlich, was du noch brauchst.</div>";
-
-    h += "<div class=\"av\"><p>✓ Immer enthalten: klassenweite Fehlermuster (Grammatik, Wortschatz, Ausdruck, Flüssigkeit).</p></div>";
-
-    h += "<div class=\"rg\" style=\"margin-top:14px\">";
-
-    h += "<div class=\"ro" + (S.vorschlaege?" sel":"") + "\" onclick=\"toggleField('vorschlaege')\">";
-    h += "<input type=\"checkbox\" " + (S.vorschlaege?"checked":"") + " onclick=\"event.stopPropagation()\" onchange=\"toggleField('vorschlaege')\">";
-    h += "<div><div class=\"rl\">Vorschläge für den nächsten Unterricht</div><div class=\"rd\">Sprachlicher Fokus und konkrete Aktivitätsvorschläge, zugeschnitten auf die gefundenen Fehlermuster.</div></div></div>";
-
-    h += "<div class=\"ro" + (S.spannbreite?" sel":"") + "\" onclick=\"toggleField('spannbreite')\">";
-    h += "<input type=\"checkbox\" " + (S.spannbreite?"checked":"") + " onclick=\"event.stopPropagation()\" onchange=\"toggleField('spannbreite')\">";
-    h += "<div><div class=\"rl\">Spannbreite der Klasse</div><div class=\"rd\">Kurzer Überblick über den Abstand zwischen stärksten und schwächsten Lernenden, mit Hinweis auf Differenzierung.</div></div></div>";
-
-    h += "<div class=\"ro" + (S.gruppenbildung?" sel":"") + "\" onclick=\"toggleField('gruppenbildung')\">";
-    h += "<input type=\"checkbox\" " + (S.gruppenbildung?"checked":"") + " onclick=\"event.stopPropagation()\" onchange=\"toggleField('gruppenbildung')\">";
-    h += "<div><div class=\"rl\">Vorschläge zur Gruppenbildung</div><div class=\"rd\">2–4 Paarungen für Partnerarbeit, inklusive Begründung, ob heterogen oder homogen gruppiert wurde.</div></div></div>";
-
-    h += "<div class=\"ro" + (S.noten?" sel":"") + "\" onclick=\"toggleField('noten')\">";
-    h += "<input type=\"checkbox\" " + (S.noten?"checked":"") + " onclick=\"event.stopPropagation()\" onchange=\"toggleField('noten')\">";
-    h += "<div><div class=\"rl\">Orientierungsnoten (optional)</div><div class=\"rd\">Grobe Note je Lernender/Lernendem zur internen Einordnung — nicht für Lernende bestimmt, keine offizielle Note.</div></div></div>";
-
-    h += "</div>";
-
-    if (S.noten) {
-      var krit = NIVEAU_KRITERIEN[S.niveau];
-      h += "<div class=\"section-divider\" style=\"margin-top:18px;padding-top:14px;border-top:1.5px dashed #cbd5e1\">";
-      if (!krit) {
-        h += "<div class=\"av\"><p>Bitte wähle oben in Schritt 1 zuerst ein Niveau — die Kriterien richten sich danach.</p></div>";
-      } else if (krit.typ === "holistisch") {
-        h += "<div class=\"sh\" style=\"margin-bottom:10px\">Für Niveau " + S.niveau + " basiert die Note auf „" + esc(krit.quelle) + "“ — dort gibt es keine A–E-Skala, sondern eine ganzheitliche Einschätzung in drei Stufen.</div>";
-        h += "<div class=\"av\"><p>";
-        for (var hi = 0; hi < krit.stufen.length; hi++) {
-          h += (hi+1) + ". " + esc(krit.stufen[hi].label) + (hi < krit.stufen.length-1 ? "<br><br>" : "");
+    if (lz.length) {
+      sec("LERNZIEL-CHECK");
+      L.push("Zähle nur die aktive Verwendung durch die Lernenden. Vorkommen in den Beiträgen der KI zählen nicht – auch dann nicht, wenn die lernende Person sie direkt danach wiederholt.");
+      if (S.zielstruktur.trim()) {
+        if (gruppe) {
+          L.push("Prüfe jede Zielstruktur einzeln. Tabelle mit den Spalten: Zielstruktur | verwendet von (Anzahl) | davon korrekt" + (skript ? " | davon mit Zögern davor" : "") + " | stattdessen verwendet | Beispielsatz (ohne " + kennung(S) + ").");
+        } else {
+          L.push("Prüfe jede Zielstruktur einzeln. Tabelle mit den Spalten: Zielstruktur | verwendet? (wie oft) | davon korrekt" + (skript ? " | davon mit Zögern davor" : "") + " | stattdessen verwendet | Beispielsatz.");
         }
-        h += "</p></div>";
-      } else {
-        h += "<div class=\"sh\" style=\"margin-bottom:10px\">Für Niveau " + S.niveau + " basiert die Note auf „" + esc(krit.quelle) + "“: Aufgabenerfüllung und Sprache, je A–E. Aussprache fließt nicht ein (keine Audiodaten).</div>";
+        L.push("Die Spalte „stattdessen verwendet“ ist die wichtigste: Wenn die Zielstruktur fehlt, benenne konkret, was an ihrer Stelle benutzt wird (z. B. Perfekt statt Plusquamperfekt, Hauptsatz statt Nebensatz).");
+        if (skript) {
+          L.push("„Mit Zögern davor“ heißt: unmittelbar vor oder in der Struktur eine Pause, ein Zögerungslaut oder ein Neustart. Das zeigt: verstanden, aber noch nicht automatisiert.");
+          L.push("Hängt eine Zielstruktur an Endungen (z. B. Kasus, Adjektivendungen, Pluralformen), kennzeichne die Spalte „davon korrekt“ als unsicher (Glättung durch die Spracherkennung) und nenne die Zeitmarken der Stellen, damit ich sie nachhören kann.");
+        }
       }
-      h += "<div class=\"fg\"><label>Notenformat</label>";
-      h += "<div class=\"rg\">";
-      h += "<div class=\"ro" + (S.notenformat==="punkte"?" sel":"") + "\" onclick=\"selectField('notenformat','punkte')\">";
-      h += "<input type=\"radio\" " + (S.notenformat==="punkte"?"checked":"") + ">";
-      h += "<div><div class=\"rl\">0–100 Punkte</div></div></div>";
-      h += "<div class=\"ro" + (S.notenformat==="schulnote"?" sel":"") + "\" onclick=\"selectField('notenformat','schulnote')\">";
-      h += "<input type=\"radio\" " + (S.notenformat==="schulnote"?"checked":"") + ">";
-      h += "<div><div class=\"rl\">Schulnote 1–6</div></div></div>";
-      h += "</div></div>";
-      h += "</div>";
+      if (wortschatzListe(S).length) {
+        L.push(gruppe
+          ? "Zielwortschatz: kompakte Liste, welche Einträge von wie vielen Lernenden aktiv verwendet wurden und welche bei niemandem vorkamen. Markiere Einträge, die verwendet, aber erkennbar falsch eingesetzt wurden, mit einem Beispiel."
+          : "Zielwortschatz: welche Einträge wurden aktiv verwendet, welche nicht? Markiere Einträge, die verwendet, aber erkennbar falsch eingesetzt wurden, mit einem Beispiel.");
+        if (skript) L.push("Neue oder seltene Wörter erkennt die Spracherkennung manchmal falsch. Nenne bei nicht gefundenen Einträgen ähnlich klingende Formen im Transkript als möglichen Erkennungsfehler.");
+      }
+      L.push("Schließe mit einem Satz: Ist das Lernziel angekommen, teilweise angekommen oder nicht angekommen?");
+      L.push("");
     }
 
-    sc.innerHTML = h;
-    return;
-  }
-
-  if (cur === 2) {
-    h = "<div class=\"ey\">SCHRITT 3 VON " + T + "</div>";
-    h += "<div class=\"st\">Format &amp; Länge</div>";
-    h += "<div class=\"sh\">Wie ausführlich soll die Auswertung sein?</div>";
-
-    h += "<div class=\"rg\">";
-    for (var li = 0; li < LAENGEN.length; li++) {
-      var lo = LAENGEN[li];
-      h += "<div class=\"ro" + (S.laenge===lo.c?" sel":"") + "\" onclick=\"selectField('laenge','" + lo.c + "')\">";
-      h += "<input type=\"radio\" " + (S.laenge===lo.c?"checked":"") + ">";
-      h += "<div><div class=\"rl\">" + esc(lo.n) + "</div><div class=\"rd\">" + esc(lo.d) + "</div></div></div>";
-    }
-    h += "</div>";
-    sc.innerHTML = h;
-    return;
-  }
-
-  if (cur === 3) {
-    h = "<div class=\"ey\">SCHRITT 4 VON " + T + "</div>";
-    h += "<div class=\"st\">Interaktive Übungsmaterialien</div>";
-    h += "<div class=\"sh\">Optional: Ein zweiter Prompt, den du im Anschluss an die Auswertung ins selbe Gespräch einfügen kannst — für interaktive Materialien, mit denen deine Lernenden die klassenweiten Fehlermuster nochmal üben und erklärt bekommen.</div>";
-
-    h += "<div class=\"rg\">";
-    h += "<div class=\"ro" + (S.artefakte?" sel":"") + "\" onclick=\"toggleField('artefakte')\">";
-    h += "<input type=\"checkbox\" " + (S.artefakte?"checked":"") + " onclick=\"event.stopPropagation()\" onchange=\"toggleField('artefakte')\">";
-    h += "<div><div class=\"rl\">Ja, zusätzlichen Prompt dafür erstellen</div><div class=\"rd\">Baut auf der Auswertung von Schritt 1 auf und schlägt Übungen zu den dort gefundenen Fehlermustern vor.</div></div></div>";
-    h += "</div>";
-
-    if (S.artefakte) {
-      h += "<div class=\"av\"><p>🚧 Grundgerüst — die genaue Ausgestaltung (Übungsformen, Umfang, Format) legen wir als Nächstes gemeinsam fest. Aktuell wird ein einfacher Basis-Prompt erzeugt.</p></div>";
+    if (gruppe && o.gruppe) {
+      sec("FEHLERMUSTER IN DER GRUPPE");
+      L.push("Nur Muster, die bei mindestens 30 % der ausgewerteten " + (S.quelle === "alle" ? "Aufnahmen" : "Lernenden") + " auftreten (aufgerundet, mindestens 2). Tabelle mit den Spalten: Bereich (Grammatik / Wortschatz / Ausdruck / Flüssigkeit) | Muster | Anzahl | Beispielsatz aus den Transkripten (ohne " + kennung(S) + ").");
+      if (skript) L.push("Für den Bereich Flüssigkeit darfst du die Pausenmarkierungen und Kennzahlen nutzen, wie in den Lesehinweisen beschrieben.");
+      L.push("");
     }
 
-    sc.innerHTML = h;
-    return;
-  }
-
-  if (cur === 4) {
-    h = "<div class=\"ey\">SCHRITT 5 VON " + T + "</div>";
-    h += "<div class=\"st\">Aufgabenbeschreibung</div>";
-    h += "<div class=\"sh\">Optional: Füge den ursprünglichen Prompt ein, den deine Lernenden für die Sprechaufgabe bekommen haben. Damit steckt er direkt im generierten Prompt — du musst ihn dann nicht separat als dritte Datei hochladen.</div>";
-
-    h += "<div class=\"fg\"><label>Ursprünglicher Aufgaben-Prompt</label>";
-    h += "<textarea class=\"ti\" id=\"aufgabenInput\" rows=\"10\" placeholder=\"Hier den vollständigen Prompt einfügen, den die Lernenden bekommen haben ...\" oninput=\"S.aufgabenPrompt=this.value\">" + esc(S.aufgabenPrompt) + "</textarea></div>";
-
-    if (!S.aufgabenPrompt.trim()) {
-      h += "<div class=\"av\"><p>Leer gelassen? Kein Problem — du lädst den Aufgaben-Prompt dann einfach wie gewohnt als eigene, dritte Datei mit hoch.</p></div>";
+    if (skript && S.kennzahlen === "erklaeren") {
+      sec("KENNZAHLEN VERSTÄNDLICH ERKLÄRT");
+      L.push(gruppe
+        ? "Höchstens 5 Stichpunkte in einfachen Worten, ohne Fachbegriffe: Was sagen die Kennzahlen über diese Gruppe? Wo liegen die Lernenden nah beieinander, wo weit auseinander, wer fällt auf (Codes nennen)? Keine Niveaustufen."
+        : "Höchstens 4 Stichpunkte in einfachen Worten, ohne Fachbegriffe: Was sagen die Kennzahlen über diese Aufnahme? Beschreibe nur, stufe nicht ein.");
+      L.push("");
     }
 
-    sc.innerHTML = h;
-    return;
+    if (skript && S.flussMarkieren) {
+      sec("AUFFÄLLIG FLÜSSIGE AUFNAHMEN");
+      L.push(gruppe
+        ? "Nenne Aufnahmen, die im Vergleich zur Gruppe auffällig flüssig und vorformuliert wirken: viele Wörter zwischen Pausen, kaum Zögerungslaute oder Wiederholungen, sprachlich deutlich ausgefeilter als der Rest. Formuliere das als Hinweis zum Nachhören, nicht als Vorwurf – es gibt viele harmlose Gründe. Fällt keine auf, schreib das."
+        : "Wirkt diese Aufnahme auffällig flüssig und vorformuliert (viele Wörter zwischen Pausen, kaum Zögerungslaute oder Wiederholungen, sprachlich ausgefeilter als für das Niveau zu erwarten)? Formuliere das als Hinweis zum Nachhören, nicht als Vorwurf. Wenn nicht, schreib das in einem Satz.");
+      L.push("");
+    }
+
+    if (gruppe && o.gruppe && S.gruppeSpann) {
+      sec("SPANNBREITE DER GRUPPE");
+      L.push("Höchstens 4 Sätze: Wie groß ist der Abstand zwischen den stärksten und den schwächsten Lernenden, und was folgt daraus für die Unterrichtsplanung (z. B. Differenzierung)?");
+      L.push("");
+    }
+    if (gruppe && o.gruppe && S.gruppeBildung) {
+      sec("VORSCHLÄGE ZUR GRUPPENBILDUNG");
+      L.push("Entscheide dich für eine Strategie – überwiegend heterogene Paare (Stärkere als Sprachvorbild) oder überwiegend homogene Paare (gemeinsamer Schwerpunkt) – und begründe sie in einem Satz. Dann 2–4 Paarungen, je eine Zeile: " + kennungen(S) + " – gemeinsamer Schwerpunkt.");
+      L.push("");
+    }
+
+    if (o.unterricht) {
+      if (gruppe) {
+        sec("UNTERRICHTSVORSCHLÄGE FÜR " + S.zeitrahmen + " MINUTEN");
+        L.push("Sprachlicher Fokus: höchstens 3 Stichpunkte, je ein Satz" + (lz.length ? " – berücksichtige ausdrücklich den Lernziel-Check." : "."));
+        L.push("Ablauf: " + (S.zeitrahmen <= 15 ? "1–2 Aktivitäten" : S.zeitrahmen <= 45 ? "2–3 Aktivitäten" : "3–4 Aktivitäten") + ", je mit Minutenangabe, Name und 1–2 Sätzen Beschreibung. Die Minuten ergeben zusammen " + S.zeitrahmen + ". Keine Schritt-für-Schritt-Anleitungen.");
+      } else {
+        sec("FÖRDEREMPFEHLUNGEN");
+        L.push("3–4 konkrete Empfehlungen, woran diese Person als Nächstes arbeiten sollte, nach Wichtigkeit geordnet, je ein Satz.");
+      }
+      L.push("");
+    }
+
+    if (o.noten) {
+      var k = LANG_PACKS.de.kriterien[S.niveau];
+      var bezug = S.zielsprache === "de" ? ("„" + k.quelle + "“ (mündlicher Teil)") : ("GER-orientierten Prüfungskriterien für Niveau " + S.niveau);
+      sec("ORIENTIERUNGSNOTEN (nur für mich – niemals als offizielle Note verwenden)");
+      if (k.typ === "holistisch") {
+        L.push("Vergib " + (gruppe ? "pro Person" : "für diese Person") + " eine ungefähre Note, angelehnt an das ganzheitliche Bewertungsprinzip von " + bezug + ". Es gibt keine A–E-Skala, sondern drei Stufen:");
+        k.stufen.forEach(function (st) { L.push("- " + st.label + " (" + (S.notenformat === "schulnote" ? "Note " + st.note : st.punkte + " Punkte") + ")"); });
+        L.push("Tabelle: " + kennung(S) + " | Einschätzung (kurz) | Note.");
+      } else {
+        L.push("Vergib " + (gruppe ? "pro Person" : "für diese Person") + " eine ungefähre Note, angelehnt an " + bezug + ". Bewerte zwei Dimensionen je auf einer Skala von A bis E:");
+        L.push("- Aufgabenerfüllung: A = " + k.aufgabe.A + " | B = " + k.aufgabe.B + " | C = " + k.aufgabe.C + " | D = " + k.aufgabe.D + " | E = " + k.aufgabe.E);
+        L.push("- Sprache: A = " + k.sprache.A + " | B = " + k.sprache.B + " | C = " + k.sprache.C + " | D = " + k.sprache.D + " | E = " + k.sprache.E);
+        L.push("Bilde die Gesamtstufe so – kein Durchschnitt: Ausgangspunkt ist die schwächere der beiden Dimensionen. Ist die stärkere Dimension mindestens zwei Stufen besser, hebe um genau eine Stufe an (Beispiel: Aufgabenerfüllung A, Sprache D → C). Ist eine Dimension E, bleibt es bei E.");
+        L.push(S.notenformat === "schulnote"
+          ? "Rechne die Gesamtstufe um: A = 1, B = 2, C = 3, D = 5, E = 6. Ganze Noten, keine Nachkommastellen."
+          : "Rechne die Gesamtstufe um: A = 100, B = 75, C = 50, D = 25, E = 0 Punkte.");
+        L.push("Tabelle: " + kennung(S) + " | Aufgabenerfüllung (A–E) | Sprache (A–E) | Note.");
+      }
+      L.push("Nenne direkt darunter, ungekürzt, diese Einschränkungen:");
+      L.push("- Aussprache fließt nicht ein – in einer echten Prüfung ein eigenes Kriterium.");
+      L.push("- Eine echte Prüfung hat mehrere Aufgabentypen; hier liegt nur ein Gespräch vor.");
+      L.push("- Eine echte Prüfung bewerten zwei geschulte Personen; diese Note stammt von einer einzigen KI-Einschätzung.");
+      L.push("- Grobe Orientierung für die Lehrkraft – nicht an Lernende weitergeben, nicht offiziell verwenden.");
+      L.push("");
+    }
+
+    if (!gruppe && o.feedback) {
+      sec("FEEDBACK FÜR DIE LERNENDE PERSON");
+      L.push(feedbackRegeln(S, false));
+      L.push("");
+    }
+
+    sec("EINORDNUNG");
+    L.push("Ein bis zwei Sätze: Diese Auswertung beruht auf " + (gruppe ? "einer einzigen Hausaufgabe" : "einer einzigen Aufnahme") + " und zeigt Tendenzen, keine endgültige Diagnose.");
+    if (chainLen > 1) { L.push(""); L.push("Wenn du fertig bist, warte auf meinen nächsten Auftrag in diesem Chat."); }
+    return L.join("\n");
+  };
+
+  /* ---------- Feedback-Regeln (gemeinsam) ---------- */
+  function feedbackRegeln(S, runden) {
+    var L = [];
+    if (S.fbSprache === "andere" && S.fbSpracheAndere.trim())
+      L.push("Schreib das Feedback auf " + S.fbSpracheAndere.trim() + ". Zitate aus dem Transkript und Korrekturen bleiben auf " + zs(S) + ".");
+    else
+      L.push("Schreib das Feedback auf " + zs(S) + " – so einfach formuliert, dass eine Person auf Niveau " + S.niveau + " es versteht (kurze Sätze, bekannter Wortschatz).");
+    L.push(anrede(S));
+    L.push("Aufbau: zuerst 2 Stärken, dann 2–3 Punkte zum Verbessern – jeder mit einem Zitat aus dem eigenen Transkript und der richtigen Form –, zum Schluss 1 konkreter Tipp.");
+    L.push(S.fbUmfang === "ausfuehrlich" ? "Erkläre jeden Verbesserungspunkt in 1–2 Sätzen." : "Halte dich kurz: insgesamt höchstens 4 Sätze plus die Beispiele.");
+    if (lernzielZeilen(S).length) L.push("Geh, wo es passt, auf das Lernziel ein.");
+    L.push("Nenne im Feedback keine Noten, Punktzahlen oder Niveaustufen.");
+    if (isSkript(S)) {
+      L.push("Lobe keine korrekten Endungen (die Spracherkennung glättet sie). Stellen, bei denen ein Erkennungsfehler wahrscheinlich ist, lässt du im Feedback an die Lernenden weg.");
+      if (S.quelle === "alle") L.push("Steht eine Aufnahme unter „BITTE PRÜFEN“, setze vor ihr Feedback eine Zeile nur für mich: „[Für die Lehrkraft: bitte nachhören – Aufnahme unsicher oder sehr kurz]“.");
+    }
+    L.push("Überschrift jedes Feedbacks: " + (S.quelle === "app" ? "der Name." : "der Code."));
+    return L.join("\n");
   }
+
+  function lernpromptSpec(S, umfangText) {
+    return "ÜBUNGS-PROMPT FÜR LERNENDE: Schreib einen fertigen Prompt in einem Codeblock, den " + umfangText + " in die eigene KI (z. B. Gemini oder ChatGPT) einfügen kann. Darin soll die KI: sich kurz vorstellen; die Übungen einzeln stellen und jeweils auf die Antwort warten; sofort sagen, ob die Antwort stimmt; bei Fehlern kurz erklären und einen zweiten Versuch erlauben; nach dem zweiten Fehlversuch die Lösung zeigen; am Ende zusammenfassen, was gut lief und was noch geübt werden sollte. Erklärungen " + erklSprache(S) + ". " + anrede(S) + " Der Prompt enthält alle Übungen und Lösungen, die Lösungen zeigt die KI aber erst nach der Antwort.";
+  }
+
+  function blattSpec(mitLoesungEnde) {
+    return "ARBEITSBLATT: Nummerierte Übungen mit je einer kurzen Arbeitsanweisung, verschiedene Übungsformen (z. B. Lückentext, Satzumbau, Fehler finden, Auswahl). " + (mitLoesungEnde ? "Die Lösungen gesammelt am Ende unter der Überschrift „Lösungen“. " : "") + "Einfache Formatierung, die sich gut in ein Textdokument kopieren lässt.";
+  }
+
+  function htmlSpec(S, modus) {
+    var f = parseFormLink(S.formLink), L = [];
+    L.push("INTERAKTIVE ÜBUNGSSEITE: Erstelle eine einzige, vollständige HTML-Datei – HTML, CSS und JavaScript in einer Datei, ohne externe Dateien, Bibliotheken oder Schriften. Sie muss im Browser und auf dem Handy gut funktionieren. Wenn du eine Canvas- oder Artefakt-Funktion hast, nutze sie; sonst gib den vollständigen Code in einem Codeblock aus.");
+    L.push("Ablauf der Seite:");
+    if (modus === "individuell") {
+      L.push("- Startbildschirm mit einem Eingabefeld „Dein Code“. Nach der Eingabe erscheinen nur die Übungen zu diesem Code (Groß-/Kleinschreibung egal). Unbekannter Code → freundliche Meldung. Zeige nirgends eine Liste der Codes.");
+    } else if (modus === "gruppe") {
+      L.push(S.quelle === "app"
+        ? "- Startbildschirm mit einem Eingabefeld „Dein Name“ (wird für das Ergebnis gebraucht), dann starten."
+        : "- Startbildschirm mit einem Eingabefeld „Dein Code“ (wird für das Ergebnis gebraucht), dann starten.");
+    } else {
+      L.push("- Der Code dieser Person ist fest eingebaut und steht oben auf der Seite.");
+    }
+    L.push("- Übungen mit sofortiger Rückmeldung und kurzer Erklärung. Zwei Versuche pro Aufgabe, danach erscheint die Lösung. Antworten tolerant prüfen (Groß-/Kleinschreibung, überflüssige Leerzeichen; bei offenen Antworten mehrere richtige Varianten hinterlegen).");
+    L.push("- Ergebnisbildschirm: Code, erreichte Punkte (richtig im ersten oder zweiten Versuch), Datum und ein Abschluss-Code im Format CODE-PUNKTE-TTMM-PZ. PZ ist eine zweistellige Prüfziffer: Summe der Zeichencodes von „CODE-PUNKTE-TTMM“ modulo 97.");
+    if (f.state === "ok") {
+      L.push("- Button „Ergebnis abschicken“: öffnet in einem neuen Tab diese Adresse: " + f.base + "&" + f.code + "=<CODE>&" + f.daten + "=<DATEN>. Beide Werte mit encodeURIComponent kodieren. <DATEN> ist eine Zeile im Format Ü1:<Fehlerbereich>:<r oder f>:<letzte falsche Eingabe>:<Versuche>, Einträge mit „|“ getrennt (Beispiel: Ü1:Dativ nach mit:f:mit der Bus:2|Ü2:Perfekt mit sein:r::1). Doppelpunkte und senkrechte Striche in Eingaben durch „/“ ersetzen. Wird <DATEN> länger als " + CONFIG.FORM_DATEN_MAX + " Zeichen, kürze die falschen Eingaben und hänge „|GEKUERZT“ an. Zeige unter dem Button zusätzlich denselben Link als normalen Link, falls das Öffnen blockiert wird.");
+      L.push("- Zeige außerdem den Hinweis: „Erst abschicken, dann ist deine Lehrkraft informiert.“");
+    } else {
+      L.push("- Zeige am Ende den Hinweis: „Schick deiner Lehrkraft einen Screenshot dieser Seite oder den Abschluss-Code.“");
+    }
+    L.push("- Gestaltung: schlicht, gut lesbar, große Schaltflächen. Alle Texte der Seite " + erklSprache(S) + ". " + anrede(S));
+    if (modus === "individuell") L.push("Wird die Seite zu lang für eine Antwort, teile sie in zwei Dateien (erste und zweite Hälfte der Codes) und sag mir das.");
+    return L.join("\n");
+  }
+
+  function moodleSpec() {
+    return "MOODLE-QUIZ (GIFT-FORMAT): Gib alle Übungen als Fragen im GIFT-Format in einem einzigen Codeblock aus, damit ich sie als .txt speichern und in Moodle importieren kann. Regeln: Jede Frage beginnt mit einem Titel in der Form ::Titel::. Erlaubte Fragetypen: Multiple Choice {=richtig ~falsch ~falsch}, Lückentext/Kurzantwort {=Antwort1 =Antwort2}, Richtig/Falsch {T} oder {F}, Zuordnung {=a -> 1 =b -> 2}. Hinterlege bei Kurzantworten alle sinnvollen richtigen Varianten – lieber Auswahlaufgaben als offene Lücken mit vielen möglichen Lösungen. Maskiere die Zeichen ~ = # { } : im Fragetext mit einem vorangestellten Backslash. Zwischen zwei Fragen genau eine Leerzeile. Rückmeldung zu falschen Antworten mit #Erklärung direkt hinter der jeweiligen Antwort.";
+  }
+
+  function formatListe(S, erlaubt) {
+    var a = [];
+    erlaubt.forEach(function (k) { if (S.uebFormate[k]) a.push(k); });
+    return a;
+  }
+
+  /* ---------- Feedback-Runden (Gruppen-Quellen) ---------- */
+  P.feedback = function (S) {
+    var L = [];
+    L.push("FEEDBACK FÜR JEDE/N LERNENDE/N");
+    L.push("");
+    L.push("Schreib jetzt für jede Person ein Feedback, das ich direkt weitergeben kann. Es gelten die Grundregeln aus meinem ersten Auftrag.");
+    L.push("");
+    L.push(feedbackRegeln(S, true));
+    if (S.feedbackUeb) {
+      var f = formatListe(S, ["blatt", "lernprompt", "html"]);
+      L.push("");
+      L.push("Hänge an jedes Feedback 2 kurze Übungen zu genau den Fehlern dieser Person an – nur Fehler, die sie selbst gemacht hat.");
+      if (f.indexOf("blatt") >= 0) L.push("Form: Arbeitsanweisung und Aufgabe, darunter abgesetzt „Lösung:“.");
+      if (f.indexOf("lernprompt") >= 0) L.push(lernpromptSpec(S, "diese Person"));
+      if (f.indexOf("html") >= 0) L.push("Gib die beiden Übungen in jedem Fall vollständig mit Lösung an – daraus baust du später eine interaktive Seite.");
+      var ws = wortlisteSatz(S), en = endungenUebSatz(S);
+      if (ws) L.push(ws.trim());
+      if (en) L.push(en.trim());
+    }
+    L.push("");
+    L.push("Arbeite in Runden zu je " + CONFIG.FEEDBACK_RUNDE + " Personen, in der Reihenfolge der Datei. Beende jede Runde mit der Zeile „Weiter mit den nächsten " + CONFIG.FEEDBACK_RUNDE + "? Schreib ‚weiter‘.“ und warte. Nach der letzten Runde schreib: „Fertig – Feedback für alle Personen.“");
+    return L.join("\n");
+  };
+
+  /* ---------- Individuelle Übungsseite (Gruppen-Quellen) ---------- */
+  P.uebIndividuellSeite = function (S) {
+    var L = [];
+    L.push("INTERAKTIVE ÜBUNGSSEITE MIT DEN INDIVIDUELLEN ÜBUNGEN");
+    L.push("");
+    L.push("Baue jetzt aus den individuellen Übungen, die du in den Feedback-Runden erstellt hast, EINE interaktive Übungsseite für alle.");
+    if (S.quelle === "app") L.push("Vergib dafür jeder Person einen zufälligen Code aus 4 Großbuchstaben und Ziffern (keine Namen auf der Seite!) und gib mir vorher, getrennt von der Seite, die Liste Name → Code. Diese Liste ist nur für mich.");
+    else L.push("Verwende die Codes aus der Datei.");
+    L.push("");
+    L.push(htmlSpec(S, "individuell"));
+    return L.join("\n");
+  };
+
+  /* ---------- Gruppenübungen ---------- */
+  P.uebGruppe = function (S) {
+    var L = [], f = formatListe(S, ["blatt", "lernprompt", "html", "moodle"]);
+    L.push("ÜBUNGEN FÜR DIE GANZE GRUPPE");
+    L.push("");
+    L.push("Erstelle Übungen für die ganze Gruppe. Sammle dazu die Fehler aus allen Transkripten, wähle die 4–6 häufigsten Fehlerbereiche und baue zu jedem Bereich 1–2 Übungen. Verwende als Material echte Formulierungen verschiedener Lernender (ohne " + kennungen(S) + ") – zum Korrigieren, Umformen oder Fehlersuchen.");
+    var lz = lernzielZeilen(S);
+    if (lz.length) L.push("Berücksichtige vorrangig das Lernziel (" + lz.join("; ") + "), vor allem Teile, die noch nicht oder nicht sicher verwendet wurden.");
+    var ws = wortlisteSatz(S), en = endungenUebSatz(S);
+    if (ws) L.push(ws.trim());
+    if (en) L.push(en.trim());
+    L.push("Arbeitsanweisungen und Erklärungen " + erklSprache(S) + ". " + anrede(S));
+    L.push("");
+    if (f.length > 1) { L.push("Liefere die Formate nacheinander, in der Reihenfolge unten. Nach jedem Format warte, bis ich „weiter“ schreibe. Alle Formate enthalten dieselben Übungen."); L.push(""); }
+    if (f.indexOf("blatt") >= 0) { L.push(blattSpec(true)); L.push(""); }
+    if (f.indexOf("lernprompt") >= 0) { L.push(lernpromptSpec(S, "jede lernende Person")); L.push(""); }
+    if (f.indexOf("html") >= 0) { L.push(htmlSpec(S, "gruppe")); L.push(""); }
+    if (f.indexOf("moodle") >= 0) { L.push(moodleSpec()); L.push(""); }
+    return L.join("\n").replace(/\n+$/, "");
+  };
+
+  /* ---------- Übungen für eine Person (Einzelanalyse) ---------- */
+  P.uebEinzel = function (S) {
+    var L = [], f = formatListe(S, ["blatt", "lernprompt", "html"]);
+    L.push("ÜBUNGEN FÜR DIESE PERSON");
+    L.push("");
+    L.push("Erstelle 4–6 kurze Übungen zu genau den Fehlern dieser Person aus deiner Auswertung oben.");
+    var lz = lernzielZeilen(S);
+    if (lz.length) L.push("Berücksichtige vorrangig das Lernziel (" + lz.join("; ") + ").");
+    var ws = wortlisteSatz(S), en = endungenUebSatz(S);
+    if (ws) L.push(ws.trim());
+    if (en) L.push(en.trim());
+    L.push("Arbeitsanweisungen und Erklärungen " + erklSprache(S) + ". " + anrede(S));
+    L.push("");
+    if (f.length > 1) { L.push("Liefere die Formate nacheinander. Nach jedem Format warte, bis ich „weiter“ schreibe. Alle Formate enthalten dieselben Übungen."); L.push(""); }
+    if (f.indexOf("blatt") >= 0) { L.push(blattSpec(true)); L.push(""); }
+    if (f.indexOf("lernprompt") >= 0) { L.push(lernpromptSpec(S, "die Person")); L.push(""); }
+    if (f.indexOf("html") >= 0) { L.push(htmlSpec(S, "einzel")); L.push(""); }
+    return L.join("\n").replace(/\n+$/, "");
+  };
+})(LANG_PACKS.de.prompt);
+
+/* ---------------------------------------------------------------- 3 -- */
+function defaultState() {
+  return {
+    lang: "de", langChosen: false,
+    zielsprache: "", niveau: "", aufgabe: "", aufgabePrompt: "", quelle: "",
+    out: { gruppe: true, unterricht: true, noten: false, feedback: false, uebGruppe: false },
+    gruppeSpann: true, gruppeBildung: true, feedbackUeb: false,
+    zielstruktur: "", zielwortschatz: "",
+    kennzahlen: "erklaeren", flussMarkieren: false,
+    umfang: "mittel", zeitrahmen: 45,
+    fbSprache: "ziel", fbSpracheAndere: "", anrede: "du", fbUmfang: "kurz",
+    uebFormate: { blatt: true, lernprompt: false, html: false, moodle: false },
+    formLink: "", notenformat: "schulnote",
+    merken: false
+  };
+}
+/* Was gemerkt wird – Aufgabe und Lernziel bewusst nicht. */
+var PERSIST = ["lang", "zielsprache", "niveau", "quelle", "out", "gruppeSpann", "gruppeBildung", "feedbackUeb", "kennzahlen", "flussMarkieren", "umfang", "zeitrahmen", "fbSprache", "fbSpracheAndere", "anrede", "fbUmfang", "uebFormate", "formLink", "notenformat"];
+
+var S = defaultState();
+var cur = 0;
+var STEPS = 5;
+var wortlisteCache = {};
+
+function PACK() { return LANG_PACKS[S.lang] || LANG_PACKS.de; }
+function t(k) { var u = PACK().ui; return (k in u) ? u[k] : (LANG_PACKS.de.ui[k] !== undefined ? LANG_PACKS.de.ui[k] : k); }
+function fmt(s, o) { return String(s).replace(/\{(\w+)\}/g, function (m, k) { return (o && o[k] !== undefined) ? o[k] : m; }); }
+function esc(s) { return String(s == null ? "" : s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#39;"); }
+
+function isSkript(s) { s = s || S; return s.quelle === "alle" || s.quelle === "einzel"; }
+function skriptVerfuegbar(z) { return CONFIG.SKRIPT_SPRACHEN.indexOf(z) >= 0; }
+function wortschatzListe(s) { return (s.zielwortschatz || "").split(/[\n,;]+/).map(function (x) { return x.trim(); }).filter(Boolean); }
+
+/* Effektive Ergebnisse – berücksichtigt die Quelle (Einzelanalyse hat keine Gruppe). */
+function effOut(s) {
+  s = s || S;
+  var e = s.quelle === "einzel";
+  return {
+    gruppe: !e && s.out.gruppe,
+    unterricht: s.out.unterricht,
+    noten: s.out.noten,
+    feedback: s.out.feedback,
+    feedbackUeb: s.out.feedback && s.feedbackUeb,
+    uebGruppe: !e && s.out.uebGruppe
+  };
+}
+function hatUebungen(s) { var o = effOut(s); return o.feedbackUeb || o.uebGruppe; }
+function erlaubteFormate(s) { var o = effOut(s); var a = ["blatt", "lernprompt", "html"]; if (o.uebGruppe) a.push("moodle"); return a; }
+function aktiveFormate(s) { return erlaubteFormate(s).filter(function (k) { return s.uebFormate[k]; }); }
+
+function parseFormLink(str) {
+  str = (str || "").trim();
+  if (!str) return { state: "leer" };
+  var u;
+  try { u = new URL(str); } catch (e) { return { state: "fehler", msg: t("formErrUrl") }; }
+  if (!/(^|\.)docs\.google\.com$/.test(u.hostname) || u.pathname.indexOf("/forms/") < 0) return { state: "fehler", msg: t("formErrGoogle") };
+  var ids = [];
+  u.searchParams.forEach(function (v, k) { if (/^entry\.\d+$/.test(k) && ids.indexOf(k) < 0) ids.push(k); });
+  if (ids.length !== 2) return { state: "fehler", msg: fmt(t("formErrEntries"), { n: ids.length }) };
+  var path = u.pathname.replace(/\/(formResponse|prefill|edit)$/, "/viewform");
+  if (!/\/viewform$/.test(path)) path = path.replace(/\/$/, "") + "/viewform";
+  return { state: "ok", base: u.origin + path + "?usp=pp_url", code: ids[0], daten: ids[1] };
 }
 
-function nav(dir) {
-  if (dir === 1) {
-    var err = validateStep(cur);
-    if (err) { document.getElementById("em").textContent = err; return; }
+/* Reihenfolge der Prompts – nur die Struktur (für Nummern und Hinweise). */
+function buildChainMeta(s) {
+  var o = effOut(s), c = [{ id: "main" }];
+  if (s.quelle !== "einzel") {
+    if (o.feedback) c.push({ id: "feedback" });
+    if (o.feedbackUeb && s.uebFormate.html) c.push({ id: "uebInd" });
+    if (o.uebGruppe) c.push({ id: "uebGr" });
+  } else if (o.feedbackUeb) {
+    c.push({ id: "uebEinzel" });
   }
-  cur += dir;
-  if (cur < 0) cur = 0;
-  if (cur > T-1) cur = T-1;
-  render();
+  return c;
+}
+function buildChain(s) {
+  var P = PACK().prompt;
+  var meta = buildChainMeta(s);
+  return meta.map(function (m, i) {
+    var x = { id: m.id };
+    if (m.id === "main") { x.title = t("chainMainT"); x.hint = meta.length > 1 ? t("chainMainH") : t("chainMainOnlyH"); x.text = P.main(s); }
+    if (m.id === "feedback") { x.title = t("chainFbT"); x.hint = fmt(t("chainFbH"), { n: CONFIG.FEEDBACK_RUNDE }); x.text = P.feedback(s); }
+    if (m.id === "uebInd") { x.title = t("chainIndT"); x.hint = s.quelle === "app" ? t("chainIndAppH") : t("chainIndH"); x.text = P.uebIndividuellSeite(s); }
+    if (m.id === "uebGr") { x.title = t("chainGrT"); x.hint = t("chainGrH"); x.text = P.uebGruppe(s); }
+    if (m.id === "uebEinzel") { x.title = t("chainEinzelUebT"); x.hint = t("chainEinzelUebH"); x.text = P.uebEinzel(s); }
+    return x;
+  });
 }
 
-function validateStep(step) {
+/* Speichern im Browser – nur auf ausdrücklichen Wunsch. */
+function speichern() {
+  if (!S.merken) return;
+  try {
+    var o = {};
+    PERSIST.forEach(function (k) { o[k] = S[k]; });
+    localStorage.setItem(CONFIG.STORAGE_KEY, JSON.stringify(o));
+  } catch (e) {}
+}
+function laden() {
+  try {
+    var raw = localStorage.getItem(CONFIG.STORAGE_KEY);
+    if (!raw) return;
+    var o = JSON.parse(raw), d = defaultState();
+    PERSIST.forEach(function (k) {
+      if (!(k in o)) return;
+      if (d[k] && typeof d[k] === "object") { for (var kk in d[k]) if (kk in o[k]) S[k][kk] = o[k][kk]; }
+      else S[k] = o[k];
+    });
+    if (!LANG_PACKS[S.lang]) S.lang = "de";
+    S.merken = true; S.langChosen = true;
+  } catch (e) {}
+}
+function vergessen() { try { localStorage.removeItem(CONFIG.STORAGE_KEY); } catch (e) {} }
+
+/* Prüfungen je Schritt */
+function validate(step) {
   if (step === 0) {
-    if (!S.niveau) return "Bitte wähle ein Zielniveau.";
-    if (!S.klassengroesse || parseInt(S.klassengroesse,10) < 1) return "Bitte gib eine gültige Klassengröße ein.";
+    if (!S.zielsprache) return t("errSprache");
+    if (!S.niveau) return t("errNiveau");
+    if (!S.aufgabe.trim()) return t("errAufgabe");
+    if (!S.quelle) return t("errQuelle");
+  }
+  if (step === 1) {
+    var o = effOut(); if (!(o.gruppe || o.unterricht || o.noten || o.feedback || o.uebGruppe)) return t("errOut");
+  }
+  if (step === 3) {
+    var o2 = effOut();
+    if ((o2.feedback || hatUebungen()) && S.fbSprache === "andere" && !S.fbSpracheAndere.trim()) return t("errFbSprache");
+    if (hatUebungen()) {
+      if (!aktiveFormate(S).length) return t("errFormate");
+      if (S.uebFormate.html && parseFormLink(S.formLink).state === "fehler") return t("errForm");
+    }
   }
   return null;
 }
 
-function schwelle(klassengroesse) {
-  var n = parseInt(klassengroesse, 10) || 10;
-  var t = Math.round(n * 0.3);
-  if (t < 2) t = 2;
-  return { schwelle: t, gesamt: n };
+/* ---------------------------------------------------------------- 4 -- */
+function getP(path) { return path.split(".").reduce(function (o, k) { return o[k]; }, S); }
+function setP(path, v) { var a = path.split("."), o = S; for (var i = 0; i < a.length - 1; i++) o = o[a[i]]; o[a[a.length - 1]] = v; }
+function tog(path) { setP(path, !getP(path)); afterChange(path); render(); }
+function setv(path, v) {
+  if (typeof getP(path) === "number") v = Number(v);
+  setP(path, v); afterChange(path); render();
+}
+function setText(path, v) {
+  setP(path, v);
+  if (path === "formLink") updateFormStatus();
+  speichern();
+}
+function afterChange(path) {
+  if (path === "zielsprache" && !skriptVerfuegbar(S.zielsprache) && isSkript()) S.quelle = "app";
+  if (path === "quelle" && S.quelle === "einzel") {
+    var o = effOut(); if (!(o.unterricht || o.noten || o.feedback)) S.out.feedback = true;
+  }
+  if (path === "merken") { if (S.merken) speichern(); else vergessen(); }
+  speichern();
+}
+function resetAll() { vergessen(); var l = S.lang, lc = S.langChosen; S = defaultState(); S.lang = l; S.langChosen = lc; cur = 0; render(); window.scrollTo(0, 0); }
+
+function cbRow(path, title, desc) {
+  var on = !!getP(path);
+  return "<div class=\"ro" + (on ? " sel" : "") + "\" role=\"checkbox\" aria-checked=\"" + on + "\" tabindex=\"0\" onclick=\"tog('" + path + "')\"><input type=\"checkbox\" tabindex=\"-1\"" + (on ? " checked" : "") + "><div><div class=\"rl\">" + title + "</div>" + (desc ? "<div class=\"rd\">" + desc + "</div>" : "") + "</div></div>";
+}
+function rdRow(path, val, title, desc) {
+  var on = String(getP(path)) === String(val);
+  return "<div class=\"ro" + (on ? " sel" : "") + "\" role=\"radio\" aria-checked=\"" + on + "\" tabindex=\"0\" onclick=\"setv('" + path + "','" + val + "')\"><input type=\"radio\" tabindex=\"-1\"" + (on ? " checked" : "") + "><div><div class=\"rl\">" + title + "</div>" + (desc ? "<div class=\"rd\">" + desc + "</div>" : "") + "</div></div>";
+}
+function chip(path, val, label) {
+  var on = String(getP(path)) === String(val);
+  return "<div class=\"chip" + (on ? " sel" : "") + "\" role=\"radio\" aria-checked=\"" + on + "\" tabindex=\"0\" onclick=\"setv('" + path + "','" + val + "')\">" + label + "</div>";
+}
+function stepHead(title, hint) {
+  return "<div class=\"ey\">" + esc(fmt(t("stepOf"), { n: cur + 1, t: STEPS })).toUpperCase() + "</div><div class=\"st\">" + title + "</div>" + (hint ? "<div class=\"sh\">" + hint + "</div>" : "");
+}
+function blk(label, hint, inner) { return "<div class=\"blk\">" + (label ? "<span class=\"bl\">" + label + "</span>" : "") + (hint ? "<span class=\"bh\">" + hint + "</span>" : "") + inner + "</div>"; }
+
+function renderChrome() {
+  document.title = t("title");
+  document.documentElement.lang = S.lang;
+  document.getElementById("appTitle").textContent = t("title");
+  document.getElementById("tagline").textContent = t("tagline");
+  document.getElementById("footer").innerHTML = esc(t("footer")) + " · <a href=\"/impressum\">" + esc(t("impressum")) + "</a> · <a href=\"/datenschutz\">" + esc(t("datenschutz")) + "</a> · <a href=\"/nutzungsbedingungen\">" + esc(t("nutzung")) + "</a>";
 }
 
-function buildPrompt() {
-  var L = [];
-  var n = parseInt(S.klassengroesse, 10) || 10;
-  var sw = schwelle(n);
-  var hatAufgabenPrompt = S.aufgabenPrompt.trim().length > 0;
-
-  if (hatAufgabenPrompt) {
-    L.push("Ich lade dir zwei Dateien hoch:");
-    L.push("1. Die zusammengeführten ausführlichen Berichte zu allen Lernenden meiner Klasse aus einer Sprech-Hausaufgabe");
-    L.push("2. Die zusammengeführten, dazugehörigen vollständigen Gesprächstranskripte");
-    L.push("");
-    L.push("Das war der Aufgaben-Prompt, den alle Lernenden für dieses Gespräch bekommen haben:");
-    L.push("");
-    L.push("---");
-    L.push(S.aufgabenPrompt.trim());
-    L.push("---");
-  } else {
-    L.push("Ich lade dir drei Dateien hoch:");
-    L.push("1. Die zusammengeführten ausführlichen Berichte zu allen Lernenden meiner Klasse aus einer Sprech-Hausaufgabe");
-    L.push("2. Die zusammengeführten, dazugehörigen vollständigen Gesprächstranskripte");
-    L.push("3. Den ursprünglichen Aufgaben-Prompt, den alle Lernenden für dieses Gespräch bekommen haben");
+function render() {
+  renderChrome();
+  var sc = document.getElementById("sc"), em = document.getElementById("em");
+  em.textContent = "";
+  var showLang = Object.keys(LANG_PACKS).length > 1 && !S.langChosen;
+  var pips = document.getElementById("pips"), navrow = document.getElementById("navrow");
+  if (showLang) {
+    pips.innerHTML = ""; document.getElementById("slbl").textContent = ""; document.getElementById("scnt").textContent = "";
+    navrow.style.display = "none";
+    var h = "<div class=\"st\">" + esc(t("langScreenTitle")) + "</div><div class=\"sh\">" + esc(t("langScreenHint")) + "</div><div class=\"lang-grid\">";
+    Object.keys(LANG_PACKS).forEach(function (k) { h += "<div class=\"lc\" tabindex=\"0\" onclick=\"chooseLang('" + k + "')\"><div class=\"fl\">" + LANG_PACKS[k].flag + "</div><div class=\"ln\">" + esc(LANG_PACKS[k].name) + "</div></div>"; });
+    sc.innerHTML = h + "</div>";
+    return;
   }
-  L.push("");
-  L.push("Kontext: Zielniveau " + S.niveau + ", " + n + " Lernende in der Klasse.");
-  L.push("");
-  L.push("Ich möchte diese Daten nutzen, um meinen nächsten Unterricht gezielt zu planen — nicht um einzelne Lernende zu bewerten, sondern um herauszufinden, was ich als Klasse nochmal wiederholen und trainieren sollte. Formative Auswertung auf Datenbasis ist für mich neu, deshalb bitte ich dich, mir eine klare, direkt nutzbare Struktur zu liefern statt einer rein akademischen Analyse.");
-  L.push("");
+  navrow.style.display = "flex";
+  var ph = "";
+  for (var i = 0; i < STEPS; i++) ph += "<div class=\"pip" + (i < cur ? " done" : "") + (i === cur ? " active" : "") + "\"></div>";
+  pips.innerHTML = ph;
+  document.getElementById("slbl").textContent = t("steps")[cur];
+  document.getElementById("scnt").textContent = fmt(t("stepOf"), { n: cur + 1, t: STEPS });
+  var bb = document.getElementById("bb"), bn = document.getElementById("bn");
+  bb.textContent = t("back"); bb.disabled = cur === 0;
+  bn.style.display = cur === STEPS - 1 ? "none" : "inline-block";
+  bn.textContent = cur === STEPS - 2 ? t("toResult") : t("next");
+  if (cur === STEPS - 1) { bb.disabled = false; }
+  sc.innerHTML = [renderStep1, renderStep2, renderStep3, renderStep4, renderStep5][cur]();
+  if (cur === 3) updateFormStatus();
+  if (cur === 4) pruefeWortliste();
+}
 
-  var laengeInfo = LAENGEN.find(function(x){return x.c===S.laenge;}) || LAENGEN[1];
-  L.push("WICHTIG — Fasse dich kurz: Die gesamte Antwort soll maximal " + laengeInfo.limit + " Wörter umfassen" + (S.noten ? " (die Notentabelle zählt separat, da sie zwangsläufig eine Zeile pro Lernender/Lernendem braucht)" : "") + ". Verzichte auf ausführliche Erklärungen, mehrschrittige Beispiele oder Wiederholungen zwischen den Abschnitten. Nutze wo möglich Tabellen und Stichpunkte statt Fließtext.");
-  L.push("");
-  L.push("Bitte werte die Daten wie folgt aus, in genau dieser Reihenfolge:");
-  L.push("");
+function chooseLang(k) { S.lang = k; S.langChosen = true; speichern(); render(); }
 
-  var secNum = 0;
-
-  L.push("0. DAS WICHTIGSTE AUF EINEN BLICK");
-  L.push("");
-  L.push("Dieser Abschnitt steht ganz am Anfang deiner Antwort, direkt nach der Überschrift — nicht am Ende, nicht als einzelner Satz. Maximal 4 Stichpunkte: die wichtigsten klassenweiten Muster in absteigender Priorität, jeweils nur mit Anzahl der betroffenen Lernenden (z. B. \"" + sw.schwelle + " von " + n + "\") — ohne Erklärung, die kommt in Abschnitt 1.");
-  L.push("");
-
-  secNum = 1;
-  L.push(secNum + ". KLASSENWEITE FEHLERMUSTER");
-  L.push("");
-  L.push("Nur Muster, die bei mindestens " + sw.schwelle + " von " + n + " Lernenden auftreten (das entspricht ungefähr 30% dieser Klasse). Als Tabelle mit den Spalten: Bereich (Grammatik/Wortschatz/Ausdruck/Flüssigkeit) | Muster | Anzahl | ein Beispielsatz aus den Transkripten (ohne Namen). Keine zusätzliche Fließtext-Erklärung pro Zeile — die Tabelle soll für sich stehen.");
-  L.push("");
-
-  if (S.vorschlaege) {
-    secNum++;
-    L.push(secNum + ". VORSCHLÄGE FÜR DEN NÄCHSTEN UNTERRICHT");
-    L.push("");
-    L.push("Sprachlicher Fokus: maximal 4 Stichpunkte, je ein Satz.");
-    L.push("Aktivitätsvorschläge: maximal 4 Aktivitäten, je Name + ein bis zwei Sätze Beschreibung — keine mehrschrittigen Anleitungen mit Einzelschritten.");
-    L.push("");
+function renderStep1() {
+  var h = stepHead(esc(t("s1Title")), esc(t("s1Hint")));
+  var c = "<div class=\"chips\">";
+  ZIELSPRACHEN.forEach(function (z) { c += chip("zielsprache", z, esc(t("sprachen")[z])); });
+  h += blk(esc(t("s1Sprache")) + " <span class=\"rq\">*</span>", "", c + "</div>");
+  var g = "<div class=\"niv-grid\">";
+  NIVEAUS.forEach(function (n) {
+    var on = S.niveau === n;
+    g += "<div class=\"niv-chip" + (on ? " sel" : "") + "\" role=\"radio\" aria-checked=\"" + on + "\" tabindex=\"0\" onclick=\"setv('niveau','" + n + "')\"><div class=\"nc\">" + n + "</div><div class=\"nn\">" + esc(t("niveauNamen")[n]) + "</div></div>";
+  });
+  h += blk(esc(t("s1Niveau")) + " <span class=\"rq\">*</span>", "", g + "</div>");
+  var a = "<textarea class=\"ti\" rows=\"2\" placeholder=\"" + esc(t("s1AufgabePH")) + "\" oninput=\"setText('aufgabe',this.value)\">" + esc(S.aufgabe) + "</textarea>";
+  a += "<details class=\"fold\"" + (S.aufgabePrompt.trim() ? " open" : "") + "><summary>" + esc(t("s1AufgabeFull")) + "</summary><div class=\"fb\">" + esc(t("s1AufgabeFullHint")) + "<textarea class=\"ti\" rows=\"7\" placeholder=\"" + esc(t("s1AufgabeFullPH")) + "\" oninput=\"setText('aufgabePrompt',this.value)\">" + esc(S.aufgabePrompt) + "</textarea></div></details>";
+  h += blk(esc(t("s1Aufgabe")) + " <span class=\"rq\">*</span>", esc(t("s1AufgabeHint")), a);
+  var q = "<div class=\"rg\">", skr = !S.zielsprache || skriptVerfuegbar(S.zielsprache);
+  if (skr) {
+    q += rdRow("quelle", "alle", esc(t("qAlle")), esc(t("qAlleD")));
+    q += rdRow("quelle", "einzel", esc(t("qEinzel")), esc(t("qEinzelD")));
   }
+  q += rdRow("quelle", "app", esc(t("qApp")), esc(t("qAppD")) + "<br><a href=\"" + CONFIG.KURS_URL + "\" target=\"_blank\" rel=\"noopener\" onclick=\"event.stopPropagation()\">" + esc(t("qAppKurs")) + "</a>");
+  q += "</div>";
+  if (!skr) q += "<div class=\"av\" style=\"margin-top:8px\"><p>" + esc(fmt(t("qNurApp"), { sprache: t("sprachen")[S.zielsprache] })) + "</p></div>";
+  h += blk(esc(t("s1Quelle")) + " <span class=\"rq\">*</span>", "", q);
+  return h;
+}
 
-  if (S.spannbreite) {
-    secNum++;
-    L.push(secNum + ". SPANNBREITE DER KLASSE");
-    L.push("");
-    L.push("Maximal 4 Sätze: wie groß ist der Abstand zwischen stärksten und schwächsten Lernenden, und was folgt daraus für die Unterrichtsplanung.");
-    L.push("");
+function renderStep2() {
+  var h = stepHead(esc(t("s2Title")), esc(t("s2Hint"))), e = S.quelle === "einzel", r = "<div class=\"rg\">";
+  if (!e) {
+    r += cbRow("out.gruppe", esc(t("oGruppe")), esc(t("oGruppeD")));
+    if (S.out.gruppe) r += "<div class=\"sub\">" + cbRow("gruppeSpann", esc(t("oSpann")), esc(t("oSpannD"))) + cbRow("gruppeBildung", esc(t("oBildung")), esc(t("oBildungD"))) + "</div>";
+    r += cbRow("out.unterricht", esc(t("oUnterricht")), esc(t("oUnterrichtD")));
   }
+  r += cbRow("out.feedback", esc(e ? t("oFeedbackEinzel") : t("oFeedback")), esc(t("oFeedbackD")));
+  if (S.out.feedback) r += "<div class=\"sub\">" + cbRow("feedbackUeb", esc(t("oFbUeb")), esc(t("oFbUebD"))) + "</div>";
+  if (!e) r += cbRow("out.uebGruppe", esc(t("oUebGruppe")), esc(t("oUebGruppeD")));
+  if (e) r += cbRow("out.unterricht", esc(t("oFoerder")), esc(t("oFoerderD")));
+  r += cbRow("out.noten", esc(t("oNoten")), esc(t("oNotenD")));
+  return h + r + "</div>";
+}
 
-  if (S.gruppenbildung) {
-    secNum++;
-    L.push(secNum + ". VORSCHLÄGE ZUR GRUPPENBILDUNG");
-    L.push("");
-    L.push("Entscheide dich für eine Strategie — entweder überwiegend heterogene Paarungen (unterschiedliches Niveau, z. B. damit Stärkere als Sprachvorbild dienen) oder überwiegend homogene Paarungen (ähnliches Niveau, z. B. für gemeinsame Vertiefung eines geteilten Schwerpunkts). Nenne diese Wahl und eine kurze Begründung (ein Satz), warum sie für diese Klasse passt, direkt vor der Liste der Paarungen.");
-    L.push("");
-    L.push("2–4 Paarungen, je eine Zeile: Namen — gemeinsamer Schwerpunkt, optional mit maximal einem kurzen Halbsatz Begründung.");
-    L.push("");
+function renderStep3() {
+  var h = stepHead(esc(t("s3Title")), esc(t("s3Hint")));
+  var lz = "<span class=\"bl\" style=\"font-size:12.5px\">" + esc(t("s3Struktur")) + "</span><span class=\"bh\">" + esc(t("s3StrukturHint")) + "</span>";
+  lz += "<input class=\"ti\" type=\"text\" placeholder=\"" + esc(t("s3StrukturPH")) + "\" value=\"" + esc(S.zielstruktur) + "\" oninput=\"setText('zielstruktur',this.value)\">";
+  lz += "<div style=\"height:12px\"></div><span class=\"bl\" style=\"font-size:12.5px\">" + esc(t("s3Wortschatz")) + "</span><span class=\"bh\">" + esc(t("s3WortschatzHint")) + "</span>";
+  lz += "<textarea class=\"ti\" rows=\"5\" placeholder=\"" + esc(t("s3WortschatzPH")) + "\" oninput=\"setText('zielwortschatz',this.value)\">" + esc(S.zielwortschatz) + "</textarea>";
+  h += blk(esc(t("s3Lernziel")), esc(t("s3LernzielHint")), lz);
+  if (isSkript()) {
+    h += blk(esc(t("s3Kennzahlen")), "", "<div class=\"rg\">" + rdRow("kennzahlen", "erklaeren", esc(t("kErklaeren")), esc(t("kErklaerenD"))) + rdRow("kennzahlen", "ignorieren", esc(t("kIgnorieren")), esc(t("kIgnorierenD"))) + "</div>");
+    h += blk("", "", "<div class=\"rg\">" + cbRow("flussMarkieren", esc(t("s3Fluss")), esc(t("s3FlussD"))) + "</div>");
   }
+  var items = isSkript() ? t("s3ImmerSkript") : t("s3ImmerApp");
+  h += "<div class=\"av\"><p><b>" + esc(t("s3Immer")) + "</b></p><ul>" + items.map(function (x) { return "<li>" + esc(x) + "</li>"; }).join("") + "</ul></div>";
+  return h;
+}
 
-  if (S.noten) {
-    secNum++;
-    var krit = NIVEAU_KRITERIEN[S.niveau];
-    L.push(secNum + ". ORIENTIERUNGSNOTEN (optional — nur zur internen Einordnung, niemals als offizielle Note verwenden)");
-    L.push("");
-
-    if (krit && krit.typ === "holistisch") {
-      L.push("Vergib pro Lernender/Lernendem eine ungefähre Note, angelehnt an das Bewertungsprinzip von \"" + krit.quelle + "\" (Niveau " + S.niveau + "). Dort gibt es keine A–E-Skala, sondern eine einzige, ganzheitliche Einschätzung in drei Stufen:");
-      L.push("");
-      for (var si = 0; si < krit.stufen.length; si++) {
-        var stufe = krit.stufen[si];
-        var wert = (S.notenformat === "schulnote") ? ("Note " + stufe.note) : (stufe.punkte + " Punkte");
-        L.push("— " + stufe.label + " (" + wert + ")");
-      }
-      L.push("");
-      L.push("Stelle das Ergebnis als Tabelle dar: Name | Einschätzung (kurz) | Note.");
-    } else if (krit) {
-      L.push("Vergib pro Lernender/Lernendem eine ungefähre Note, angelehnt an das Bewertungsprinzip des mündlichen Teils von \"" + krit.quelle + "\" (Niveau " + S.niveau + "). Gehe dabei genau so vor:");
-      L.push("");
-      L.push("Bewerte zwei Dimensionen je auf einer Skala A bis E:");
-      L.push("— Aufgabenerfüllung:");
-      L.push("A = " + krit.aufgabenerfuellung.A + " | B = " + krit.aufgabenerfuellung.B + " | C = " + krit.aufgabenerfuellung.C + " | D = " + krit.aufgabenerfuellung.D + " | E = " + krit.aufgabenerfuellung.E);
-      L.push("— Sprache:");
-      L.push("A = " + krit.sprache.A + " | B = " + krit.sprache.B + " | C = " + krit.sprache.C + " | D = " + krit.sprache.D + " | E = " + krit.sprache.E);
-      L.push("");
-      if (S.notenformat === "schulnote") {
-        L.push("Rechne A=1, B=2, C=3, D=5, E=6 (deutsches Schulnotensystem, 1=sehr gut) und bilde den Durchschnitt beider Dimensionen als Note (eine Nachkommastelle).");
-      } else {
-        L.push("Rechne A=100, B=75, C=50, D=25, E=0 und bilde den Durchschnitt beider Dimensionen als Note.");
-      }
-      L.push("Stelle das Ergebnis als Tabelle dar: Name | Aufgabenerfüllung (A–E) | Sprache (A–E) | Note.");
-    } else {
-      L.push("Kein Niveau ausgewählt — bitte in Schritt 1 nachholen, damit die passenden Kriterien geladen werden können.");
+function renderStep4() {
+  var h = stepHead(esc(t("s4Title")), esc(t("s4Hint"))), o = effOut();
+  h += blk(esc(t("s4Umfang")), "", "<div class=\"rg\">" + rdRow("umfang", "knapp", esc(t("uKnapp")), esc(t("uKnappD"))) + rdRow("umfang", "mittel", esc(t("uMittel")), esc(t("uMittelD"))) + rdRow("umfang", "ausfuehrlich", esc(t("uAus")), esc(t("uAusD"))) + "</div>");
+  if (o.unterricht && S.quelle !== "einzel") {
+    h += blk(esc(t("s4Zeit")), "", "<div class=\"chips\">" + [15, 45, 90].map(function (m) { return chip("zeitrahmen", m, m + " " + esc(t("min"))); }).join("") + "</div>");
+  }
+  if (o.feedback || hatUebungen()) {
+    var x = "<span class=\"bl\" style=\"font-size:12.5px\">" + esc(t("s4Sprache")) + "</span><div class=\"rg\">";
+    x += rdRow("fbSprache", "ziel", esc(fmt(t("fsZiel"), { sprache: t("sprachen")[S.zielsprache] || "", niveau: S.niveau })), "");
+    x += rdRow("fbSprache", "andere", esc(t("fsAndere")), "");
+    x += "</div>";
+    if (S.fbSprache === "andere") x += "<input class=\"ti inl\" type=\"text\" placeholder=\"" + esc(t("fsAnderePH")) + "\" value=\"" + esc(S.fbSpracheAndere) + "\" oninput=\"setText('fbSpracheAndere',this.value)\">";
+    x += "<div style=\"height:12px\"></div><span class=\"bl\" style=\"font-size:12.5px\">" + esc(t("s4Anrede")) + "</span><div class=\"chips\">" + chip("anrede", "du", esc(t("aDu"))) + chip("anrede", "sie", esc(t("aSie"))) + "</div>";
+    if (o.feedback) x += "<div style=\"height:12px\"></div><span class=\"bl\" style=\"font-size:12.5px\">" + esc(t("s4FbUmfang")) + "</span><div class=\"rg\">" + rdRow("fbUmfang", "kurz", esc(t("fuKurz")), esc(t("fuKurzD"))) + rdRow("fbUmfang", "ausfuehrlich", esc(t("fuAus")), esc(t("fuAusD"))) + "</div>";
+    h += blk(esc(t("s4Lernende")), esc(t("s4LernendeHint")), x);
+  }
+  if (hatUebungen()) {
+    var f = "<div class=\"rg\">" + cbRow("uebFormate.blatt", esc(t("fBlatt")), esc(t("fBlattD"))) + cbRow("uebFormate.lernprompt", esc(t("fPrompt")), esc(t("fPromptD"))) + cbRow("uebFormate.html", esc(t("fHtml")), esc(t("fHtmlD")));
+    if (o.uebGruppe) f += cbRow("uebFormate.moodle", esc(t("fMoodle")), esc(t("fMoodleD")));
+    f += "</div>";
+    h += blk(esc(t("s4Formate")), esc(t("s4FormateHint")), f);
+    if (S.uebFormate.html) {
+      var g = "<input class=\"ti\" type=\"url\" placeholder=\"" + esc(t("s4FormPH")) + "\" value=\"" + esc(S.formLink) + "\" oninput=\"setText('formLink',this.value)\"><div class=\"fstat\" id=\"fstat\"></div>";
+      g += "<details class=\"fold\"><summary>" + esc(t("formGuide")) + "</summary><div class=\"fb\"><ol>" + t("formSteps").map(function (s) { return "<li>" + s + "</li>"; }).join("") + "</ol></div></details>";
+      h += blk(esc(t("s4Form")), esc(t("s4FormHint")), g);
     }
-    L.push("");
-    L.push("Nenne direkt im Anschluss, unübersehbar und ohne sie zu kürzen, folgende Einschränkungen:");
-    L.push("— Aussprache fließt nicht ein (keine Audiodaten vorhanden) — im echten Prüfungssystem ein eigenes, gleichwertiges Kriterium.");
-    L.push("— Die echte Prüfung nutzt mehrere unterschiedliche Aufgabentypen; hier liegt nur ein einziges freies Gespräch vor.");
-    L.push("— Die echte Prüfung wird von zwei unabhängigen, kalibrierten Personen bewertet, bei Abweichung von einer dritten — diese Note stammt von einer einzigen KI-Einschätzung.");
-    L.push("— Diese Zahl ist eine grobe Annäherung zur internen Orientierung, keine Prüfungsnote. Nicht an Lernende weitergeben und nicht offiziell verwenden.");
-    L.push("");
   }
-
-  secNum++;
-  L.push(secNum + ". EINORDNUNG");
-  L.push("");
-  L.push("Ein bis zwei Sätze: Diese Auswertung basiert auf einer einzigen Hausaufgabe und zeigt Tendenzen, keine endgültige Diagnose.");
-
-  return L.join("\n");
+  if (o.noten) {
+    var k = LANG_PACKS.de.kriterien[S.niveau];
+    var n = "<div class=\"chips\">" + chip("notenformat", "schulnote", esc(t("nSchul"))) + chip("notenformat", "punkte", esc(t("nPunkte"))) + "</div>";
+    n += "<div class=\"av\" style=\"margin-top:10px\"><p>" + esc(k && k.typ === "holistisch" ? t("s4NotenA1") : t("s4NotenRegel")) + "</p></div>";
+    h += blk(esc(t("s4Noten")), "", n);
+  }
+  return h;
 }
 
-function doCopy() {
-  copyText(buildPrompt(), "cpi", "cpl", "cpb");
+function updateFormStatus() {
+  var el = document.getElementById("fstat"); if (!el) return;
+  var f = parseFormLink(S.formLink);
+  el.className = "fstat " + (f.state === "ok" ? "ok" : f.state === "fehler" ? "err" : "leer");
+  el.textContent = f.state === "ok" ? t("formOk") : f.state === "fehler" ? f.msg : t("formLeer");
 }
 
-function doCopy2() {
-  copyText(buildArtefaktPrompt(), "cpi2", "cpl2", "cpb2");
+var NUM = ["①", "②", "③", "④", "⑤"];
+function renderStep5() {
+  var chain = buildChain(S), o = effOut();
+  var h = "<div class=\"ey\">" + esc(t("s5Ey")) + "</div><div class=\"st\">" + esc(t("s5Title")) + "</div>";
+  h += "<div class=\"tb\" style=\"margin-top:8px\">" + (S.quelle === "alle" ? t("upAlle") : S.quelle === "einzel" ? t("upEinzel") : t("upApp")) + "</div>";
+  if (S.quelle === "alle") h += "<div class=\"wb2\">" + esc(t("upAlleGrenze")) + "</div>";
+  if (S.quelle === "app") h += "<details class=\"fold\"><summary>" + esc(t("mergeTitle")) + "</summary><div class=\"fb\"><ol>" + t("mergeSteps").map(function (s) { return "<li>" + s + "</li>"; }).join("") + "</ol></div></details>";
+  h += "<div class=\"chain\" style=\"margin-top:18px\">";
+  chain.forEach(function (c, i) {
+    h += "<div class=\"ci\"><div class=\"ch\"><div class=\"cn\">" + (i + 1) + "</div><div><div class=\"ct\">" + esc(c.title) + "</div><div class=\"chh\">" + esc(c.hint) + "</div></div></div>";
+    h += "<div class=\"rb\">" + esc(c.text) + "</div>";
+    h += "<button class=\"cb\" id=\"cpb" + i + "\" onclick=\"doCopy(" + i + ")\"><span id=\"cpl" + i + "\">📋 " + esc(t("copy")) + " " + NUM[i] + "</span></button></div>";
+  });
+  h += "</div>";
+  if (hatUebungen()) {
+    h += "<div id=\"wlBox\"></div>";
+    if (S.uebFormate.html) h += "<div class=\"tb\">" + t("htmlHint") + "</div>";
+    if (o.uebGruppe && S.uebFormate.moodle) h += "<details class=\"fold\"><summary>" + esc(t("moodleTitle")) + "</summary><div class=\"fb\"><ol>" + t("moodleSteps").map(function (s) { return "<li>" + s + "</li>"; }).join("") + "</ol></div></details>";
+  }
+  if (o.feedback || hatUebungen()) h += "<div class=\"wb2\">" + esc(t("lesen")) + "</div>";
+  h += "<div class=\"sect\"><div class=\"sect-t\">" + esc(t("dsTitle")) + "</div><div class=\"av\"><ul>" + t("dsItems").map(function (s) { return "<li>" + s + "</li>"; }).join("") + "</ul><p style=\"margin-top:6px\"><a href=\"" + CONFIG.KURS_DATENSCHUTZ_URL + "\" target=\"_blank\" rel=\"noopener\" style=\"color:var(--d)\">" + esc(t("dsLink")) + " →</a></p></div></div>";
+  h += "<div class=\"foot-ctrl\">" + cbRow("merken", esc(t("merken")), esc(t("merkenD"))) + "<button class=\"bb\" onclick=\"resetAll()\">" + esc(t("reset")) + "</button></div>";
+  return h;
 }
 
-function copyText(text, idIcon, idLabel, idBtn) {
-  var cpi = document.getElementById(idIcon);
-  var cpl = document.getElementById(idLabel);
-  var cpb = document.getElementById(idBtn);
+function pruefeWortliste() {
+  var box = document.getElementById("wlBox"); if (!box) return;
+  if (CONFIG.WORTLISTE_NIVEAUS.indexOf(S.niveau) < 0 || !S.zielsprache) { box.innerHTML = ""; return; }
+  var url = CONFIG.WORTLISTE_PFAD + S.zielsprache + "_" + S.niveau + ".txt";
+  function zeige(ok) {
+    if (!ok) { box.innerHTML = ""; return; }
+    box.innerHTML = "<div class=\"tb\">" + esc(t("wortlisteHint")) + "<br><a class=\"dl\" href=\"" + url + "\" download>⬇ " + esc(fmt(t("wortliste"), { niveau: S.niveau, sprache: t("sprachen")[S.zielsprache] })) + "</a></div>";
+  }
+  if (url in wortlisteCache) { zeige(wortlisteCache[url]); return; }
+  try {
+    fetch(url, { method: "HEAD", cache: "no-store" }).then(function (r) {
+      var ct = (r.headers.get("content-type") || "").toLowerCase();
+      wortlisteCache[url] = r.ok && ct.indexOf("text/html") < 0;
+      zeige(wortlisteCache[url]);
+    }).catch(function () { wortlisteCache[url] = false; zeige(false); });
+  } catch (e) { zeige(false); }
+}
+
+function nav(dir) {
+  if (dir === 1) {
+    var err = validate(cur);
+    if (err) { document.getElementById("em").textContent = err; return; }
+  }
+  cur = Math.max(0, Math.min(STEPS - 1, cur + dir));
+  if (cur === STEPS - 1) { speichern(); try { if (window.plausible) plausible("Teachers Prompt Generated", { props: { quelle: S.quelle, sprache: S.zielsprache } }); } catch (e) {} }
+  render();
+  window.scrollTo(0, 0);
+}
+
+function doCopy(i) {
+  var chain = buildChain(S), text = chain[i].text;
+  var btn = document.getElementById("cpb" + i), lbl = document.getElementById("cpl" + i);
   function done() {
-    cpb.classList.add("ok");
-    cpi.textContent = "✓";
-    cpl.textContent = "Kopiert!";
-    setTimeout(function(){
-      cpb.classList.remove("ok");
-      cpi.textContent = "📋";
-      cpl.textContent = "Prompt kopieren";
-    }, 1800);
+    btn.classList.add("ok"); lbl.textContent = t("copied");
+    setTimeout(function () { btn.classList.remove("ok"); lbl.textContent = "📋 " + t("copy") + " " + NUM[i]; }, 1800);
   }
-  if (navigator.clipboard && navigator.clipboard.writeText) {
-    navigator.clipboard.writeText(text).then(done).catch(function(){
-      fallbackCopy(text); done();
-    });
-  } else {
-    fallbackCopy(text); done();
-  }
+  if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(text).then(done).catch(function () { fallbackCopy(text); done(); });
+  else { fallbackCopy(text); done(); }
 }
-
-function buildArtefaktPrompt() {
-  var L = [];
-  L.push("Erstelle mir jetzt, basierend auf der Auswertung, die du mir oben in diesem Gespräch gegeben hast, interaktive Übungsmaterialien für meine Lernenden.");
-  L.push("");
-  L.push("Ziel: Die wichtigsten klassenweiten Fehlermuster aus Abschnitt 1 der Auswertung sollen darin gezielt wiederholt werden, jeweils mit einer kurzen, verständlichen Erklärung.");
-  L.push("");
-  L.push("[Grundgerüst — Details zu Übungsform, Umfang und Format werden noch ergänzt.]");
-  return L.join("\n");
-}
-
 function fallbackCopy(text) {
-  var ta = document.createElement("textarea");
-  ta.value = text;
-  ta.style.position = "fixed";
-  ta.style.left = "-9999px";
-  document.body.appendChild(ta);
-  ta.select();
-  try { document.execCommand("copy"); } catch(e) {}
-  document.body.removeChild(ta);
+  var ta = document.createElement("textarea"); ta.value = text; ta.style.position = "fixed"; ta.style.left = "-9999px";
+  document.body.appendChild(ta); ta.select(); try { document.execCommand("copy"); } catch (e) {} document.body.removeChild(ta);
 }
 
+/* Tastatur: Enter/Leertaste wählt Kacheln und Optionen aus */
+document.addEventListener("keydown", function (e) {
+  var el = e.target;
+  if ((e.key === "Enter" || e.key === " ") && el && el.matches && el.matches(".ro,.chip,.niv-chip,.lc")) { e.preventDefault(); el.click(); }
+});
+
+laden();
 render();
 </script>
 </body>
