@@ -1,0 +1,1863 @@
+Häufigkeitswortschatz Französisch bis A2 (A1 + A2) – 1850 Wörter
+Für den Prompt Generator für Lehrkräfte (promptgenerator.site/teachers).
+Kein offizieller Prüfungswortschatz.
+
+Quelle: FLELex aus den CEFRLex-Ressourcen, CENTAL, UCLouvain – https://cental.uclouvain.be/cefrlex/
+Zitation: FLELex: Pintard, A. & François, T. (2020). READI 2020; François, T., Gala, N., Watrin, P. & Fairon, C. (2014). LREC 2014.
+Lizenz: CC BY-NC-SA 4.0 – https://creativecommons.org/licenses/by-nc-sa/4.0/
+Nur nicht-kommerzielle Nutzung; Weitergabe nur unter derselben Lizenz.
+Bearbeitet: Niveaus zusammengeführt, Eigennamen und Fragmente entfernt, Artikel ergänzt, alphabetisch sortiert;
+Zahlen, Wochentage, Monate und Grußformeln ergänzt bzw. auf A1 vorgezogen.
+
+Ein Wort pro Zeile:
+----------
+à
+abandonner
+l'abricot (m.)
+abriter
+l'accent (m.)
+accepter
+l'accident (m.)
+accompagner
+accomplir
+l'accord (m.)
+l'accueil (m.)
+accueillir
+l'achat (m.)
+acheter
+actif
+l'activité (f.)
+l'actualité (f.)
+actuellement
+adapter
+l'addition (f.)
+administratif
+admirable
+admirer
+l'adolescent (m.)
+adorable
+adorer
+l'adresse (f.)
+l'adulte (m./f.)
+l'aéroport (m.)
+l'affaire (f.)
+l'affiche (f.)
+affoler
+africain
+l'âge (m.)
+âgé
+l'agence (f.)
+agir
+agréable
+l'agriculture (f.)
+ah
+l'aide (f.)
+aider
+l'aile (f.)
+ailleurs
+aimer
+ainsi
+l'air (m.)
+ajouter
+l'album (m.)
+l'alcool (m.)
+l'aliment (m.)
+l'alimentation (f.)
+allemand
+aller
+allô
+allonger
+allumer
+alors
+l'amateur (m.)
+l'ambassade (f.)
+l'ambiance (f.)
+américain
+l'ami (m.)
+l'amitié (f.)
+l'amour (m.)
+amoureux
+amusant
+s'amuser
+l'an (m.)
+analyser
+ancien
+l'âne (m.)
+anglais
+l'angle (m.)
+l'animal (m.)
+l'animateur (m.)
+l'animation (f.)
+animer
+l'année (f.)
+l'anniversaire (m.)
+annoncer
+l'antiquité (f.)
+août
+apercevoir
+l'apéritif (m.)
+apparaître
+l'appareil (m.)
+l'appartement (m.)
+appartenir
+appeler
+applaudir
+apporter
+apprendre
+l'apprenti (m.)
+approcher
+appuyer
+après
+l'après-midi (m.)
+l'arbre (m.)
+l'archéologue (m./f.)
+l'architecte (m./f.)
+l'architecture (f.)
+l'argent (m.)
+l'arme (f.)
+arrêter
+arriver
+l'arrondissement (m.)
+l'art (m.)
+l'article (m.)
+l'artiste (m./f.)
+l'ascenseur (m.)
+s'asseoir
+assez
+l'assistant (m.)
+assister
+l'association (f.)
+l'assurance (f.)
+l'atelier (m.)
+attacher
+attaquer
+attendre
+l'attention (f.)
+attraper
+au
+au revoir
+l'auberge (f.)
+aucun
+au-dessus
+aujourd'hui
+auprès
+aussi
+aussitôt
+australien
+autant
+l'auteur (m.)
+l'automne (m.)
+autoriser
+l'autoroute (f.)
+autour
+autre
+avancer
+avant
+l'avantage (m.)
+avec
+l'aventure (f.)
+l'avenue (f.)
+l'avion (m.)
+l'avis (m.)
+avoir
+avouer
+avril
+le bac
+la baguette
+se baigner
+le bain
+la balade
+la balle
+le ballon
+la banane
+bancaire
+la bande
+la banlieue
+la banque
+le bar
+bas
+la base
+le basket
+le bateau
+le bâtiment
+battre
+bavarder
+beau
+beaucoup
+le beau-frère
+la beauté
+les beaux-arts
+le bébé
+belge
+la belle-mère
+ben
+le besoin
+la bêtise
+le beurre
+la bibliothèque
+la bicyclette
+bien
+bientôt
+bienvenue
+la bière
+le billet
+la bise
+le bisou
+le bistrot
+bizarre
+la blague
+blanc
+le blé
+la blessure
+bleu
+blond
+le blouson
+le bœuf
+bof
+boire
+le bois
+la boisson
+la boîte
+bon
+le bonheur
+bonjour
+bonsoir
+le bord
+la botte
+la bouche
+la boulangerie
+la boule
+le boulevard
+le bouquet
+bourgeois
+le bout
+la bouteille
+la boutique
+le bowling
+le bras
+brave
+bravo
+brésilien
+briller
+le bruit
+brûler
+brun
+le buffet
+le bulletin
+le bureau
+le bus
+cacher
+le cadeau
+le café
+le cahier
+la caisse
+le caissier
+calme
+le/la camarade
+le camion
+la campagne
+le camping
+canadien
+le candidat
+la canne
+la cantine
+capable
+la capitale
+car
+le carnet
+la carrière
+la carte
+le cas
+le casque
+casser
+la cathédrale
+la cause
+la cave
+ce
+ceci
+cela
+célèbre
+célébrer
+le/la célibataire
+celui
+cent
+le centre
+le centre-ville
+cependant
+les céréales
+la cérémonie
+certain
+certainement
+chacun
+la chaîne
+la chaise
+chaleureux
+la chambre
+le champ
+le champagne
+le champion
+la chance
+changer
+la chanson
+le chant
+chanter
+le chanteur
+le chapeau
+chaque
+la charcuterie
+la charité
+charmant
+le charme
+le chat
+châtain
+le château
+chaud
+la chaussure
+le chemin
+la cheminée
+le chèque
+cher
+chercher
+le chéri
+le cheval
+le chevalier
+le cheveu
+la chèvre
+chez
+chic
+le chien
+le chiffre
+chinois
+le chocolat
+choisir
+le choix
+le chômage
+le chômeur
+la chose
+chut
+le cidre
+le ciel
+le cimetière
+le ciné
+le cinéma
+cinq
+cinquante
+la cire
+la cité
+citer
+clair
+la classe
+classique
+la clé
+le client
+le climat
+le club
+le code
+le cœur
+coiffer
+le coin
+la colère
+la collection
+collectionner
+le collectionneur
+le collège
+le/la collègue
+coller
+la colline
+la colonie
+coloré
+le combat
+combien
+la comédie
+le comédien
+comique
+commander
+comme
+commencer
+comment
+le commentaire
+commenter
+le commerçant
+le commerce
+commercial
+le commissariat
+commun
+la communauté
+la communication
+la compagnie
+complet
+compléter
+compliqué
+composer
+comprendre
+la comptabilité
+compter
+concerner
+le concert
+le concombre
+le concours
+la condition
+le conducteur
+conduire
+la confiance
+confirmer
+la confiture
+confortable
+le congé
+la connaissance
+connaître
+consacrer
+le conseil
+conseiller
+conserver
+considérer
+la console
+consommer
+constater
+la construction
+construire
+le contact
+contacter
+le conte
+contemporain
+content
+le continent
+continu
+continuer
+contre
+le contrôle
+convaincre
+la conversation
+la coopération
+le copain
+la copine
+la corde
+le corps
+corriger
+la côte
+le côté
+se coucher
+la couleur
+le couloir
+le coup
+la coupe
+couper
+le couple
+la cour
+le courage
+courageux
+courir
+la course
+court
+le couscous
+le cousin
+coûter
+la coutume
+couvrir
+la crèche
+créer
+la crème
+le créole
+la crêpe
+le cri
+crier
+la crise
+critiquer
+croire
+le croissant
+cuire
+la cuisine
+le cuisinier
+culinaire
+cultivé
+cultiver
+la culture
+culturel
+curieux
+d'abord
+d'accord
+la dame
+dangereux
+dans
+la danse
+danser
+le danseur
+la date
+dater
+de
+le début
+décembre
+décevoir
+décider
+la décision
+déclarer
+décontracté
+le décor
+la décoration
+décorer
+la découverte
+découvrir
+décrire
+défendre
+définir
+le degré
+déguiser
+déguster
+le dehors
+déjà
+le déjeuner
+délicieux
+demain
+la demande
+demander
+déménager
+le demi
+la demi-heure
+la dent
+le/la dentiste
+le départ
+le département
+se dépêcher
+dépendre
+déposer
+depuis
+déranger
+dernier
+derrière
+dès
+descendre
+désespérer
+désirer
+désolé
+le dessert
+le dessin
+le dessinateur
+dessiner
+la destination
+le détail
+détester
+deux
+devant
+le développement
+développer
+devenir
+devoir
+dévorer
+le diable
+le dialogue
+le dieu
+la différence
+différent
+difficile
+la difficulté
+le dimanche
+la dinde
+dîner
+dire
+direct
+directement
+le directeur
+la direction
+diriger
+le discours
+la discussion
+discuter
+disparaître
+le disque
+divers
+la diversité
+diviser
+divorcer
+dix
+dix-huit
+dix-neuf
+dix-sept
+le document
+le doigt
+le domaine
+domestique
+donc
+donner
+dormir
+le dos
+double
+doucement
+la douche
+le doute
+doux
+douze
+le droit
+drôle
+du
+dur
+durer
+dynamique
+l'eau (f.)
+l'échange (m.)
+échanger
+l'écharpe (f.)
+l'éclairage (m.)
+l'école (f.)
+l'économie (f.)
+économique
+l'écoute (f.)
+écouter
+l'écran (m.)
+écrire
+l'écrivain (m.)
+l'écurie (f.)
+l'effet (m.)
+s'effondrer
+également
+l'église (f.)
+eh
+l'électricité (f.)
+électrique
+élégant
+l'élément (m.)
+l'élève (m./f.)
+élire
+elle
+embrasser
+l'émission (f.)
+emmener
+l'émotion (f.)
+l'emploi (m.)
+en
+enchanter
+encore
+s'endormir
+l'endroit (m.)
+l'énergie (f.)
+l'enfance (f.)
+l'enfant (m./f.)
+enfermer
+enfin
+engager
+enlever
+s'ennuyer
+ennuyeux
+énorme
+l'enquête (f.)
+l'enseignement (m.)
+ensemble
+ensoleillé
+ensuite
+entendre
+entier
+entraîner
+entre
+l'entrée (f.)
+l'entreprise (f.)
+entrer
+l'envie (f.)
+environ
+l'environnement (m.)
+envoyer
+l'épée (f.)
+épeler
+l'épice (f.)
+épicé
+l'épisode (m.)
+éplucher
+l'époque (f.)
+épouser
+l'équipe (f.)
+l'équipement (m.)
+l'erreur (f.)
+l'escalier (m.)
+l'escargot (m.)
+l'esclave (m./f.)
+l'espace (m.)
+espagnol
+espérer
+essayer
+essentiel
+l'est (m.)
+et
+l'étage (m.)
+l'été (m.)
+éteindre
+l'étoile (f.)
+étonner
+étranger
+être
+étroit
+l'étude (f.)
+l'étudiant (m.)
+étudier
+euh
+l'euro (m.)
+européen
+eux
+évidemment
+évoluer
+l'évolution (f.)
+évoquer
+exactement
+exagérer
+l'examen (m.)
+excellent
+s'exclamer
+excuser
+l'exemple (m.)
+l'exercice (m.)
+exister
+exotique
+l'explication (f.)
+expliquer
+exposer
+l'exposition (f.)
+exprimer
+extraordinaire
+fabriquer
+la fac
+la face
+facile
+facilement
+la façon
+la faim
+faire
+le fait
+la falaise
+falloir
+la famille
+le/la fan
+fantastique
+la farine
+fatigant
+fatigué
+fatiguer
+faux
+la faveur
+les félicitations
+féliciter
+féminin
+la femme
+la fenêtre
+le fer
+férié
+fermer
+la fermeture
+la fête
+fêter
+le feu
+le feu d'artifice
+la feuille
+le feuilleton
+février
+fidèle
+la fidélité
+fier
+la fille
+le film
+le fils
+la fin
+finalement
+finir
+fixer
+la fleur
+le fleuve
+le foie
+la fonction
+fonctionner
+le fond
+fonder
+la fontaine
+le foot
+le football
+la force
+la forêt
+la forme
+former
+formidable
+fort
+fou
+le foyer
+frais
+français
+francophone
+la francophonie
+frapper
+le frère
+froid
+le fromage
+le fruit
+fumé
+fumer
+futur
+gagner
+la galerie
+le gamin
+le garage
+le garçon
+la garde
+garder
+le gardien
+la gare
+le gâteau
+gauche
+la gendarmerie
+général
+la génération
+généreux
+génial
+le genou
+le genre
+les gens
+gentil
+la glace
+glisser
+le goût
+goûter
+le gouvernement
+la grâce
+le gramme
+grand
+la grand-mère
+le grand-père
+les grands-parents
+gras
+gratuit
+grave
+la grenouille
+grillé
+gris
+gros
+la grotte
+le groupe
+la guerre
+la guitare
+s'habiller
+l'habitant (m.)
+habiter
+l'habitude (f.)
+haut
+hé
+hein
+l'hélicoptère (m.)
+l'herbe (f.)
+l'héritage (m.)
+hésiter
+l'heure (f.)
+heureusement
+heureux
+hier
+l'histoire (f.)
+historique
+l'hiver (m.)
+l'homme (m.)
+l'honneur (m.)
+l'hôpital (m.)
+l'horaire (m.)
+l'horreur (f.)
+horrible
+le hors-d'œuvre
+l'hôtel (m.)
+l'huile (f.)
+huit
+hum
+humain
+l'humeur (f.)
+l'humour (m.)
+l'hygiène (f.)
+l'hypermarché (m.)
+ici
+idéal
+l'idée (f.)
+l'identité (f.)
+ignorer
+il
+s'il te plaît
+s'il vous plaît
+l'île (f.)
+illuminer
+l'illustration (f.)
+illustrer
+l'image (f.)
+imaginer
+immédiatement
+immense
+l'immeuble (m.)
+important
+impossible
+l'impression (f.)
+l'inauguration (f.)
+inconnu
+incroyable
+indépendant
+l'indice (m.)
+indien
+indiquer
+industriel
+l'infirmier (m.)
+l'informaticien (m.)
+l'information (f.)
+l'informatique (f.)
+informer
+l'ingénieur (m.)
+innocent
+inoubliable
+inquiet
+s'inquiéter
+l'inscription (f.)
+inscrire
+insister
+l'inspecteur (m.)
+inspirer
+l'installation (f.)
+installer
+l'instant (m.)
+l'institut (m.)
+l'institution (f.)
+insupportable
+intelligent
+intense
+interdire
+intéressant
+s'intéresser
+l'intérieur (m.)
+international
+internet
+interroger
+inventer
+l'invention (f.)
+l'invitation (f.)
+l'invité (m.)
+inviter
+italien
+l'itinéraire (m.)
+jaloux
+jamais
+la jambe
+janvier
+japonais
+le jardin
+jaune
+le jazz
+je
+le jean
+jeter
+le jeu
+le jeudi
+jeune
+la jeunesse
+la joie
+joli
+jouer
+le jouet
+le joueur
+le jour
+le journal
+le/la journaliste
+la journée
+joyeux
+le/la juge
+juillet
+juin
+le jumeau
+le jus
+jusqu'à
+juste
+justement
+la justice
+le kilo
+le kilomètre
+la
+là
+là-bas
+le laboratoire
+laisser
+le lait
+laitier
+la lampe
+lancer
+la langue
+le lapin
+large
+la larme
+le latin
+se laver
+le
+la leçon
+la lecture
+la légende
+léger
+le légume
+le lendemain
+lentement
+lequel
+la lettre
+leur
+se lever
+la libération
+libérer
+la liberté
+libre
+le lieu
+linguistique
+lire
+la liste
+le lit
+le litre
+la littérature
+le livre
+local
+le logement
+la loi
+loin
+lointain
+le loisir
+long
+longtemps
+lorsque
+louer
+le loup
+lourd
+lui
+lui-même
+la lumière
+le lundi
+la lune
+le lycée
+madame
+mademoiselle
+le magasin
+le magazine
+magnifique
+mai
+le mail
+la main
+maintenant
+le maire
+la mairie
+mais
+la maison
+le maître
+mal
+malade
+malheureusement
+malheureux
+la maman
+manger
+la manière
+manquer
+la maquette
+la marche
+le marché
+marcher
+le mardi
+le mari
+le mariage
+se marier
+marocain
+la marque
+marquer
+marrant
+marre
+marron
+mars
+le masque
+maternel
+les mathématiques
+les maths
+la matière
+le matin
+mauvais
+me
+le mec
+le médecin
+la médecine
+les médias
+médiéval
+meilleur
+mélanger
+même
+le ménage
+mener
+la menthe
+mentir
+le menu
+la mer
+merci
+le mercredi
+la mère
+la merveille
+merveilleux
+le message
+la messe
+messieurs
+mesurer
+le métal
+le métier
+le mètre
+le métro
+la métropole
+mettre
+le micro
+le midi
+mieux
+mignon
+le milieu
+mille
+le million
+mince
+minéral
+la minute
+le mistral
+mixte
+la mode
+moderne
+moi
+moins
+le mois
+la moitié
+le moment
+mon
+le monde
+mondial
+la monnaie
+monsieur
+la montagne
+le montant
+monter
+la montre
+montrer
+le monument
+monumental
+se moquer
+le morceau
+la mort
+le mot
+le moteur
+le motif
+le moulin
+mourir
+le mouton
+le moyen
+la moyenne
+la mule
+le mur
+mural
+le musée
+musical
+le musicien
+la musique
+musulman
+le mystère
+mystérieux
+la naissance
+naître
+la natation
+national
+la nationalité
+la nature
+naturel
+ne
+nécessaire
+la neige
+nerveux
+nettoyer
+neuf
+le neveu
+le nez
+ni
+le niveau
+nocturne
+noir
+le nom
+le nombre
+nombreux
+non
+le nord
+normal
+notamment
+la note
+noter
+notre
+la nourriture
+nous
+nouveau
+la nouvelle
+novembre
+le nuage
+la nuit
+nul
+le numéro
+numéroter
+l'objet (m.)
+obligatoire
+obliger
+observer
+l'occasion (f.)
+occuper
+l'océan (m.)
+octobre
+l'odeur (f.)
+l'œil (m.)
+l'œuf (m.)
+l'œuvre (f.)
+l'office (m.)
+officiel
+offrir
+oh
+l'oignon (m.)
+l'oiseau (m.)
+l'olive (f.)
+l'ombre (f.)
+on
+l'oncle (m.)
+onze
+l'opéra (m.)
+l'opération (f.)
+l'or (m.)
+orange
+l'ordinateur (m.)
+l'ordre (m.)
+l'oreille (f.)
+l'organisation (f.)
+organiser
+l'organisme (m.)
+original
+l'origine (f.)
+ou
+où
+ouais
+oublier
+l'ouest (m.)
+ouf
+oui
+l'outil (m.)
+outre-mer
+l'ouverture (f.)
+l'ouvrier (m.)
+ouvrir
+la page
+le pain
+la paix
+le palais
+le pamplemousse
+le panneau
+le panorama
+le pantalon
+le papa
+le pape
+le papier
+le paquet
+par
+le paradis
+le parapluie
+le parc
+parce que
+pardon
+parfait
+parfois
+le parfum
+parisien
+le parking
+parler
+parmi
+la parole
+la part
+partager
+participer
+particulier
+particulièrement
+la partie
+partir
+partout
+pas
+le passage
+le passé
+passer
+la passion
+passionnant
+passionner
+la pâte
+le pâté
+le patient
+la pâtisserie
+le patron
+pauvre
+payer
+le pays
+le paysage
+la peau
+la pêche
+peindre
+la peine
+le peintre
+la peinture
+pendant
+pendre
+penser
+perdre
+perdu
+le père
+la période
+la perle
+permettre
+le personnage
+la personne
+personnel
+la pétanque
+petit
+la petite-fille
+peu
+la peur
+peut-être
+la pharmacie
+la photo
+la photocopie
+le/la photographe
+la phrase
+la pièce
+le pied
+la pierre
+pire
+la piscine
+la piste
+la place
+placer
+la plage
+plaire
+plaisanter
+le plaisir
+le plan
+la planche
+la plante
+planter
+le plastique
+le plat
+le plateau
+plein
+pleurer
+pleuvoir
+la pluie
+la plume
+plus
+plusieurs
+plutôt
+la poésie
+le point
+le poisson
+la police
+politique
+polluant
+polonais
+la pomme
+le pont
+populaire
+la population
+le porc
+le port
+portable
+la porte
+porter
+le portugais
+poser
+la position
+posséder
+la possibilité
+possible
+la poste / le poste
+le poulet
+la poupée
+pour
+le pourboire
+pourquoi
+pourtant
+pousser
+la poussière
+pouvoir
+la pratique
+pratiquer
+le pré
+précieux
+précis
+préféré
+préférer
+prendre
+le prénom
+préparer
+près
+présent
+le présentateur
+présenter
+le président
+presque
+la presse
+presser
+prêt
+prêter
+prévoir
+prier
+le prince
+principal
+le printemps
+la prison
+le prisonnier
+privilégier
+le prix
+le problème
+prochain
+proche
+la production
+produire
+le produit
+le/la prof
+le professeur
+la profession
+profiter
+le programme
+le progrès
+le projet
+la promenade
+se promener
+promettre
+proposer
+la proposition
+propre
+le/la propriétaire
+protéger
+prouver
+la province
+la proximité
+la publicité
+publier
+publique
+puis
+le pull
+la pyramide
+le quai
+la qualité
+quand
+quarante
+le quart
+le quartier
+quatorze
+quatre
+quatre-vingt-dix
+quatre-vingts
+que
+québécois
+quel
+quelque
+quelquefois
+quelqu'un
+la question
+la queue
+qui
+quinze
+quitter
+quoi
+quotidien
+le rabat
+raconter
+la radio
+raide
+la raison
+ramasser
+ramener
+la randonnée
+ranger
+rapide
+rapidement
+rappeler
+rapprocher
+rare
+rassurer
+rattraper
+le réalisateur
+réaliser
+la réalité
+la réception
+recevoir
+la recherche
+rechercher
+recommencer
+recomposer
+reconnaître
+recouvrir
+rédiger
+réfléchir
+refuser
+regarder
+la région
+régler
+regretter
+la reine
+la relation
+la religion
+remarquer
+remercier
+remonter
+remplacer
+remplir
+remporter
+la renaissance
+la rencontre
+rencontrer
+le rendez-vous
+rendre
+renseigner
+rentrer
+repartir
+le repas
+répéter
+le répondeur
+répondre
+la réponse
+se reposer
+reprendre
+représenter
+la république
+la réserve
+réserver
+la résidence
+résistant
+respecter
+la responsabilité
+responsable
+ressembler
+le restaurant
+restaurer
+le reste
+rester
+le resto
+le retard
+retenir
+retirer
+le retour
+retourner
+la retraite
+retrouver
+la réunion
+réunir
+réussir
+le rêve
+se réveiller
+le réveillon
+revenir
+rêver
+revoir
+le rhum
+riche
+la richesse
+rien
+rire
+la rive
+la rivière
+le riz
+la robe
+le rock
+le roi
+le rôle
+romain
+le roman
+romantique
+rond
+le rosier
+la roue
+rouge
+rouler
+la route
+royal
+le royaume
+la rue
+russe
+le sable
+le sac
+sage
+la saison
+la salade
+sale
+la salle
+le salon
+saluer
+salut
+la salutation
+le samedi
+le sang
+sans
+la santé
+le sapin
+la sardine
+le saucisson
+sauf
+le saumon
+sauter
+sauvage
+sauver
+savoir
+la scène
+la science
+scientifique
+scolaire
+la sculpture
+se
+sec
+le secret
+le/la secrétaire
+le secrétariat
+le secteur
+la sécurité
+seize
+le séjour
+selon
+la semaine
+sembler
+sensible
+le sentiment
+sentir
+séparer
+sept
+septembre
+sérieux
+le serpent
+le serveur
+le service
+servir
+seul
+seulement
+sévère
+si
+le siècle
+le signe
+le silence
+simple
+simplement
+sincère
+sinon
+le sirop
+le site
+la situation
+situer
+six
+le ski
+skier
+social
+la société
+la sœur
+la soif
+le soir
+la soirée
+soit
+soixante
+soixante-dix
+solaire
+le soldat
+les soldes
+le soleil
+la solidarité
+la solution
+le sommeil
+le sommet
+son
+sonner
+le sort
+la sortie
+sortir
+soudain
+souffler
+souhaiter
+le soulier
+la soupe
+souriant
+sourire
+sous
+se souvenir
+souvent
+les spaghettis
+spécial
+spécialement
+la spécialité
+le spectacle
+spectaculaire
+le spectateur
+le sport
+sportif
+le stage
+la station
+le studio
+stupide
+le style
+le succès
+le sucre
+le sud
+le sud-est
+le sud-ouest
+suffire
+la suite
+suivant
+suivre
+le sujet
+super
+superbe
+supérieur
+le supermarché
+sur
+sûr
+sûrement
+surprendre
+la surprise
+surtout
+surveiller
+le symbole
+symboliser
+sympa
+la sympathie
+sympathique
+la table
+le tableau
+la taille
+se taire
+tant
+la tante
+la tapisserie
+tard
+la tarte
+la tartine
+le taxi
+tchao
+te
+la technologie
+tel
+la télé
+le téléphone
+téléphoner
+télévisé
+la télévision
+tellement
+la température
+le temps
+tenir
+le tennis
+la tente
+terminer
+le terrain
+la terrasse
+la terre
+terrible
+terrifiant
+le territoire
+la tête
+le texte
+le thé
+le théâtre
+tiens
+timide
+tirer
+le tiroir
+le titre
+toi
+les toilettes
+le toit
+la tomate
+tomber
+ton
+tôt
+total
+toucher
+toujours
+le tour / la tour
+le tourisme
+le/la touriste
+touristique
+tourner
+tout
+la tradition
+traditionnel
+traditionnellement
+le train
+tranquille
+tranquillement
+transformer
+le transport
+le travail
+travailler
+la traversée
+traverser
+treize
+trente
+très
+triste
+trois
+tromper
+trop
+trouver
+tu
+tuer
+le type
+un
+l'union (f.)
+universitaire
+l'université (f.)
+l'usine (f.)
+utile
+utiliser
+les vacances
+vain
+la valeur
+la vallée
+varier
+le véhicule
+le vélo
+le vendeur
+vendre
+le vendredi
+venir
+le vent
+vérifier
+véritable
+la vérité
+le verre
+vers
+la version
+vert
+la veste
+le vestige
+le vêtement
+vexer
+la viande
+vide
+la vie
+vieux
+vif
+le village
+la ville
+le vin
+vingt
+violent
+le visage
+la visite
+visiter
+le visiteur
+vite
+vivre
+le vœu
+voici
+voilà
+la voile / le voile
+voir
+le voisin
+la voiture
+la voix
+le vol
+voler
+le voleur
+votre
+vouloir
+vous
+le voyage
+voyager
+le voyageur
+vrai
+vraiment
+la vue
+le week-end
+y
+le yaourt
+zéro
+la zone
+le zoo

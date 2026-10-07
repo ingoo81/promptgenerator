@@ -1,0 +1,1025 @@
+Häufigkeitswortschatz Deutsch bis A1 – 1012 Wörter
+Für den Prompt Generator für Lehrkräfte (promptgenerator.site/teachers).
+Kein offizieller Prüfungswortschatz (keine Goethe-Wortliste).
+
+Quelle: DAFlex aus den CEFRLex-Ressourcen, CENTAL, UCLouvain – https://cental.uclouvain.be/cefrlex/
+Zitation: DAFlex: CENTAL, UCLouvain – https://cental.uclouvain.be/cefrlex/daflex/
+Lizenz: CC BY-NC-SA 4.0 – https://creativecommons.org/licenses/by-nc-sa/4.0/
+Nur nicht-kommerzielle Nutzung; Weitergabe nur unter derselben Lizenz.
+Bearbeitet: Niveaus zusammengeführt, Eigennamen und Fragmente entfernt, Artikel ergänzt, alphabetisch sortiert;
+Zahlen, Wochentage, Monate und Grußformeln ergänzt bzw. auf A1 vorgezogen.
+
+Ein Wort pro Zeile:
+----------
+der Abend
+das Abendessen
+abends
+aber
+die Abfahrt
+abholen
+ach
+acht
+achten
+achtzehn
+achtzig
+die Adresse
+ah
+aha
+der Akkusativ
+der Alkohol
+alle
+allein
+als
+also
+alt
+am
+die Ampel
+an
+andere
+anders
+der Anfang
+anfangen
+angeben
+das Angebot
+ankommen
+die Ankunft
+anmachen
+der Anruf
+anrufen
+ansehen
+anstrengend
+antworten
+die Anzeige
+der Apfel
+der Apfelsaft
+die Apotheke
+der Appetit
+der April
+die Arbeit
+arbeiten
+arbeitslos
+der Arbeitsplatz
+der Arbeitstag
+die Arbeitszeit
+der Artikel
+der Arzt
+die Ärztin
+asiatisch
+die Atmosphäre
+auch
+auf
+die Aufgabe
+aufmachen
+aufräumen
+aufstehen
+aufwachen
+der Aufzug
+das Auge
+der August
+aus
+die Ausbildung
+der Ausflug
+die Auskunft
+der Ausländer
+ausmachen
+äußern
+die Aussicht
+das Auto
+die Autobahn
+das Baby
+backen
+die Bahn
+der Bahnhof
+bald
+der Balkon
+der Ball
+die Bank
+der Bär
+die Bauchschmerzen
+bauen
+der Baum
+beginnen
+begrüßen
+bei
+beide
+das Bein
+das Beispiel
+bekommen
+benennen
+bequem
+beraten
+der Berg
+der Beruf
+beruflich
+berühmt
+beschreiben
+besichtigen
+besonders
+die Besprechung
+die Besserung
+bestellen
+bestimmt
+der Besuch
+besuchen
+der Besucher
+das Bett
+bezahlen
+das Bier
+bieten
+das Bild
+billig
+bis
+bisschen
+bitte
+die Bitte
+bitten
+blau
+bleiben
+der Blick
+die Blume
+brauchen
+braun
+der Brief
+die Brille
+bringen
+das Brot
+das Brötchen
+der Bruder
+das Buch
+buchen
+buchstabieren
+bunt
+das Büro
+die Büroarbeit
+der Bus
+die Butter
+das Café
+der Cent
+der Chef
+circa
+der Club
+der Computer
+cool
+da
+dabei
+dafür
+die Dame
+damit
+danach
+der Dank
+danke
+danken
+dann
+dass
+das Datum
+dauern
+dazu
+der Deckel
+dein
+denken
+denn
+der/die Bekannte
+der/die Deutsche
+der/die/das
+deshalb
+deutsch
+der Deutschkurs
+die Deutschlehrerin
+der Dezember
+dick
+der Dienstag
+dieser
+das Ding
+direkt
+doch
+der Doktor
+der Donnerstag
+das Dorf
+dort
+draußen
+drei
+dreimal
+dreißig
+dreizehn
+dritte
+du
+dunkel
+durch
+dürfen
+duschen
+echt
+die Ecke
+egal
+das Ei
+eigen
+eigentlich
+ein
+einfach
+einige
+einkaufen
+einladen
+die Einladung
+einmal
+eins
+der Eintritt
+der Einwohner
+das Eis
+elegant
+elf
+die Eltern
+empfehlen
+das Ende
+endlich
+Englisch
+englisch
+entschuldigen
+die Entschuldigung
+er
+der Erfolg
+die Erkältung
+erklären
+erleben
+erreichen
+erst
+der Erwachsene
+erzählen
+es
+das Essen
+essen
+die Etage
+etwa
+etwas
+euer
+der Euro
+die Fähigkeit
+fahren
+der Fahrer
+das Fahrrad
+die Fahrt
+der Fall
+die Familie
+die Farbe
+fast
+faul
+der Februar
+fehlen
+feiern
+das Fenster
+die Ferien
+das Fernsehen
+der Fernseher
+der Fernsehturm
+fertig
+das Fest
+das Fieber
+der Film
+finden
+die Firma
+der Fisch
+das Fleisch
+fleißig
+fliegen
+der Flughafen
+das Flugzeug
+der Flur
+der Fluss
+das Formular
+das Foto
+fotografieren
+die Frage
+fragen
+Französisch
+die Frau
+frei
+die Freiheit
+der Freitag
+die Freizeit
+die Fremdsprache
+sich freuen
+der Freund
+die Freundin
+freundlich
+frisch
+früh
+früher
+der Frühling
+das Frühstück
+frühstücken
+fühlen
+fünf
+fünfzehn
+fünfzig
+funktionieren
+für
+der Fuß
+der Fußball
+ganz
+gar
+der Garten
+der Gast
+geben
+geboren
+der Geburtstag
+das Geburtstagskind
+geehrt
+gefallen
+gegen
+gehen
+gehören
+gelb
+das Geld
+der Geldautomat
+gemeinsam
+das Gemüse
+gemütlich
+genau
+genießen
+das Gepäck
+gerade
+geradeaus
+gern
+gerne
+das Geschäft
+das Geschenk
+die Geschwister
+gestern
+gesund
+das Getränk
+die Gitarre
+das Glas
+glauben
+gleich
+das Glück
+glücklich
+der Glückwunsch
+der Grad
+gratulieren
+grau
+grillen
+groß
+die Größe
+die Großeltern
+die Großmutter
+die Großstadt
+der Großvater
+grün
+der Gruß
+grüßen
+günstig
+gut
+das Haar
+haben
+der Hafen
+halb
+hallo
+die Halsschmerzen
+halten
+die Haltestelle
+die Hand
+hängen
+hart
+die Hauptstadt
+das Haus
+die Hausaufgabe
+der Haushalt
+das Heft
+die Heimat
+heiß
+heißen
+helfen
+hell
+der Herbst
+der Herd
+der Herr
+herzlich
+heute
+hier
+die Hilfe
+der Himmel
+hinten
+hinter
+das Hobby
+hoch
+hoffentlich
+holen
+hören
+die Hose
+das Hotel
+das Hotelzimmer
+der Hund
+hundert
+der Hunger
+der Husten
+der Hut
+ich
+die Idee
+ihr
+immer
+in
+die Information
+informieren
+die Insel
+interessant
+international
+das Internet
+ja
+die Jacke
+das Jahr
+der Januar
+der Jazz
+die Jeans
+jeder
+jemand
+jetzt
+der Job
+joggen
+der Juli
+jung
+der Junge
+der Juni
+der Kaffee
+kalt
+die Kantine
+kaputt
+die Karte
+die Kartoffel
+der Käse
+die Katze
+kaufen
+das Kaufhaus
+kein
+der Kellner
+kennen
+kennenlernen
+die Kerze
+das Kilo
+der Kilometer
+das Kind
+der Kindergarten
+das Kinderzimmer
+das Kino
+die Kirche
+klar
+die Klasse
+das Kleid
+die Kleidung
+klein
+klingeln
+klingen
+die Kneipe
+kochen
+der Koffer
+der Kollege
+die Kollegin
+kommen
+können
+der Kontakt
+kontrollieren
+das Konzert
+der Kopf
+die Kopfschmerzen
+der Körper
+die Kosten
+kosten
+das Kostüm
+krank
+das Krankenhaus
+der Krankenpfleger
+die Krankenschwester
+die Krankheit
+kreativ
+die Küche
+der Kuchen
+der Kugelschreiber
+der Kühlschrank
+die Kultur
+der Kunde
+der Kurs
+kurz
+lachen
+laden
+die Lage
+die Lampe
+das Land
+lang
+lange
+langsam
+langweilig
+laufen
+laut
+das Leben
+leben
+die Lebensmittel
+lecker
+ledig
+legen
+der Lehrer
+die Lehrerin
+leicht
+leid
+leider
+leise
+lernen
+lesen
+letzte
+die Leute
+lieb
+die Liebe
+lieben
+liegen
+die Linie
+links
+los
+losfahren
+die Lust
+lustig
+machen
+das Mädchen
+der Mai
+das Mal
+mal
+die Mama
+man
+manche
+manchmal
+der Mann
+der Mantel
+markieren
+der Markt
+die Marmelade
+der März
+die Maus
+das Medikament
+das Meer
+das Mehl
+mehr
+mein
+meinen
+die Meinung
+meiste
+meistens
+melden
+der Mensch
+der Meter
+die Miete
+die Milch
+die Million
+das Mineralwasser
+die Minute
+mit
+mitbringen
+mitkommen
+der Mittag
+mittags
+die Mittagspause
+die Mitte
+der Mittwoch
+die Möbel
+das Modell
+modern
+mögen
+der Moment
+der Monat
+der Montag
+der Morgen
+morgen
+morgens
+das Motorrad
+müde
+der Müll
+das Museum
+die Musik
+müssen
+die Mutter
+na
+nach
+der Nachbar
+die Nachbarin
+der Nachmittag
+nachmittags
+die Nachricht
+die Nacht
+nachts
+nah
+die Nähe
+der Name
+nämlich
+die Natur
+natürlich
+neben
+nehmen
+nein
+nennen
+nerven
+nett
+neu
+neun
+neunzehn
+neunzig
+nicht
+die Nichte
+nichts
+nie
+noch
+nochmal
+das Nomen
+der Norden
+normal
+normalerweise
+notieren
+der November
+die Nudel
+null
+die Nummer
+nun
+nur
+oben
+das Obst
+oder
+öffentlich
+offiziell
+öffnen
+oft
+oh
+ohne
+okay
+der Oktober
+das Öl
+die Oma
+der Onkel
+der Opa
+der Orangensaft
+organisieren
+die Orientierung
+der Ort
+der Osten
+die Ostsee
+paar
+der Park
+der Partner
+die Party
+passen
+passieren
+der Patient
+die Pause
+perfekt
+die Person
+der Pfeffer
+das Pfund
+das Picknick
+die Pizza
+planen
+der Platz
+plötzlich
+plus
+polnisch
+die Pommes
+die Post
+praktisch
+die Praxis
+der Preis
+prima
+privat
+pro
+probieren
+das Problem
+das Programm
+das Prozent
+die Prüfung
+der Pullover
+pünktlich
+putzen
+das Rad
+das Radio
+das Rathaus
+rauchen
+die Rechnung
+rechts
+reden
+das Regal
+die Regel
+der Regen
+die Region
+regnen
+die Reise
+reisen
+renovieren
+reparieren
+das Restaurant
+das Rezept
+richtig
+die Richtung
+der Rock
+rot
+der Rücken
+die Rückenschmerzen
+rufen
+die Ruhe
+ruhig
+rund
+Russisch
+die Sache
+der Saft
+sagen
+die Sahne
+der Salat
+das Salz
+sammeln
+der Samstag
+der Satz
+sauber
+schade
+schaffen
+schauen
+die Scheibe
+scheinen
+schenken
+schicken
+das Schiff
+das Schild
+der Schinken
+schlafen
+das Schlafzimmer
+schlecht
+das Schloss
+der Schluss
+schmecken
+der Schmerz
+der Schnee
+schneiden
+schneien
+schnell
+der Schnupfen
+die Schokolade
+schon
+schön
+schreiben
+der Schreibtisch
+der Schuh
+die Schule
+der Schüler
+schwarz
+schwer
+die Schwester
+das Schwimmbad
+schwimmen
+sechs
+sechzehn
+sechzig
+der See
+sehen
+die Sehenswürdigkeit
+sehr
+sein
+seit
+die Seite
+die Sekretärin
+selbst
+der September
+der Service
+setzen
+sich
+sicher
+sie
+sieben
+siebzehn
+siebzig
+singen
+sitzen
+der Ski
+so
+das Sofa
+sofort
+sogar
+der Sohn
+sollen
+der Sommer
+die Sonne
+sonnig
+der Sonntag
+sonst
+Spanisch
+spannend
+der Spaß
+spät
+spazieren
+der Spaziergang
+die Spezialität
+das Spiel
+spielen
+der Sport
+sportlich
+die Sprache
+sprechen
+die Stadt
+die Stadtrundfahrt
+stark
+die Station
+stehen
+steigen
+stellen
+der Stift
+stimmen
+der Stock
+der Strand
+die Straße
+der Stress
+das Stück
+der Student
+die Studentin
+studieren
+der Stuhl
+die Stunde
+suchen
+der Süden
+super
+der Supermarkt
+die Suppe
+süß
+die Süßigkeit
+die Tafel
+der Tag
+täglich
+die Tante
+tanzen
+die Tasche
+die Tasse
+tausend
+das Taxi
+der Taxifahrer
+der Tee
+teilen
+das Telefon
+telefonieren
+die Telefonnummer
+das Tennis
+der Teppich
+der Termin
+teuer
+der Text
+das Theater
+das Thema
+das Ticket
+das Tier
+der Tisch
+die Tochter
+die Toilette
+toll
+die Tomate
+der Topf
+das Tor
+total
+der Tourist
+die Tradition
+tragen
+trainieren
+der Traum
+träumen
+traurig
+das Treffen
+treffen
+trennen
+trinken
+trotzdem
+tschüss
+tun
+die Tür
+der Turm
+üben
+über
+überall
+die Uhr
+die Uhrzeit
+um
+umziehen
+der Umzug
+und
+der Unfall
+ungefähr
+die Uni
+die Universität
+unser
+unten
+unter
+der Unterricht
+unterwegs
+der Urlaub
+der Vater
+das Verb
+verdienen
+vergessen
+verheiratet
+verkaufen
+der Verkäufer
+die Verkäuferin
+das Verkehrsmittel
+verschieden
+verstehen
+versuchen
+viel
+viele
+vielleicht
+vier
+das Viertel
+vierzehn
+vierzig
+der Vogel
+der Vokal
+voll
+der Volleyball
+von
+vor
+vorher
+der Vormittag
+vormittags
+vorstellen
+wählen
+die Wand
+wann
+die Ware
+warm
+warten
+warum
+was
+die Wäsche
+waschen
+die Waschmaschine
+das Wasser
+wechseln
+der Weg
+weh
+weil
+der Wein
+weinen
+weiß
+weit
+weiter
+weiterfahren
+welcher
+die Welt
+wenige
+wenn
+wer
+werden
+das Wetter
+wichtig
+wie
+wieder
+wiederholen
+das Wiederhören
+das Wiedersehen
+der Wind
+windig
+der Winter
+wir
+wirklich
+wissen
+wo
+die Woche
+das Wochenende
+woher
+wohin
+wohl
+wohnen
+die Wohnung
+das Wohnzimmer
+wollen
+das Wort
+das Wörterbuch
+der Wortschatz
+wunderbar
+der Wunsch
+wünschen
+die Wurst
+das Würstchen
+das Yoga
+die Zahl
+zahlen
+zehn
+zeichnen
+zeigen
+die Zeit
+die Zeitung
+zentral
+das Zentrum
+ziehen
+das Ziel
+ziemlich
+das Zimmer
+der Zoo
+zu
+der Zucker
+zuerst
+zufrieden
+der Zug
+das Zuhause
+zurzeit
+zusammen
+die Zutaten
+zwanzig
+zwei
+zweimal
+zweite
+die Zwiebel
+zwischen
+zwölf

@@ -170,8 +170,10 @@ var CONFIG = {
      erscheinen die Quellen „ALLE_TRANSKRIPTE.txt“ und „Einzelanalyse“. */
   SKRIPT_SPRACHEN: ["de"],
   /* Wortlisten zum Download: Datei <Pfad><sprache>_<niveau>.txt, z. B.
-     /teachers/wortlisten/de_A2.txt. Fehlt eine Datei, erscheint kein Button. */
-  WORTLISTE_NIVEAUS: ["A1", "A2", "B1"],
+     /teachers/wortlisten/de_A2.txt (aufbauend: A2 enthält A1). Fehlt eine
+     Datei, erscheint kein Button. B1 bewusst nicht: aufbauend rund 11.000
+     Tokens, zusammen mit den Transkripten zu groß für kostenlose KI-Konten. */
+  WORTLISTE_NIVEAUS: ["A1", "A2"],
   WORTLISTE_PFAD: "/teachers/wortlisten/",
   KURS_URL: "https://courses.promptgenerator.site/transcription/",
   KURS_DATENSCHUTZ_URL: "https://courses.promptgenerator.site/transcription/nutzen",
@@ -350,8 +352,8 @@ LANG_PACKS.de = {
     chainEinzelUebT: "Übungen für diese Person",
     chainEinzelUebH: "Im selben Chat einfügen, wenn ① fertig ist.",
     copy: "Prompt kopieren", copied: "Kopiert! ✓",
-    wortliste: "Wortliste {niveau} {sprache} herunterladen (.txt)",
-    wortlisteHint: "Lade die Wortliste zusammen mit dem Übungs-Prompt hoch, dann verwendet die KI in den Übungen nur diese Wörter.",
+    wortliste: "Häufigkeitswortschatz {sprache} bis {niveau} herunterladen (.txt)",
+    wortlisteHint: "Lade die Wortliste zusammen mit dem Übungs-Prompt hoch, dann bleibt die KI in den Übungen beim Wortschatz bis zu diesem Niveau. Die Liste beruht auf Worthäufigkeiten in Lehrwerken (CEFRLex) und ist kein offizieller Prüfungswortschatz.",
     moodleTitle: "Moodle: So importierst du das Quiz",
     moodleSteps: [
       "Den GIFT-Text aus der Antwort der KI kopieren und als <code>.txt</code> speichern (Zeichenkodierung UTF-8).",
@@ -423,7 +425,7 @@ LANG_PACKS.de = {
   }
   function wortlisteSatz(S) {
     return CONFIG.WORTLISTE_NIVEAUS.indexOf(S.niveau) >= 0
-      ? "Falls ich eine Wortliste hochlade, verwende in den Übungen nur Wörter daraus.\n" : "";
+      ? "Falls ich eine Wortliste hochlade, verwende in den Übungen möglichst nur Wörter daraus. Immer erlaubt sind zusätzlich: Zahlen, Namen, Wochentage, Monate, Grußformeln und Wörter, die in der Aufgabe oder in den Transkripten vorkommen.\n" : "";
   }
   function endungenUebSatz(S) {
     return isSkript(S)
