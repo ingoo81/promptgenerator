@@ -12,7 +12,7 @@ body{background:#f8fafc;font-family:'Segoe UI',Arial,sans-serif;color:#1e293b;}
 .gh{background:var(--d);}
 .hi{max-width:780px;margin:0 auto;padding:16px 24px;display:flex;align-items:center;gap:16px;}
 .ht{flex:1;}.ht h1{font-size:26px;font-weight:800;color:white;margin-bottom:3px;letter-spacing:-.01em;}
-.hbadge{width:56px;height:56px;border-radius:50%;background:var(--p);color:var(--d);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:22px;flex-shrink:0;border:3px solid rgba(255,255,255,.25);}
+.hlogo{width:56px;height:56px;border-radius:50%;flex-shrink:0;display:block;}
 .hs{background:linear-gradient(135deg,var(--d) 0%,#005a8e 100%);padding:9px 24px;display:flex;align-items:center;justify-content:center;border-bottom:3px solid var(--p);}
 .hs span{color:rgba(255,255,255,.85);font-size:13px;font-style:italic;text-align:center;}
 .ww{max-width:780px;margin:0 auto;padding:26px 20px 50px;}
@@ -36,6 +36,10 @@ textarea.ti{resize:vertical;}
 .chip{padding:8px 16px;border-radius:20px;border:2px solid #e2e8f0;font-size:13.5px;cursor:pointer;background:#f8fafc;color:#334155;transition:all .15s;user-select:none;font-family:inherit;}
 .chip:hover{border-color:var(--p);background:var(--selbg);}
 .chip.sel{background:var(--p);border-color:var(--p);color:var(--d);font-weight:700;}
+.sfr{margin:0 0 10px;}
+.sfr summary{cursor:pointer;font-size:13px;font-weight:600;color:var(--d);margin-bottom:8px;}
+.sfn{font-size:12px;font-weight:700;color:#64748b;margin:4px 0 6px;}
+.sww{font-size:12.5px;color:#92400e;background:#fef3c7;border-radius:8px;padding:6px 10px;margin-top:6px;}
 .niv-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:8px;}
 .niv-chip{padding:10px 4px;border-radius:12px;border:2px solid #e2e8f0;cursor:pointer;text-align:center;background:#f8fafc;transition:all .15s;}
 .niv-chip:hover{border-color:var(--p);background:var(--selbg);}
@@ -107,7 +111,7 @@ footer a:hover{text-decoration:underline;}
 @media (max-width: 600px){
   .hi{padding:12px 16px;gap:10px;}
   .ht h1{font-size:18px;}
-  .hbadge{width:44px;height:44px;font-size:17px;}
+  .hlogo{width:44px;height:44px;}
   .hs{padding:7px 16px;}
   .hs span{font-size:12px;}
   .ww{padding:16px 12px 48px;}
@@ -126,12 +130,13 @@ footer a:hover{text-decoration:underline;}
   window.plausible=window.plausible||function(){(plausible.q=plausible.q||[]).push(arguments)},plausible.init=plausible.init||function(i){plausible.o=i||{}};
   plausible.init()
 </script>
+<link rel="icon" type="image/png" href="/teachers/favicon.png">
 </head>
 <body>
 <header class="gh">
   <div class="hi">
     <div class="ht"><h1 id="appTitle">Prompt Generator für Lehrkräfte</h1></div>
-    <div class="hbadge" aria-hidden="true">👩‍🏫</div>
+    <img class="hlogo" src="/teachers/logo.webp" width="56" height="56" alt="">
   </div>
 </header>
 <div class="hs"><span id="tagline"></span></div>
@@ -184,6 +189,21 @@ var CONFIG = {
 };
 
 var ZIELSPRACHEN = ["de", "en", "fr", "es"];
+/* Zielstrukturen zum Anklicken (Schritt 3), je Zielsprache und Niveau.
+   Deutsch: abgeglichen mit dem Goethe-Curriculum A1–C2 (Formen und Strukturen),
+   nur Strukturen, die im mündlichen Deutsch vorkommen. Kein Komma in den
+   Beschriftungen: Das Feld wird an Kommas in einzelne Strukturen geteilt.
+   Weitere Sprachen später ergänzen; fehlt ein Eintrag, bleibt nur das Freitextfeld. */
+var ZIELSTRUKTUREN = {
+  de: {
+    A1: ["Verbposition in Aussage und W-Frage", "Ja-/Nein-Fragen", "Präsens (auch haben/sein)", "Modalverben (können/müssen/wollen/möchten)", "trennbare Verben", "Imperativ", "Akkusativ (Artikel und Pronomen)", "Negation mit nicht/kein", "Possessivartikel", "Perfekt (häufige Verben)", "war/hatte", "Zeitangaben (am/um/von … bis)"],
+    A2: ["Perfekt mit haben/sein", "Präteritum von haben/sein und Modalverben", "Dativ (Artikel und Pronomen)", "Verben mit Dativ (gefallen/helfen/gehören)", "Wechselpräpositionen (wo?/wohin?)", "Adjektivendungen", "Nebensätze mit weil/dass/wenn", "denn/deshalb", "Temporalsätze mit als/wenn/bis/seit", "Komparativ und Superlativ", "reflexive Verben", "Verben mit Präposition (warten auf/denken an)", "Relativsätze (Nominativ/Akkusativ)", "Passiv Präsens", "höfliche Bitten (hätte gern/könnte/würde)"],
+    B1: ["Plusquamperfekt", "Temporalsätze mit bevor/nachdem/während", "indirekte Fragen mit ob/W-Wort", "Infinitiv mit zu", "Relativsätze mit Dativ/Präposition", "Relativsätze mit was/wo", "Konjunktiv II (Wunsch/Rat/irreale Bedingung)", "Verben mit Präposition und da-/wo-Wörter", "damit/um … zu", "obwohl/trotzdem", "so … dass", "je … desto", "Futur I", "Passiv mit Modalverb"],
+    B2: ["Konjunktiv II der Vergangenheit", "irreale Wünsche und Vorwürfe", "als ob + Konjunktiv II", "Modalverben subjektiv (soll/muss … sein)", "lassen + Infinitiv", "nicht nur … sondern auch/sowohl … als auch", "zwar … aber/einerseits … andererseits", "weder … noch", "falls/sobald/solange", "indem/ohne dass/anstatt dass"],
+    C1: ["subjektloses Passiv", "Modalverben subjektiv (Vertiefung)", "es als Platzhalter (Es freut mich …)", "Funktionsverbgefüge", "es sei denn/außer wenn", "wenn … auch/wie … auch", "und zwar/beziehungsweise/vielmehr", "Hervorhebung durch Vorfeld/Nachfeld", "Aufforderungen in verschiedenen Registern"]
+  }
+};
+var NIVEAUS_REIHE = ["A1", "A2", "B1", "B2", "C1", "C2"];
 var NIVEAUS = ["A1", "A2", "B1", "B2", "C1", "C2"];
 
 /* ---------------------------------------------------------------- 2 -- */
@@ -262,6 +282,10 @@ LANG_PACKS.de = {
     s3Struktur: "Zielstruktur(en)",
     s3StrukturHint: "Grammatik, die dran war. Mehrere durch Komma trennen.",
     s3StrukturPH: "z. B. Perfekt mit sein, Nebensätze mit weil",
+    s3StrukturHintChips: "Grammatik, die dran war. Antippen zum Auswählen oder unten selbst eintragen, mehrere durch Komma getrennt.",
+    s3ChipsHint: "Auswahl nach dem Goethe-Curriculum, nur Strukturen des gesprochenen Deutsch.",
+    s3Frueher: "Wiederholung: frühere Niveaus",
+    s3ZuViele: "Mehr als 3 Strukturen sind in einer kurzen Aufnahme kaum prüfbar – wähle lieber die wichtigsten.",
     s3Wortschatz: "Zielwortschatz und Wendungen",
     s3WortschatzHint: "Ein Eintrag pro Zeile oder durch Komma getrennt.",
     s3WortschatzPH: "z. B.\ndie Mülltrennung\nnachhaltig\nIch finde, dass …",
@@ -947,6 +971,36 @@ function chip(path, val, label) {
 function stepHead(title, hint) {
   return "<div class=\"ey\">" + esc(fmt(t("stepOf"), { n: cur + 1, t: STEPS })).toUpperCase() + "</div><div class=\"st\">" + title + "</div>" + (hint ? "<div class=\"sh\">" + hint + "</div>" : "");
 }
+/* Zielstrukturen als Buttons */
+var frueherOffen = false;
+function strukturListe() { return S.zielstruktur.split(",").map(function (x) { return x.trim(); }).filter(Boolean); }
+function strukturToggle(niv, i) {
+  var lbl = ZIELSTRUKTUREN[S.zielsprache][niv][i], l = strukturListe(), k = l.indexOf(lbl);
+  if (k >= 0) l.splice(k, 1); else l.push(lbl);
+  S.zielstruktur = l.join(", ");
+  render();
+}
+function strukturChipRow(niv) {
+  var l = strukturListe();
+  return "<div class=\"chips\" style=\"margin-bottom:10px\">" + ZIELSTRUKTUREN[S.zielsprache][niv].map(function (lbl, i) {
+    var on = l.indexOf(lbl) >= 0;
+    return "<div class=\"chip" + (on ? " sel" : "") + "\" role=\"checkbox\" aria-checked=\"" + on + "\" tabindex=\"0\" onclick=\"strukturToggle('" + niv + "'," + i + ")\" onkeydown=\"if(event.key==='Enter'||event.key===' '){event.preventDefault();strukturToggle('" + niv + "'," + i + ")}\">" + esc(lbl) + "</div>";
+  }).join("") + "</div>";
+}
+function strukturChips() {
+  var sp = ZIELSTRUKTUREN[S.zielsprache];
+  if (!sp || !sp[S.niveau]) return "";
+  var h = "<span class=\"bh\" style=\"margin-top:4px\">" + esc(t("s3ChipsHint")) + "</span>" + strukturChipRow(S.niveau);
+  var frueher = NIVEAUS_REIHE.slice(0, NIVEAUS_REIHE.indexOf(S.niveau)).filter(function (n) { return sp[n]; });
+  if (frueher.length) {
+    h += "<details class=\"sfr\"" + (frueherOffen ? " open" : "") + " ontoggle=\"frueherOffen=this.open\"><summary>" + esc(t("s3Frueher")) + "</summary>";
+    frueher.slice().reverse().forEach(function (n) { h += "<div class=\"sfn\">" + n + "</div>" + strukturChipRow(n); });
+    h += "</details>";
+  }
+  return h;
+}
+function strukturWarnHtml() { return strukturListe().length > 3 ? "<div class=\"sww\">" + esc(t("s3ZuViele")) + "</div>" : ""; }
+function strukturWarnung() { var el = document.getElementById("strukWarn"); if (el) el.innerHTML = strukturWarnHtml(); }
 function blk(label, hint, inner) { return "<div class=\"blk\">" + (label ? "<span class=\"bl\">" + label + "</span>" : "") + (hint ? "<span class=\"bh\">" + hint + "</span>" : "") + inner + "</div>"; }
 
 function renderChrome() {
@@ -1032,8 +1086,11 @@ function renderStep2() {
 
 function renderStep3() {
   var h = stepHead(esc(t("s3Title")), esc(t("s3Hint")));
-  var lz = "<span class=\"bl\" style=\"font-size:12.5px\">" + esc(t("s3Struktur")) + "</span><span class=\"bh\">" + esc(t("s3StrukturHint")) + "</span>";
-  lz += "<input class=\"ti\" type=\"text\" placeholder=\"" + esc(t("s3StrukturPH")) + "\" value=\"" + esc(S.zielstruktur) + "\" oninput=\"setText('zielstruktur',this.value)\">";
+  var hatChips = !!(ZIELSTRUKTUREN[S.zielsprache] && ZIELSTRUKTUREN[S.zielsprache][S.niveau]);
+  var lz = "<span class=\"bl\" style=\"font-size:12.5px\">" + esc(t("s3Struktur")) + "</span><span class=\"bh\">" + esc(t(hatChips ? "s3StrukturHintChips" : "s3StrukturHint")) + "</span>";
+  lz += strukturChips();
+  lz += "<textarea class=\"ti\" rows=\"2\" placeholder=\"" + esc(t("s3StrukturPH")) + "\" oninput=\"setText('zielstruktur',this.value);strukturWarnung()\">" + esc(S.zielstruktur) + "</textarea>";
+  lz += "<div id=\"strukWarn\">" + strukturWarnHtml() + "</div>";
   lz += "<div style=\"height:12px\"></div><span class=\"bl\" style=\"font-size:12.5px\">" + esc(t("s3Wortschatz")) + "</span><span class=\"bh\">" + esc(t("s3WortschatzHint")) + "</span>";
   lz += "<textarea class=\"ti\" rows=\"5\" placeholder=\"" + esc(t("s3WortschatzPH")) + "\" oninput=\"setText('zielwortschatz',this.value)\">" + esc(S.zielwortschatz) + "</textarea>";
   h += blk(esc(t("s3Lernziel")), esc(t("s3LernzielHint")), lz);
