@@ -1,0 +1,4 @@
+# Prompt Generator für Lehrkräfte ist umgezogen auf teachers.promptgenerator.site
+# "!" ist nötig, weil teachers/index.html im Repo bleibt (daraus baut die eigene Netlify-Site).
+/teachers    https://teachers.promptgenerator.site/        301!
+/teachers/*  https://teachers.promptgenerator.site/:splat  301!
