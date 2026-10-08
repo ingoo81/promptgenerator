@@ -204,6 +204,20 @@ var ZIELSTRUKTUREN = {
   }
 };
 var NIVEAUS_REIHE = ["A1", "A2", "B1", "B2", "C1", "C2"];
+/* Notenskalen: Umrechnung der Gesamtstufe A–E (zweidimensional) bzw. der drei
+   Stufen bei A1 (h). D liegt an der Grenze zum Nichtbestehen. */
+var NOTENSKALEN = {
+  de: { chip: "Deutschland 1–6", name: "Schulnoten Deutschland (1 = sehr gut, 6 = ungenügend)", A: "1", B: "2", C: "3", D: "4 oder 5", E: "6", h: ["1", "3 bis 4", "6"], tend: "Tendenzen mit + und − sind erlaubt (z. B. 2+, 3−), wenn die Leistung zwischen zwei Stufen liegt." },
+  at: { chip: "Österreich 1–5", name: "Schulnoten Österreich (1 = Sehr gut, 5 = Nicht genügend)", A: "1", B: "2", C: "3", D: "4 oder 5", E: "5", h: ["1", "3 bis 4", "5"], tend: "Tendenzen mit + und − sind erlaubt (z. B. 2+, 3−), wenn die Leistung zwischen zwei Stufen liegt." },
+  ch: { chip: "Schweiz 6–1", name: "Schulnoten Schweiz (6 = sehr gut, 4 = genügend, 1 = sehr schwach)", A: "6", B: "5", C: "4,5", D: "4 oder 3,5", E: "3", h: ["6", "4", "3"], tend: "Halbe Noten sind erlaubt (z. B. 4,5 oder 5,5)." },
+  fr: { chip: "Frankreich 0–20", name: "Notenskala 0–20 (Frankreich; 10 = bestanden)", A: "17", B: "14", C: "12", D: "10 oder 9", E: "6", h: ["16", "10", "5"], tend: "Halbe Punkte sind erlaubt (z. B. 13,5)." },
+  es: { chip: "Spanien/Lateinamerika 1–10", name: "Notenskala 1–10 (Spanien und Lateinamerika; 5 = bestanden)", A: "9 bis 10", B: "8", C: "6 bis 7", D: "5 oder 4", E: "3", h: ["9", "5", "2"], tend: "Eine Nachkommastelle ist erlaubt (z. B. 7,5)." },
+  punkte: { chip: "0–100 Punkte", name: "Punkte von 0 bis 100", A: "100", B: "75", C: "50", D: "25", E: "0", h: ["100", "50", "0"], tend: "Zwischenwerte sind erlaubt (z. B. 85), wenn die Leistung zwischen zwei Stufen liegt." },
+  us: { chip: "USA A–F", name: "Notenskala A–F (USA; A = beste Note, F = nicht bestanden)", A: "A", B: "B", C: "C", D: "D", E: "F", h: ["A", "C", "F"], tend: "Tendenzen mit + und − sind erlaubt (z. B. B+, A−)." }
+};
+var NOTEN_REIHE = ["de", "at", "ch", "fr", "es", "punkte", "us"];
+/* Übersetzungssprachen für Wortschatzlisten (die Zielsprache wird ausgeblendet). */
+var WORT_SPRACHEN = ["Englisch", "Deutsch", "Französisch", "Spanisch", "Russisch", "Ukrainisch", "Arabisch", "Türkisch"];
 var NIVEAUS = ["A1", "A2", "B1", "B2", "C1", "C2"];
 
 /* ---------------------------------------------------------------- 2 -- */
@@ -269,10 +283,14 @@ LANG_PACKS.de = {
     oFeedback: "Feedback für jede/n Lernende/n",
     oFeedbackEinzel: "Feedback für diese Person",
     oFeedbackD: "Zum direkten Weitergeben: Stärken, Verbesserungen mit Beispiel aus dem eigenen Transkript, ein Tipp.",
-    oFbUeb: "+ 2 Übungen zu den eigenen Fehlern",
-    oFbUebD: "Nur Fehler, die diese Person selbst gemacht hat.",
+    oFbUeb: "+ Übungen zu den eigenen Fehlern",
+    oFbUebD: "Nur Fehler, die diese Person selbst gemacht hat. Die Anzahl wählst du in Schritt 4.",
+    oFbWort: "+ persönliche Wortschatzliste",
+    oFbWortD: "5–8 Wörter, Wendungen und Sätze, die dieser Person gefehlt haben – mit Übersetzung.",
     oUebGruppe: "Übungen für die ganze Gruppe",
-    oUebGruppeD: "Aus allen Transkripten: Übungen zu den 4–6 häufigsten Fehlerbereichen.",
+    oUebGruppeD: "Aus allen Transkripten: Übungen zu den häufigsten Fehlerbereichen. Den Umfang wählst du in Schritt 4.",
+    oWortGruppe: "Wortschatzliste für die Gruppe",
+    oWortGruppeD: "Wörter, Wendungen und ganze Sätze, die in den Gesprächen gefehlt haben oder gepasst hätten – mit Übersetzung, bereit für Quizlet.",
     errOut: "Bitte wähle mindestens ein Ergebnis.",
 
     s3Title: "Worauf soll die Auswertung achten?",
@@ -319,6 +337,16 @@ LANG_PACKS.de = {
     s4FbUmfang: "Länge des Feedbacks",
     fuKurz: "Kurz", fuKurzD: "3–4 Sätze plus Beispiele.",
     fuAus: "Ausführlich", fuAusD: "Mit kurzen Erklärungen.",
+    s4UebZeit: "Bearbeitungszeit der Übungen",
+    s4UebZeitHint: "Die KI richtet die Zahl der Übungen danach – aber nie mehr, als es belegte Fehler gibt.",
+    s4UebZeitEinzel: "Bearbeitungszeit der Übungen für diese Person",
+    s4UebAnzahl: "Übungen je Person im Feedback",
+    uebStk: "Übungen",
+    s4Wort: "Wortschatzliste: Übersetzung in",
+    s4WortHint: "Ein Eintrag pro Zeile im Format „Wort - Übersetzung“.",
+    wsAndere: "Andere …",
+    wsAnderePH: "z. B. Persisch, Vietnamesisch …",
+    errWortSprache: "Bitte gib die Sprache für die Übersetzung der Wortschatzliste an.",
     s4Formate: "Format der Übungen",
     s4FormateHint: "Mehrere möglich.",
     fBlatt: "Arbeitsblatt", fBlattD: "Zum Kopieren oder Ausdrucken, Lösungen am Ende.",
@@ -343,7 +371,10 @@ LANG_PACKS.de = {
       "Drei Punkte ⋮ → <i>Pre-fill form</i> → in beide Felder irgendetwas eintragen → <i>Get link</i> → <i>Copy link</i> → hier einfügen."
     ],
     s4Noten: "Notenformat",
-    nPunkte: "0–100 Punkte", nSchul: "Schulnote 1–6",
+    nEigene: "Eigene Skala",
+    nEigenePH: "Beschreibe deine Skala, z. B. „1–15 Punkte, 15 = beste Note, ab 5 bestanden“",
+    nUmrechnung: "So rechnet die KI um:",
+    errNotenEigene: "Bitte beschreibe deine Notenskala.",
     s4NotenRegel: "Die Note richtet sich nach der schwächeren der beiden Bewertungsdimensionen – gute Sprache gleicht eine schwache Aufgabenerfüllung nicht einfach aus.",
     s4NotenA1: "Für A1 gibt es eine ganzheitliche Einschätzung in drei Stufen (wie bei Start Deutsch 1).",
     errFbSprache: "Bitte gib die Sprache für die Lernenden an.",
@@ -373,6 +404,9 @@ LANG_PACKS.de = {
     chainIndAppH: "Erst einfügen, wenn alle Feedback-Runden fertig sind. Die KI vergibt jeder Person einen Code und gibt dir die Liste Name → Code. Verteile die Codes einzeln.",
     chainGrT: "Übungen für die ganze Gruppe",
     chainGrH: "Im selben Chat einfügen. Bei mehreren Formaten liefert die KI sie nacheinander – schreib jeweils „weiter“.",
+    chainWortT: "Wortschatzliste für die Gruppe",
+    chainWortH: "Im selben Chat einfügen, wenn die Auswertung (und ggf. das Feedback) fertig ist.",
+    wortHint: "Die Wortschatzlisten kannst du in <b>Quizlet</b> importieren (beim Import als Trennzeichen zwischen Begriff und Definition „ - “ angeben). Deine Lernenden können sie auch in den <a href=\"https://promptgenerator.site\" target=\"_blank\" rel=\"noopener\">Prompt Generator für Lernende</a> einfügen (Feld „Eigener Wortschatz“) und die Wörter im nächsten Gespräch üben.",
     chainEinzelUebT: "Übungen für diese Person",
     chainEinzelUebH: "Im selben Chat einfügen, wenn ① fertig ist.",
     copy: "Prompt kopieren", copied: "Kopiert! ✓",
@@ -450,6 +484,42 @@ LANG_PACKS.de = {
   function wortlisteSatz(S) {
     return CONFIG.WORTLISTE_NIVEAUS.indexOf(S.niveau) >= 0
       ? "Falls ich eine Wortliste hochlade, verwende in den Übungen möglichst nur Wörter daraus. Immer erlaubt sind zusätzlich: Zahlen, Namen, Wochentage, Monate, Grußformeln und Wörter, die in der Aufgabe oder in den Transkripten vorkommen.\n" : "";
+  }
+  /* Umfang der Übungen nach Bearbeitungszeit – nie mehr als belegte Fehler. */
+  function uebZeitSatz(S, wessen) {
+    var z = S.uebZeit, n = z <= 10 ? "2" : z <= 20 ? "3–4" : "5–6";
+    return "Umfang: Übungen für insgesamt etwa " + z + " Minuten Bearbeitungszeit (Richtwert: eine Übung mit 5–8 Aufgaben dauert etwa 5 Minuten, also ungefähr " + n + " Übungen). Mach nicht mehr Übungen, als es Fehlerbereiche mit Belegen in " + wessen + " gibt. Reichen die Belege nicht für die Zeit, sag mir das, statt mit Übungen ohne Beleg aufzufüllen.";
+  }
+  /* Übungsformen als Vorschlag – Vielfalt statt Schema. */
+  function uebFormenSatz(S, f) {
+    var L = [];
+    L.push("Übungsformen – Vorschläge, keine Vorgabe. Wähle abwechslungsreich und passend zum jeweiligen Fehler, verwende möglichst verschiedene Formen und gern auch andere als diese:");
+    L.push("- Endungen, Artikel, Kasus: Lückentext oder Auswahl aus 2–3 Formen");
+    L.push("- Satzstellung: Wörter zu einem Satz ordnen");
+    L.push("- Strukturen (z. B. Nebensatz, Perfekt, Passiv): Sätze umformen");
+    L.push("- Wortschatz: Zuordnen oder passendes Wort einsetzen");
+    L.push("- Fehler finden und korrigieren – in echten, anonymisierten Sätzen der Lernenden");
+    L.push("- zum Abschluss ein kurzer Sprech- oder Schreibauftrag mit dem geübten Punkt");
+    var namen = { html: "die interaktive Übungsseite", moodle: "das Moodle-Quiz", blatt: "das Arbeitsblatt", lernprompt: "den Übungs-Prompt" };
+    var auto = f.filter(function (k) { return k === "html" || k === "moodle"; }), frei = f.filter(function (k) { return k === "blatt" || k === "lernprompt"; });
+    function und(a) { return a.map(function (k) { return namen[k]; }).join(" und "); }
+    if (auto.length && !frei.length) L.push("Wichtig: Für " + und(auto) + " nur Formen, die sich automatisch prüfen lassen – keine freien Sprech- oder Schreibaufträge.");
+    else if (auto.length) L.push("Freie Sprech- oder Schreibaufträge nur für " + und(frei) + "; für " + und(auto) + " entfallen sie.");
+    return L.join("\n");
+  }
+  /* Format der Wortschatzlisten */
+  function wortSprache(S) { return S.wortSprache === "andere" ? (S.wortSpracheAndere.trim() || "Englisch") : S.wortSprache; }
+  function wortFormSatz(S) {
+    var nomen = S.zielsprache === "de" ? " Nomen mit Artikel und Pluralform (z. B. „die Rechnung, -en“), Verben im Infinitiv mit Perfektform (z. B. „bestellen, hat bestellt“)."
+      : (S.zielsprache === "fr" || S.zielsprache === "es") ? " Nomen mit Artikel, Verben im Infinitiv." : " Verben im Infinitiv.";
+    return "Ein Eintrag pro Zeile im Format: Eintrag - Übersetzung (Bindestrich mit je einem Leerzeichen davor und danach). Keine Überschriften, Nummern oder Leerzeilen im Codeblock." + nomen + " Übersetzung auf " + wortSprache(S) + ".";
+  }
+  /* Notenskala */
+  function notenSkala(S) { return NOTENSKALEN[S.notenformat] || null; }
+  function notenUmrechnung(S) {
+    var sk = notenSkala(S);
+    if (!sk) return "Rechne die Gesamtstufe in diese Notenskala um: „" + (S.notenEigene || "").trim() + "“. A ist die beste Note, D liegt an der Grenze zum Nichtbestehen, E ist die schlechteste. Schreib die Zuordnung A–E einmal in einer Zeile über die Tabelle.";
+    return "Rechne die Gesamtstufe um in " + sk.name + ": A = " + sk.A + ", B = " + sk.B + ", C = " + sk.C + ", D = " + sk.D + ", E = " + sk.E + "." + (sk.D.indexOf("oder") >= 0 ? " D liegt an der Grenze zum Nichtbestehen – entscheide dort nach dem Gesamteindruck." : "") + " " + sk.tend;
   }
   function endungenUebSatz(S) {
     return isSkript(S)
@@ -621,16 +691,17 @@ LANG_PACKS.de = {
       sec("ORIENTIERUNGSNOTEN (nur für mich – niemals als offizielle Note verwenden)");
       if (k.typ === "holistisch") {
         L.push("Vergib " + (gruppe ? "pro Person" : "für diese Person") + " eine ungefähre Note, angelehnt an das ganzheitliche Bewertungsprinzip von " + bezug + ". Es gibt keine A–E-Skala, sondern drei Stufen:");
-        k.stufen.forEach(function (st) { L.push("- " + st.label + " (" + (S.notenformat === "schulnote" ? "Note " + st.note : st.punkte + " Punkte") + ")"); });
+        var sk = notenSkala(S);
+        k.stufen.forEach(function (st, i) { L.push("- " + st.label + (sk ? " (" + sk.h[i] + ")" : "")); });
+        if (sk) L.push("Notenskala: " + sk.name + ". " + sk.tend);
+        else L.push("Notenskala: „" + (S.notenEigene || "").trim() + "“. Ordne den drei Stufen passende Noten dieser Skala zu und nenne die Zuordnung einmal über der Tabelle.");
         L.push("Tabelle: " + kennung(S) + " | Einschätzung (kurz) | Note.");
       } else {
         L.push("Vergib " + (gruppe ? "pro Person" : "für diese Person") + " eine ungefähre Note, angelehnt an " + bezug + ". Bewerte zwei Dimensionen je auf einer Skala von A bis E:");
         L.push("- Aufgabenerfüllung: A = " + k.aufgabe.A + " | B = " + k.aufgabe.B + " | C = " + k.aufgabe.C + " | D = " + k.aufgabe.D + " | E = " + k.aufgabe.E);
         L.push("- Sprache: A = " + k.sprache.A + " | B = " + k.sprache.B + " | C = " + k.sprache.C + " | D = " + k.sprache.D + " | E = " + k.sprache.E);
         L.push("Bilde die Gesamtstufe so – kein Durchschnitt: Ausgangspunkt ist die schwächere der beiden Dimensionen. Ist die stärkere Dimension mindestens zwei Stufen besser, hebe um genau eine Stufe an (Beispiel: Aufgabenerfüllung A, Sprache D → C). Ist eine Dimension E, bleibt es bei E.");
-        L.push(S.notenformat === "schulnote"
-          ? "Rechne die Gesamtstufe um: A = 1, B = 2, C = 3, D = 5, E = 6. Ganze Noten, keine Nachkommastellen."
-          : "Rechne die Gesamtstufe um: A = 100, B = 75, C = 50, D = 25, E = 0 Punkte.");
+        L.push(notenUmrechnung(S));
         L.push("Tabelle: " + kennung(S) + " | Aufgabenerfüllung (A–E) | Sprache (A–E) | Note.");
       }
       L.push("Nenne direkt darunter, ungekürzt, diese Einschränkungen:");
@@ -669,6 +740,9 @@ LANG_PACKS.de = {
       L.push("Lobe keine korrekten Endungen (die Spracherkennung glättet sie). Stellen, bei denen ein Erkennungsfehler wahrscheinlich ist, lässt du im Feedback an die Lernenden weg.");
       if (S.quelle === "alle") L.push("Steht eine Aufnahme unter „BITTE PRÜFEN“, setze vor ihr Feedback eine Zeile nur für mich: „[Für die Lehrkraft: bitte nachhören – Aufnahme unsicher oder sehr kurz]“.");
     }
+    if (effOut(S).feedbackWort) {
+      L.push("Persönliche Wortschatzliste: Füge am Ende jedes Feedbacks 5–8 Einträge an – Wörter, feste Wendungen oder ganze Sätze, die dieser Person im Gespräch gefehlt haben (erkennbar an Wechseln in eine andere Sprache, Umschreibungen, Fragen nach einem Wort" + (isSkript(S) ? ", langen Pausen direkt vor einem Nomen" : "") + "), die sie falsch verwendet hat oder die an einer Stelle gut gepasst hätten. Nur Einträge, die zum Thema der Aufgabe und zum Niveau passen. Gib die Liste in einem Codeblock aus. " + wortFormSatz(S));
+    }
     L.push("Überschrift jedes Feedbacks: " + (S.quelle === "app" ? "der Name." : "der Code."));
     return L.join("\n");
   }
@@ -678,7 +752,7 @@ LANG_PACKS.de = {
   }
 
   function blattSpec(mitLoesungEnde) {
-    return "ARBEITSBLATT: Nummerierte Übungen mit je einer kurzen Arbeitsanweisung, verschiedene Übungsformen (z. B. Lückentext, Satzumbau, Fehler finden, Auswahl). " + (mitLoesungEnde ? "Die Lösungen gesammelt am Ende unter der Überschrift „Lösungen“. " : "") + "Einfache Formatierung, die sich gut in ein Textdokument kopieren lässt.";
+    return "ARBEITSBLATT: Nummerierte Übungen mit je einer kurzen Arbeitsanweisung. " + (mitLoesungEnde ? "Die Lösungen gesammelt am Ende unter der Überschrift „Lösungen“. " : "") + "Einfache Formatierung, die sich gut in ein Textdokument kopieren lässt.";
   }
 
   function htmlSpec(S, modus) {
@@ -728,7 +802,7 @@ LANG_PACKS.de = {
     if (S.feedbackUeb) {
       var f = formatListe(S, ["blatt", "lernprompt", "html"]);
       L.push("");
-      L.push("Hänge an jedes Feedback 2 kurze Übungen zu genau den Fehlern dieser Person an – nur Fehler, die sie selbst gemacht hat.");
+      L.push("Hänge an jedes Feedback " + S.feedbackUebAnzahl + " kurze Übungen zu genau den Fehlern dieser Person an – nur Fehler, die sie selbst gemacht hat. Hat sie weniger Fehlerbereiche, mach weniger Übungen, statt aufzufüllen. Wechsle die Übungsformen ab (z. B. Lückentext, Auswahl, Sätze ordnen, Umformen, Fehler finden), damit nicht jede Person dieselbe Form bekommt.");
       if (f.indexOf("blatt") >= 0) L.push("Form: Arbeitsanweisung und Aufgabe, darunter abgesetzt „Lösung:“.");
       if (f.indexOf("lernprompt") >= 0) L.push(lernpromptSpec(S, "diese Person"));
       if (f.indexOf("html") >= 0) L.push("Gib die beiden Übungen in jedem Fall vollständig mit Lösung an – daraus baust du später eine interaktive Seite.");
@@ -759,13 +833,16 @@ LANG_PACKS.de = {
     var L = [], f = formatListe(S, ["blatt", "lernprompt", "html", "moodle"]);
     L.push("ÜBUNGEN FÜR DIE GANZE GRUPPE");
     L.push("");
-    L.push("Erstelle Übungen für die ganze Gruppe. Sammle dazu die Fehler aus allen Transkripten, wähle die 4–6 häufigsten Fehlerbereiche und baue zu jedem Bereich 1–2 Übungen. Verwende als Material echte Formulierungen verschiedener Lernender (ohne " + kennungen(S) + ") – zum Korrigieren, Umformen oder Fehlersuchen.");
+    L.push("Erstelle Übungen für die ganze Gruppe. Sammle dazu die Fehler aus allen Transkripten und beginne mit den Fehlerbereichen, die die meisten Lernenden betreffen. Verwende als Material echte Formulierungen verschiedener Lernender (ohne " + kennungen(S) + ").");
+    L.push(uebZeitSatz(S, "den Transkripten"));
     var lz = lernzielZeilen(S);
     if (lz.length) L.push("Berücksichtige vorrangig das Lernziel (" + lz.join("; ") + "), vor allem Teile, die noch nicht oder nicht sicher verwendet wurden.");
     var ws = wortlisteSatz(S), en = endungenUebSatz(S);
     if (ws) L.push(ws.trim());
     if (en) L.push(en.trim());
     L.push("Arbeitsanweisungen und Erklärungen " + erklSprache(S) + ". " + anrede(S));
+    L.push("");
+    L.push(uebFormenSatz(S, f));
     L.push("");
     if (f.length > 1) { L.push("Liefere die Formate nacheinander, in der Reihenfolge unten. Nach jedem Format warte, bis ich „weiter“ schreibe. Alle Formate enthalten dieselben Übungen."); L.push(""); }
     if (f.indexOf("blatt") >= 0) { L.push(blattSpec(true)); L.push(""); }
@@ -775,18 +852,43 @@ LANG_PACKS.de = {
     return L.join("\n").replace(/\n+$/, "");
   };
 
+  /* ---------- Wortschatzliste für die Gruppe ---------- */
+  P.wortGruppe = function (S) {
+    var L = [], wl = wortschatzListe(S);
+    L.push("WORTSCHATZLISTE FÜR DIE GRUPPE");
+    L.push("");
+    L.push("Erstelle jetzt eine Wortschatzliste für die ganze Gruppe – aus dem, was in den Gesprächen gefehlt hat oder gut gepasst hätte. Es gelten die Grundregeln aus meinem ersten Auftrag.");
+    L.push("Wähle die Einträge nach diesen Kriterien, das Wichtigste zuerst:");
+    var K = [];
+    K.push("Wörter, die gefehlt haben: Wechsel in eine andere Sprache, Umschreibungen („das Ding für …“), Fragen nach einem Wort" + (isSkript(S) ? ", lange Pausen direkt vor einem Nomen" : "") + ".");
+    K.push("Wörter, die falsch verwendet wurden: falsches Wort, falscher Artikel oder falsche Form.");
+    if (wl.length) K.push("Einträge aus dem Zielwortschatz (" + wl.join(", ") + "), die offensichtlich zum Thema der Aufgabe passen und nicht oder falsch verwendet wurden.");
+    K.push("Wörter aus den Beiträgen der KI, die Lernende übernommen oder nicht verstanden haben.");
+    K.push("Feste Wendungen und ganze Sätze, die zu diesem Thema passen und in diesen Gesprächen gepasst hätten.");
+    K.forEach(function (x, i) { L.push((i + 1) + ". " + x); });
+    L.push("Nur Einträge, die zum Thema der Aufgabe und zum Niveau " + S.niveau + " passen (höchstens ein Niveau darüber). Einträge, die mehrere Lernende betreffen, kommen zuerst.");
+    if (isSkript(S)) L.push("Wörter aus anderen Sprachen schreibt die Spracherkennung oft falsch – erschließe das gemeinte Wort aus dem Zusammenhang.");
+    L.push("Umfang: etwa 15 Wörter, 5 feste Wendungen und 5 ganze Sätze – erst die Wörter, dann die Wendungen, dann die Sätze.");
+    L.push("Gib die Liste in einem einzigen Codeblock aus. " + wortFormSatz(S));
+    L.push("Unter dem Codeblock höchstens 3 Sätze nur für mich: Welche Lücken waren in der Gruppe am häufigsten?");
+    return L.join("\n");
+  };
+
   /* ---------- Übungen für eine Person (Einzelanalyse) ---------- */
   P.uebEinzel = function (S) {
     var L = [], f = formatListe(S, ["blatt", "lernprompt", "html"]);
     L.push("ÜBUNGEN FÜR DIESE PERSON");
     L.push("");
-    L.push("Erstelle 4–6 kurze Übungen zu genau den Fehlern dieser Person aus deiner Auswertung oben.");
+    L.push("Erstelle Übungen zu genau den Fehlern dieser Person aus deiner Auswertung oben.");
+    L.push(uebZeitSatz(S, "ihrem Transkript"));
     var lz = lernzielZeilen(S);
     if (lz.length) L.push("Berücksichtige vorrangig das Lernziel (" + lz.join("; ") + ").");
     var ws = wortlisteSatz(S), en = endungenUebSatz(S);
     if (ws) L.push(ws.trim());
     if (en) L.push(en.trim());
     L.push("Arbeitsanweisungen und Erklärungen " + erklSprache(S) + ". " + anrede(S));
+    L.push("");
+    L.push(uebFormenSatz(S, f));
     L.push("");
     if (f.length > 1) { L.push("Liefere die Formate nacheinander. Nach jedem Format warte, bis ich „weiter“ schreibe. Alle Formate enthalten dieselben Übungen."); L.push(""); }
     if (f.indexOf("blatt") >= 0) { L.push(blattSpec(true)); L.push(""); }
@@ -801,19 +903,20 @@ function defaultState() {
   return {
     lang: "de", langChosen: false,
     zielsprache: "", niveau: "", aufgabe: "", aufgabePrompt: "", quelle: "",
-    out: { gruppe: true, unterricht: true, noten: false, feedback: false, uebGruppe: false },
-    gruppeSpann: true, gruppeBildung: true, feedbackUeb: false,
+    out: { gruppe: true, unterricht: true, noten: false, feedback: false, uebGruppe: false, wortGruppe: false },
+    gruppeSpann: true, gruppeBildung: true, feedbackUeb: false, feedbackUebAnzahl: 2, feedbackWort: false,
     zielstruktur: "", zielwortschatz: "",
     kennzahlen: "erklaeren", flussMarkieren: false,
     umfang: "mittel", zeitrahmen: 45,
     fbSprache: "ziel", fbSpracheAndere: "", anrede: "du", fbUmfang: "kurz",
-    uebFormate: { blatt: true, lernprompt: false, html: false, moodle: false },
-    formLink: "", notenformat: "schulnote",
+    uebFormate: { blatt: true, lernprompt: false, html: false, moodle: false }, uebZeit: 20,
+    wortSprache: "Englisch", wortSpracheAndere: "",
+    formLink: "", notenformat: "de", notenEigene: "",
     merken: false
   };
 }
 /* Was gemerkt wird – Aufgabe und Lernziel bewusst nicht. */
-var PERSIST = ["lang", "zielsprache", "niveau", "quelle", "out", "gruppeSpann", "gruppeBildung", "feedbackUeb", "kennzahlen", "flussMarkieren", "umfang", "zeitrahmen", "fbSprache", "fbSpracheAndere", "anrede", "fbUmfang", "uebFormate", "formLink", "notenformat"];
+var PERSIST = ["lang", "zielsprache", "niveau", "quelle", "out", "gruppeSpann", "gruppeBildung", "feedbackUeb", "kennzahlen", "flussMarkieren", "umfang", "zeitrahmen", "fbSprache", "fbSpracheAndere", "anrede", "fbUmfang", "uebFormate", "formLink", "notenformat", "feedbackUebAnzahl", "feedbackWort", "uebZeit", "wortSprache", "wortSpracheAndere", "notenEigene"];
 
 var S = defaultState();
 var cur = 0;
@@ -839,9 +942,12 @@ function effOut(s) {
     noten: s.out.noten,
     feedback: s.out.feedback,
     feedbackUeb: s.out.feedback && s.feedbackUeb,
-    uebGruppe: !e && s.out.uebGruppe
+    feedbackWort: s.out.feedback && s.feedbackWort,
+    uebGruppe: !e && s.out.uebGruppe,
+    wortGruppe: !e && s.out.wortGruppe
   };
 }
+function hatWortliste(s) { var o = effOut(s); return o.feedbackWort || o.wortGruppe; }
 function hatUebungen(s) { var o = effOut(s); return o.feedbackUeb || o.uebGruppe; }
 function erlaubteFormate(s) { var o = effOut(s); var a = ["blatt", "lernprompt", "html"]; if (o.uebGruppe) a.push("moodle"); return a; }
 function aktiveFormate(s) { return erlaubteFormate(s).filter(function (k) { return s.uebFormate[k]; }); }
@@ -865,6 +971,7 @@ function buildChainMeta(s) {
   var o = effOut(s), c = [{ id: "main" }];
   if (s.quelle !== "einzel") {
     if (o.feedback) c.push({ id: "feedback" });
+    if (o.wortGruppe) c.push({ id: "wortGr" });
     if (o.feedbackUeb && s.uebFormate.html) c.push({ id: "uebInd" });
     if (o.uebGruppe) c.push({ id: "uebGr" });
   } else if (o.feedbackUeb) {
@@ -880,6 +987,7 @@ function buildChain(s) {
     if (m.id === "main") { x.title = t("chainMainT"); x.hint = meta.length > 1 ? t("chainMainH") : t("chainMainOnlyH"); x.text = P.main(s); }
     if (m.id === "feedback") { x.title = t("chainFbT"); x.hint = fmt(t("chainFbH"), { n: CONFIG.FEEDBACK_RUNDE }); x.text = P.feedback(s); }
     if (m.id === "uebInd") { x.title = t("chainIndT"); x.hint = s.quelle === "app" ? t("chainIndAppH") : t("chainIndH"); x.text = P.uebIndividuellSeite(s); }
+    if (m.id === "wortGr") { x.title = t("chainWortT"); x.hint = t("chainWortH"); x.text = P.wortGruppe(s); }
     if (m.id === "uebGr") { x.title = t("chainGrT"); x.hint = t("chainGrH"); x.text = P.uebGruppe(s); }
     if (m.id === "uebEinzel") { x.title = t("chainEinzelUebT"); x.hint = t("chainEinzelUebH"); x.text = P.uebEinzel(s); }
     return x;
@@ -906,6 +1014,8 @@ function laden() {
       else S[k] = o[k];
     });
     if (!LANG_PACKS[S.lang]) S.lang = "de";
+    if (S.notenformat === "schulnote") S.notenformat = "de";
+    if (!NOTENSKALEN[S.notenformat] && S.notenformat !== "eigene") S.notenformat = "de";
     S.merken = true; S.langChosen = true;
   } catch (e) {}
 }
@@ -920,7 +1030,7 @@ function validate(step) {
     if (!S.quelle) return t("errQuelle");
   }
   if (step === 1) {
-    var o = effOut(); if (!(o.gruppe || o.unterricht || o.noten || o.feedback || o.uebGruppe)) return t("errOut");
+    var o = effOut(); if (!(o.gruppe || o.unterricht || o.noten || o.feedback || o.uebGruppe || o.wortGruppe)) return t("errOut");
   }
   if (step === 3) {
     var o2 = effOut();
@@ -929,6 +1039,8 @@ function validate(step) {
       if (!aktiveFormate(S).length) return t("errFormate");
       if (S.uebFormate.html && parseFormLink(S.formLink).state === "fehler") return t("errForm");
     }
+    if (hatWortliste() && S.wortSprache === "andere" && !S.wortSpracheAndere.trim()) return t("errWortSprache");
+    if (o2.noten && S.notenformat === "eigene" && !S.notenEigene.trim()) return t("errNotenEigene");
   }
   return null;
 }
@@ -948,6 +1060,7 @@ function setText(path, v) {
 }
 function afterChange(path) {
   if (path === "zielsprache" && !skriptVerfuegbar(S.zielsprache) && isSkript()) S.quelle = "app";
+  if (path === "zielsprache" && S.wortSprache === t("sprachen")[S.zielsprache]) S.wortSprache = S.zielsprache === "en" ? "Deutsch" : "Englisch";
   if (path === "quelle" && S.quelle === "einzel") {
     var o = effOut(); if (!(o.unterricht || o.noten || o.feedback)) S.out.feedback = true;
   }
@@ -1077,8 +1190,9 @@ function renderStep2() {
     r += cbRow("out.unterricht", esc(t("oUnterricht")), esc(t("oUnterrichtD")));
   }
   r += cbRow("out.feedback", esc(e ? t("oFeedbackEinzel") : t("oFeedback")), esc(t("oFeedbackD")));
-  if (S.out.feedback) r += "<div class=\"sub\">" + cbRow("feedbackUeb", esc(t("oFbUeb")), esc(t("oFbUebD"))) + "</div>";
+  if (S.out.feedback) r += "<div class=\"sub\">" + cbRow("feedbackUeb", esc(t("oFbUeb")), esc(t("oFbUebD"))) + cbRow("feedbackWort", esc(t("oFbWort")), esc(t("oFbWortD"))) + "</div>";
   if (!e) r += cbRow("out.uebGruppe", esc(t("oUebGruppe")), esc(t("oUebGruppeD")));
+  if (!e) r += cbRow("out.wortGruppe", esc(t("oWortGruppe")), esc(t("oWortGruppeD")));
   if (e) r += cbRow("out.unterricht", esc(t("oFoerder")), esc(t("oFoerderD")));
   r += cbRow("out.noten", esc(t("oNoten")), esc(t("oNotenD")));
   return h + r + "</div>";
@@ -1119,6 +1233,12 @@ function renderStep4() {
     if (o.feedback) x += "<div style=\"height:12px\"></div><span class=\"bl\" style=\"font-size:12.5px\">" + esc(t("s4FbUmfang")) + "</span><div class=\"rg\">" + rdRow("fbUmfang", "kurz", esc(t("fuKurz")), esc(t("fuKurzD"))) + rdRow("fbUmfang", "ausfuehrlich", esc(t("fuAus")), esc(t("fuAusD"))) + "</div>";
     h += blk(esc(t("s4Lernende")), esc(t("s4LernendeHint")), x);
   }
+  if (o.uebGruppe || (S.quelle === "einzel" && o.feedbackUeb)) {
+    h += blk(esc(t(o.uebGruppe ? "s4UebZeit" : "s4UebZeitEinzel")), esc(t("s4UebZeitHint")), "<div class=\"chips\">" + [10, 20, 30].map(function (m) { return chip("uebZeit", m, "ca. " + m + " " + esc(t("min"))); }).join("") + "</div>");
+  }
+  if (o.feedbackUeb && S.quelle !== "einzel") {
+    h += blk(esc(t("s4UebAnzahl")), "", "<div class=\"chips\">" + [2, 4].map(function (m) { return chip("feedbackUebAnzahl", m, m + " " + esc(t("uebStk"))); }).join("") + "</div>");
+  }
   if (hatUebungen()) {
     var f = "<div class=\"rg\">" + cbRow("uebFormate.blatt", esc(t("fBlatt")), esc(t("fBlattD"))) + cbRow("uebFormate.lernprompt", esc(t("fPrompt")), esc(t("fPromptD"))) + cbRow("uebFormate.html", esc(t("fHtml")), esc(t("fHtmlD")));
     if (o.uebGruppe) f += cbRow("uebFormate.moodle", esc(t("fMoodle")), esc(t("fMoodleD")));
@@ -1130,9 +1250,18 @@ function renderStep4() {
       h += blk(esc(t("s4Form")), esc(t("s4FormHint")), g);
     }
   }
+  if (hatWortliste()) {
+    var zsName = t("sprachen")[S.zielsprache];
+    var w = "<div class=\"chips\">" + WORT_SPRACHEN.filter(function (x) { return x !== zsName; }).map(function (x) { return chip("wortSprache", x, esc(x)); }).join("") + chip("wortSprache", "andere", esc(t("wsAndere"))) + "</div>";
+    if (S.wortSprache === "andere") w += "<input class=\"ti inl\" type=\"text\" placeholder=\"" + esc(t("wsAnderePH")) + "\" value=\"" + esc(S.wortSpracheAndere) + "\" oninput=\"setText('wortSpracheAndere',this.value)\">";
+    h += blk(esc(t("s4Wort")), esc(t("s4WortHint")), w);
+  }
   if (o.noten) {
     var k = LANG_PACKS.de.kriterien[S.niveau];
-    var n = "<div class=\"chips\">" + chip("notenformat", "schulnote", esc(t("nSchul"))) + chip("notenformat", "punkte", esc(t("nPunkte"))) + "</div>";
+    var n = "<div class=\"chips\">" + NOTEN_REIHE.map(function (x) { return chip("notenformat", x, esc(NOTENSKALEN[x].chip)); }).join("") + chip("notenformat", "eigene", esc(t("nEigene"))) + "</div>";
+    if (S.notenformat === "eigene") n += "<input class=\"ti inl\" type=\"text\" placeholder=\"" + esc(t("nEigenePH")) + "\" value=\"" + esc(S.notenEigene) + "\" oninput=\"setText('notenEigene',this.value)\">";
+    var sk = NOTENSKALEN[S.notenformat];
+    if (sk) n += "<div class=\"bh\" style=\"margin-top:8px\">" + esc(t("nUmrechnung")) + " " + esc(k && k.typ === "holistisch" ? sk.h.join(" · ") : "A → " + sk.A + " · B → " + sk.B + " · C → " + sk.C + " · D → " + sk.D + " · E → " + sk.E) + ". " + esc(sk.tend) + "</div>";
     n += "<div class=\"av\" style=\"margin-top:10px\"><p>" + esc(k && k.typ === "holistisch" ? t("s4NotenA1") : t("s4NotenRegel")) + "</p></div>";
     h += blk(esc(t("s4Noten")), "", n);
   }
@@ -1146,7 +1275,7 @@ function updateFormStatus() {
   el.textContent = f.state === "ok" ? t("formOk") : f.state === "fehler" ? f.msg : t("formLeer");
 }
 
-var NUM = ["①", "②", "③", "④", "⑤"];
+var NUM = ["①", "②", "③", "④", "⑤", "⑥"];
 function renderStep5() {
   var chain = buildChain(S), o = effOut();
   var h = "<div class=\"ey\">" + esc(t("s5Ey")) + "</div><div class=\"st\">" + esc(t("s5Title")) + "</div>";
@@ -1165,6 +1294,7 @@ function renderStep5() {
     if (S.uebFormate.html) h += "<div class=\"tb\">" + t("htmlHint") + "</div>";
     if (o.uebGruppe && S.uebFormate.moodle) h += "<details class=\"fold\"><summary>" + esc(t("moodleTitle")) + "</summary><div class=\"fb\"><ol>" + t("moodleSteps").map(function (s) { return "<li>" + s + "</li>"; }).join("") + "</ol></div></details>";
   }
+  if (hatWortliste()) h += "<div class=\"tb\">" + t("wortHint") + "</div>";
   if (o.feedback || hatUebungen()) h += "<div class=\"wb2\">" + esc(t("lesen")) + "</div>";
   h += "<div class=\"sect\"><div class=\"sect-t\">" + esc(t("dsTitle")) + "</div><div class=\"av\"><ul>" + t("dsItems").map(function (s) { return "<li>" + s + "</li>"; }).join("") + "</ul><p style=\"margin-top:6px\"><a href=\"" + CONFIG.KURS_DATENSCHUTZ_URL + "\" target=\"_blank\" rel=\"noopener\" style=\"color:var(--d)\">" + esc(t("dsLink")) + " →</a></p></div></div>";
   h += "<div class=\"foot-ctrl\">" + cbRow("merken", esc(t("merken")), esc(t("merkenD"))) + "<button class=\"bb\" onclick=\"resetAll()\">" + esc(t("reset")) + "</button></div>";
