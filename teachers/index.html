@@ -130,13 +130,13 @@ footer a:hover{text-decoration:underline;}
   window.plausible=window.plausible||function(){(plausible.q=plausible.q||[]).push(arguments)},plausible.init=plausible.init||function(i){plausible.o=i||{}};
   plausible.init()
 </script>
-<link rel="icon" type="image/png" href="/teachers/favicon.png">
+<link rel="icon" type="image/png" href="favicon.png">
 </head>
 <body>
 <header class="gh">
   <div class="hi">
     <div class="ht"><h1 id="appTitle">Prompt Generator für Lehrkräfte</h1></div>
-    <img class="hlogo" src="/teachers/logo.webp" width="56" height="56" alt="">
+    <img class="hlogo" src="logo.webp" width="56" height="56" alt="">
   </div>
 </header>
 <div class="hs"><span id="tagline"></span></div>
@@ -179,9 +179,9 @@ var CONFIG = {
      Datei, erscheint kein Button. B1 bewusst nicht: aufbauend rund 11.000
      Tokens, zusammen mit den Transkripten zu groß für kostenlose KI-Konten. */
   WORTLISTE_NIVEAUS: ["A1", "A2"],
-  WORTLISTE_PFAD: "/teachers/wortlisten/",
+  WORTLISTE_PFAD: "wortlisten/",
   KURS_URL: "https://courses.promptgenerator.site/transcription/",
-  KURS_DATENSCHUTZ_URL: "https://courses.promptgenerator.site/transcription/nutzen",
+  KURS_DATENSCHUTZ_URL: "https://courses.promptgenerator.site/transcription/nutzen#03-3",
   STORAGE_KEY: "pgTeachers.settings.v1",
   /* Höchstlänge der Ergebnisdaten im vorausgefüllten Formular-Link (getestet: 1.475 Zeichen) */
   FORM_DATEN_MAX: 1500,
@@ -1008,7 +1008,7 @@ function renderChrome() {
   document.documentElement.lang = S.lang;
   document.getElementById("appTitle").textContent = t("title");
   document.getElementById("tagline").textContent = t("tagline");
-  document.getElementById("footer").innerHTML = esc(t("footer")) + " · <a href=\"/impressum\">" + esc(t("impressum")) + "</a> · <a href=\"/datenschutz\">" + esc(t("datenschutz")) + "</a> · <a href=\"/nutzungsbedingungen\">" + esc(t("nutzung")) + "</a>";
+  document.getElementById("footer").innerHTML = esc(t("footer")) + " · <a href=\"https://promptgenerator.site/impressum\">" + esc(t("impressum")) + "</a> · <a href=\"https://promptgenerator.site/datenschutz\">" + esc(t("datenschutz")) + "</a> · <a href=\"https://promptgenerator.site/nutzungsbedingungen\">" + esc(t("nutzung")) + "</a>";
 }
 
 function render() {
