@@ -72,6 +72,25 @@ textarea.ti{resize:vertical;}
 .tb a{color:var(--it);}
 .wb2{background:var(--w);border:1.5px solid var(--wb);border-radius:10px;padding:11px 14px;font-size:12.5px;color:var(--wt);margin-top:14px;line-height:1.55;}
 .wb2 a{color:var(--wt);}
+.mg{margin-top:14px;border:2px solid var(--p);border-radius:14px;padding:14px 16px;background:#fbfdf4;}
+.mg-t{font-size:14px;font-weight:800;color:var(--d);margin-bottom:4px;}
+.mg-i{font-size:12.5px;color:#475569;line-height:1.55;margin-bottom:10px;}
+.mg-drop{border:2px dashed #94a3b8;border-radius:12px;padding:18px 12px;text-align:center;font-size:13px;font-weight:600;color:var(--d);background:white;cursor:pointer;transition:all .15s;}
+.mg-drop:hover,.mg-drop.over{border-color:var(--p);background:var(--selbg);}
+.mg-list{margin-top:12px;display:flex;flex-direction:column;gap:6px;}
+.mg-row{display:flex;align-items:center;gap:8px;background:white;border:1.5px solid #e2e8f0;border-radius:10px;padding:6px 8px;}
+.mg-row.warn{border-color:var(--wb);background:#fffbeb;}
+.mg-row input{flex:1;min-width:0;border:1.5px solid #e2e8f0;border-radius:8px;padding:6px 9px;font-size:13.5px;font-family:inherit;}
+.mg-meta{font-size:11.5px;color:#64748b;white-space:nowrap;}
+.mg-w{font-size:11.5px;color:var(--wt);}
+.mg-btn{border:none;background:#f1f5f9;border-radius:7px;width:28px;height:28px;cursor:pointer;font-size:13px;color:#475569;flex-shrink:0;}
+.mg-btn:hover{background:#e2e8f0;}
+.mg-sum{margin-top:10px;font-size:12.5px;color:#334155;}
+.mg-act{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-top:10px;}
+.mg-err{margin-top:8px;font-size:12px;color:var(--err);}
+.mg-dl{display:inline-flex;align-items:center;gap:8px;padding:10px 16px;border-radius:10px;border:none;background:var(--d);color:white;font-weight:700;font-size:13px;cursor:pointer;font-family:inherit;}
+.mg-dl:disabled{opacity:.4;cursor:default;}
+@media(max-width:540px){.mg-row{flex-wrap:wrap;}.mg-row input{flex-basis:100%;}.mg-meta{flex:1;}.mg-w{order:5;flex-basis:100%;}}
 details.fold{margin-top:10px;border:2px solid #e2e8f0;border-radius:12px;background:#f8fafc;overflow:hidden;}
 details.fold summary{padding:10px 14px;cursor:pointer;font-size:12.5px;font-weight:700;color:var(--d);list-style:none;}
 details.fold summary::-webkit-details-marker{display:none;}
@@ -260,6 +279,7 @@ LANG_PACKS.de = {
     qApp: "Transkripte aus der KI-App",
     qAppD: "Die Texte, die die KI-App (z. B. Gemini, ChatGPT) beim Sprechen erstellt hat und die dir deine Lernenden geschickt haben.",
     qAppKurs: "Transkripte mit Pausen und Sprechtempo? → So geht's",
+    qAppMerge: "Mehrere Dateien? Im letzten Schritt führst du sie mit einem Klick zu einer zusammen.",
     qNurApp: "Das Transkriptionsskript gibt es bisher nur für Deutsch – für {sprache} bleibt der Weg über die KI-App.",
     errSprache: "Bitte wähle die Sprache, die du unterrichtest.",
     errNiveau: "Bitte wähle ein Zielniveau.",
@@ -386,8 +406,36 @@ LANG_PACKS.de = {
     upAlle: "Öffne einen neuen Chat (z. B. in Gemini), füge Prompt ① ein und lade die Datei <code>ALLE_TRANSKRIPTE.txt</code> aus dem Ordner „Ergebnisse“ hoch (Plus- bzw. Büroklammer-Symbol). <b>Die Datei <code>ZUORDNUNG_NICHT_HOCHLADEN.txt</code> bleibt immer auf deinem Computer.</b>",
     upAlleGrenze: "Kostenlose KI-Versionen verarbeiten nur eine begrenzte Textmenge. Bei mehr als etwa 15 Aufnahmen kann ALLE_TRANSKRIPTE.txt zu groß sein – die Zählkontrolle am Anfang der Antwort zeigt dir, ob alle Aufnahmen gelesen wurden. Wenn nicht: die Aufnahmen auf zwei Ordner aufteilen und zweimal auswerten.",
     upEinzel: "Öffne einen neuen Chat (z. B. in Gemini), füge Prompt ① ein und lade die Datei <code>Aufnahme_…_analyse.txt</code> hoch (Plus- bzw. Büroklammer-Symbol). <b>Die Datei <code>ZUORDNUNG_NICHT_HOCHLADEN.txt</code> bleibt immer auf deinem Computer.</b>",
-    upApp: "Öffne einen neuen Chat (z. B. in Gemini), füge Prompt ① ein und lade die Transkripte deiner Lernenden hoch – als eine zusammengeführte Datei oder als mehrere Dateien.",
-    mergeTitle: "Wie führe ich die Transkripte zu einer Datei zusammen?",
+    upApp: "Öffne einen neuen Chat (z. B. in Gemini), füge Prompt ① ein und lade die Transkripte deiner Lernenden hoch – am besten als eine Datei, die du hier direkt darunter erstellst.",
+    mgTitle: "Transkripte zu einer Datei zusammenführen",
+    mgIntro: "Kostenlose KI-Versionen erlauben oft nur wenige Uploads. Füge hier alle Transkripte deiner Lernenden zu einer einzigen Datei zusammen.",
+    mgDrop: "Dateien hierher ziehen oder klicken zum Auswählen (.txt oder .docx)",
+    mgPaste: "Text einfügen (z. B. aus einer Mail oder einem Chat)",
+    mgPasteName: "Name der Person",
+    mgPastePH: "Transkript hier einfügen …",
+    mgPasteAdd: "Hinzufügen",
+    mgPrivacy: "Die Dateien werden nur in deinem Browser verarbeitet – nichts wird hochgeladen. Die Namen stehen später in der Datei, die du der KI gibst: am besten nur Vornamen oder Kürzel.",
+    mgNameTitle: "Name (änderbar)",
+    mgChars: "{n} Zeichen",
+    mgUp: "nach oben", mgDown: "nach unten", mgRemove: "entfernen",
+    mgWarnEmpty: "leer – wird nicht übernommen",
+    mgWarnEnc: "Kodierung geschätzt – bitte Umlaute prüfen",
+    mgWarnDup: "Name doppelt",
+    mgWarnNoName: "Name fehlt",
+    mgErrType: "„{f}“: Dieses Format geht nicht. PDF bitte öffnen, den Text kopieren und über „Text einfügen“ hinzufügen.",
+    mgErrRead: "„{f}“ konnte nicht gelesen werden.",
+    mgErrDocx: "„{f}“: Word-Dateien kann dieser Browser nicht lesen. Speichere sie als .txt oder kopiere den Text über „Text einfügen“.",
+    mgErrPasteName: "Bitte gib einen Namen ein.",
+    mgSum: "{n} Transkripte · ca. {w} Wörter",
+    mgTooMany: "Mehr als 15 Transkripte: Für kostenlose KI-Versionen kann die Datei zu groß werden. Die Zählkontrolle am Anfang der Antwort zeigt dir, ob alle gelesen wurden – sonst auf zwei Dateien aufteilen.",
+    mgDownload: "⬇ Datei herunterladen",
+    mgClear: "Liste leeren",
+    mgFile: "transkripte_gesamt.txt",
+    mgHint: "Lade diese eine Datei zusammen mit Prompt ① hoch.",
+    mgHeadTitle: "=== GESAMTÜBERSICHT: {n} Transkripte ===",
+    mgHeadNames: "Personen (in dieser Reihenfolge): {names}",
+    mgHeadInfo: "Zusammengeführt am {d} mit dem Prompt Generator für Lehrkräfte. Jede Person beginnt mit einer Zeile „===== Name =====“.",
+    mergeTitle: "Lieber von Hand zusammenführen?",
     mergeSteps: [
       "Lass dir von jeder Person das <b>reine Transkript</b> schicken – ohne Korrekturen oder Kommentare der KI.",
       "Öffne eine leere Textdatei und füge alle Transkripte nacheinander ein. Setze vor jedes eine Trennzeile mit dem Namen, z. B. <code>===== Amina =====</code>",
@@ -521,9 +569,11 @@ LANG_PACKS.de = {
     if (!sk) return "Rechne die Gesamtstufe in diese Notenskala um: „" + (S.notenEigene || "").trim() + "“. A ist die beste Note, D liegt an der Grenze zum Nichtbestehen, E ist die schlechteste. Schreib die Zuordnung A–E einmal in einer Zeile über die Tabelle.";
     return "Rechne die Gesamtstufe um in " + sk.name + ": A = " + sk.A + ", B = " + sk.B + ", C = " + sk.C + ", D = " + sk.D + ", E = " + sk.E + "." + (sk.D.indexOf("oder") >= 0 ? " D liegt an der Grenze zum Nichtbestehen – entscheide dort nach dem Gesamteindruck." : "") + " " + sk.tend;
   }
-  function endungenUebSatz(S) {
-    return isSkript(S)
-      ? "Beachte: Die Spracherkennung glättet Endungen. Endungsfehler können deshalb im Transkript fehlen. Wenn Endungen für dieses Niveau wichtig sind, darfst du dazu eine Übung aufnehmen, auch wenn sie im Transkript selten vorkommen.\n" : "";
+  function endungenUebSatz(S, gruppe) {
+    if (!isSkript(S)) return "";
+    return gruppe
+      ? "Beachte: Die Spracherkennung glättet Endungen, Endungsfehler können deshalb im Transkript fehlen. Einzige Ausnahme von der Belegregel: Wenn Endungen für dieses Niveau wichtig sind, darfst du höchstens eine Übung zu Endungen ohne direkten Beleg aufnehmen. Nenne sie mir vorab in einer Zeile nur für mich (z. B. „Übung 3: Adjektivendungen – ohne direkten Beleg, weil die Spracherkennung Endungen glättet“). Auf den Materialien für die Lernenden steht davon nichts.\n"
+      : "Beachte: Die Spracherkennung glättet Endungen, Endungsfehler können deshalb im Transkript fehlen. Übe trotzdem nur Fehler, die im Transkript dieser Person belegt sind.\n";
   }
 
   /* ---------- Hauptprompt ---------- */
@@ -537,7 +587,7 @@ LANG_PACKS.de = {
     } else if (S.quelle === "einzel") {
       L.push("Ich lade dir eine Einzelanalyse hoch (Datei „Aufnahme_A-XXXXXX_analyse.txt“). Sie wurde mit einem Transkriptionsskript aus der Sprachaufnahme einer lernenden Person erstellt – meist ein Gespräch mit einer KI. Sie enthält Kennzahlen, das Gespräch mit Zeitangaben und Pausen und einen Abschnitt nur mit den Äußerungen der lernenden Person ohne Pausen. Die Person ist nur über ihren Code erkennbar.");
     } else {
-      L.push("Ich lade dir die Gesprächstranskripte meiner Lernenden hoch. Sie haben mit einer KI-App (z. B. Gemini oder ChatGPT) gesprochen und mir das Transkript geschickt, das die App dabei erstellt hat. Jede Person ist mit ihrem Namen gekennzeichnet – durch eine Trennzeile wie „===== Name =====“ in einer gemeinsamen Datei oder durch den Dateinamen.");
+      L.push("Ich lade dir die Gesprächstranskripte meiner Lernenden hoch. Sie haben mit einer KI-App (z. B. Gemini oder ChatGPT) gesprochen und mir das Transkript geschickt, das die App dabei erstellt hat. Jede Person ist mit ihrem Namen gekennzeichnet – durch eine Trennzeile wie „===== Name =====“ in einer gemeinsamen Datei oder durch den Dateinamen. Steht oben in der Datei eine GESAMTÜBERSICHT, nennt sie Anzahl und Namen.");
     }
     L.push("");
     L.push("KONTEXT");
@@ -582,7 +632,7 @@ LANG_PACKS.de = {
 
     // Zählkontrolle
     if (S.quelle === "alle") L.push("ZUERST: Nenne in einer Zeile, wie viele Aufnahmen du ausgewertet hast, und liste ihre Codes auf. Sind es weniger, als in der Gesamtübersicht angegeben, schreib das deutlich dazu – dann war die Datei vermutlich zu lang.");
-    if (S.quelle === "app") L.push("ZUERST: Nenne in einer Zeile, wie viele Lernende du in den Transkripten erkannt hast, und liste ihre Namen auf. Ist die Abgrenzung zwischen zwei Personen unklar, schreib das.");
+    if (S.quelle === "app") L.push("ZUERST: Nenne in einer Zeile, wie viele Lernende du in den Transkripten erkannt hast, und liste ihre Namen auf. Steht oben eine GESAMTÜBERSICHT, gleiche deine Zählung damit ab: Fehlt jemand oder ist jemand zusätzlich, schreib das deutlich dazu – dann war die Datei vermutlich zu lang. Ist die Abgrenzung zwischen zwei Personen unklar, schreib das.");
     if (S.quelle !== "einzel") L.push("");
 
     var hatHaupt = gruppe ? (o.gruppe || o.unterricht || o.noten) : true;
@@ -701,6 +751,7 @@ LANG_PACKS.de = {
         L.push("- Aufgabenerfüllung: A = " + k.aufgabe.A + " | B = " + k.aufgabe.B + " | C = " + k.aufgabe.C + " | D = " + k.aufgabe.D + " | E = " + k.aufgabe.E);
         L.push("- Sprache: A = " + k.sprache.A + " | B = " + k.sprache.B + " | C = " + k.sprache.C + " | D = " + k.sprache.D + " | E = " + k.sprache.E);
         L.push("Bilde die Gesamtstufe so – kein Durchschnitt: Ausgangspunkt ist die schwächere der beiden Dimensionen. Ist die stärkere Dimension mindestens zwei Stufen besser, hebe um genau eine Stufe an (Beispiel: Aufgabenerfüllung A, Sprache D → C). Ist eine Dimension E, bleibt es bei E.");
+        if (S.quelle === "app") L.push("Achtung: Diese Transkripte enthalten keine Zeitangaben. Merkmale zu Sprechtempo, Pausen und Sprechweise (z. B. „flüssig“, „stockend“, „natürliche Sprechweise“) bewertest du deshalb nicht – beurteile die Dimension Sprache nur nach Wortschatz, Strukturen und Verknüpfung der Sätze und schreib unter die Tabelle: „Flüssigkeit nicht bewertet (keine Zeitangaben im Transkript)“.");
         L.push(notenUmrechnung(S));
         L.push("Tabelle: " + kennung(S) + " | Aufgabenerfüllung (A–E) | Sprache (A–E) | Note.");
       }
@@ -806,7 +857,7 @@ LANG_PACKS.de = {
       if (f.indexOf("blatt") >= 0) L.push("Form: Arbeitsanweisung und Aufgabe, darunter abgesetzt „Lösung:“.");
       if (f.indexOf("lernprompt") >= 0) L.push(lernpromptSpec(S, "diese Person"));
       if (f.indexOf("html") >= 0) L.push("Gib die beiden Übungen in jedem Fall vollständig mit Lösung an – daraus baust du später eine interaktive Seite.");
-      var ws = wortlisteSatz(S), en = endungenUebSatz(S);
+      var ws = wortlisteSatz(S), en = endungenUebSatz(S, false);
       if (ws) L.push(ws.trim());
       if (en) L.push(en.trim());
     }
@@ -837,7 +888,7 @@ LANG_PACKS.de = {
     L.push(uebZeitSatz(S, "den Transkripten"));
     var lz = lernzielZeilen(S);
     if (lz.length) L.push("Berücksichtige vorrangig das Lernziel (" + lz.join("; ") + "), vor allem Teile, die noch nicht oder nicht sicher verwendet wurden.");
-    var ws = wortlisteSatz(S), en = endungenUebSatz(S);
+    var ws = wortlisteSatz(S), en = endungenUebSatz(S, true);
     if (ws) L.push(ws.trim());
     if (en) L.push(en.trim());
     L.push("Arbeitsanweisungen und Erklärungen " + erklSprache(S) + ". " + anrede(S));
@@ -883,7 +934,7 @@ LANG_PACKS.de = {
     L.push(uebZeitSatz(S, "ihrem Transkript"));
     var lz = lernzielZeilen(S);
     if (lz.length) L.push("Berücksichtige vorrangig das Lernziel (" + lz.join("; ") + ").");
-    var ws = wortlisteSatz(S), en = endungenUebSatz(S);
+    var ws = wortlisteSatz(S), en = endungenUebSatz(S, false);
     if (ws) L.push(ws.trim());
     if (en) L.push(en.trim());
     L.push("Arbeitsanweisungen und Erklärungen " + erklSprache(S) + ". " + anrede(S));
@@ -1175,7 +1226,7 @@ function renderStep1() {
     q += rdRow("quelle", "alle", esc(t("qAlle")), esc(t("qAlleD")));
     q += rdRow("quelle", "einzel", esc(t("qEinzel")), esc(t("qEinzelD")));
   }
-  q += rdRow("quelle", "app", esc(t("qApp")), esc(t("qAppD")) + "<br><a href=\"" + CONFIG.KURS_URL + "\" target=\"_blank\" rel=\"noopener\" onclick=\"event.stopPropagation()\">" + esc(t("qAppKurs")) + "</a>");
+  q += rdRow("quelle", "app", esc(t("qApp")), esc(t("qAppD")) + "<br>" + esc(t("qAppMerge")) + "<br><a href=\"" + CONFIG.KURS_URL + "\" target=\"_blank\" rel=\"noopener\" onclick=\"event.stopPropagation()\">" + esc(t("qAppKurs")) + "</a>");
   q += "</div>";
   if (!skr) q += "<div class=\"av\" style=\"margin-top:8px\"><p>" + esc(fmt(t("qNurApp"), { sprache: t("sprachen")[S.zielsprache] })) + "</p></div>";
   h += blk(esc(t("s1Quelle")) + " <span class=\"rq\">*</span>", "", q);
@@ -1281,7 +1332,10 @@ function renderStep5() {
   var h = "<div class=\"ey\">" + esc(t("s5Ey")) + "</div><div class=\"st\">" + esc(t("s5Title")) + "</div>";
   h += "<div class=\"tb\" style=\"margin-top:8px\">" + (S.quelle === "alle" ? t("upAlle") : S.quelle === "einzel" ? t("upEinzel") : t("upApp")) + "</div>";
   if (S.quelle === "alle") h += "<div class=\"wb2\">" + esc(t("upAlleGrenze")) + "</div>";
-  if (S.quelle === "app") h += "<details class=\"fold\"><summary>" + esc(t("mergeTitle")) + "</summary><div class=\"fb\"><ol>" + t("mergeSteps").map(function (s) { return "<li>" + s + "</li>"; }).join("") + "</ol></div></details>";
+  if (S.quelle === "app") {
+    h += mergeBoxHtml();
+    h += "<details class=\"fold\"><summary>" + esc(t("mergeTitle")) + "</summary><div class=\"fb\"><ol>" + t("mergeSteps").map(function (s) { return "<li>" + s + "</li>"; }).join("") + "</ol></div></details>";
+  }
   h += "<div class=\"chain\" style=\"margin-top:18px\">";
   chain.forEach(function (c, i) {
     h += "<div class=\"ci\"><div class=\"ch\"><div class=\"cn\">" + (i + 1) + "</div><div><div class=\"ct\">" + esc(c.title) + "</div><div class=\"chh\">" + esc(c.hint) + "</div></div></div>";
@@ -1317,6 +1371,163 @@ function pruefeWortliste() {
       zeige(wortlisteCache[url]);
     }).catch(function () { wortlisteCache[url] = false; zeige(false); });
   } catch (e) { zeige(false); }
+}
+
+/* ---------------------------------------------------------------- 5 --
+   Transkripte zusammenführen (nur Quelle „KI-App“, Schritt 5).
+   Alles läuft im Browser: Dateien werden lokal gelesen, nichts wird
+   gesendet. Die Liste liegt bewusst nicht in S und wird nie gespeichert. */
+var MERGE = [], mergeManuell = false, mergeFehler = [], mergeSeq = 0;
+
+function mergeName(fn) {
+  return fn.replace(/\.[^.]+$/, "").replace(/[_]+/g, " ").replace(/\s+/g, " ").trim();
+}
+function mergeSort() {
+  if (mergeManuell) return;
+  MERGE.sort(function (a, b) { return a.name.localeCompare(b.name, undefined, { numeric: true, sensitivity: "base" }); });
+}
+function mergeClean(txt) {
+  return String(txt).replace(/^﻿/, "").replace(/\r\n?/g, "\n").replace(/^\s*\n/, "").replace(/\s+$/, "");
+}
+/* Text-Dekodierung: BOM, UTF-16 ohne BOM, UTF-8 streng, sonst windows-1252. */
+function mergeDecode(buf) {
+  var u = new Uint8Array(buf);
+  if (u.length >= 3 && u[0] === 0xEF && u[1] === 0xBB && u[2] === 0xBF) return { text: new TextDecoder("utf-8").decode(u.subarray(3)), geraten: false };
+  if (u.length >= 2 && u[0] === 0xFF && u[1] === 0xFE) return { text: new TextDecoder("utf-16le").decode(u.subarray(2)), geraten: false };
+  if (u.length >= 2 && u[0] === 0xFE && u[1] === 0xFF) return { text: new TextDecoder("utf-16be").decode(u.subarray(2)), geraten: false };
+  var n = Math.min(u.length, 2000), zo = 0, ze = 0;
+  for (var i = 0; i < n; i++) if (u[i] === 0) { if (i % 2) zo++; else ze++; }
+  if (n > 3 && zo > n * 0.3) return { text: new TextDecoder("utf-16le").decode(u), geraten: false };
+  if (n > 3 && ze > n * 0.3) return { text: new TextDecoder("utf-16be").decode(u), geraten: false };
+  try { return { text: new TextDecoder("utf-8", { fatal: true }).decode(u), geraten: false }; }
+  catch (e) { return { text: new TextDecoder("windows-1252").decode(u), geraten: true }; }
+}
+/* .docx: ZIP-Verzeichnis lesen, word/document.xml entpacken (DecompressionStream). */
+function mergeDocx(buf) {
+  var u = new Uint8Array(buf), dv = new DataView(buf), eocd = -1;
+  for (var i = u.length - 22; i >= Math.max(0, u.length - 65557); i--) if (dv.getUint32(i, true) === 0x06054b50) { eocd = i; break; }
+  if (eocd < 0) return Promise.reject(new Error("zip"));
+  var cnt = dv.getUint16(eocd + 10, true), off = dv.getUint32(eocd + 16, true), ent = null;
+  for (var k = 0; k < cnt; k++) {
+    if (dv.getUint32(off, true) !== 0x02014b50) break;
+    var meth = dv.getUint16(off + 10, true), csize = dv.getUint32(off + 20, true);
+    var nl = dv.getUint16(off + 28, true), xl = dv.getUint16(off + 30, true), cl = dv.getUint16(off + 32, true), lo = dv.getUint32(off + 42, true);
+    var name = new TextDecoder("utf-8").decode(u.subarray(off + 46, off + 46 + nl));
+    if (name === "word/document.xml") { ent = { meth: meth, csize: csize, lo: lo }; break; }
+    off += 46 + nl + xl + cl;
+  }
+  if (!ent) return Promise.reject(new Error("docx"));
+  var start = ent.lo + 30 + dv.getUint16(ent.lo + 26, true) + dv.getUint16(ent.lo + 28, true);
+  var data = u.subarray(start, start + ent.csize);
+  var p;
+  if (ent.meth === 0) p = Promise.resolve(data);
+  else if (ent.meth === 8) {
+    if (typeof DecompressionStream === "undefined") return Promise.reject(new Error("nods"));
+    p = new Response(new Blob([data]).stream().pipeThrough(new DecompressionStream("deflate-raw"))).arrayBuffer().then(function (b) { return new Uint8Array(b); });
+  } else return Promise.reject(new Error("meth"));
+  return p.then(function (x) { return mergeDocxText(new TextDecoder("utf-8").decode(x)); });
+}
+function mergeDocxText(xml) {
+  var body = xml.replace(/^[\s\S]*?<w:body[^>]*>/, "");
+  return body.split(/<\/w:p>/).map(function (par) {
+    par = par.replace(/<w:tab\s*\/>/g, "\u0001").replace(/<w:(br|cr)(\s[^>]*)?\/>/g, "\u0002");
+    var out = "", re = /<w:t(?:\s[^>]*)?>([^<]*)<\/w:t>|(\u0001)|(\u0002)/g, m;
+    while ((m = re.exec(par))) out += m[1] !== undefined ? m[1] : (m[2] ? "\t" : "\n");
+    return out.replace(/&lt;/g, "<").replace(/&gt;/g, ">").replace(/&quot;/g, "\"").replace(/&apos;/g, "'").replace(/&#(\d+);/g, function (a, d) { return String.fromCharCode(+d); }).replace(/&#x([0-9a-f]+);/gi, function (a, h) { return String.fromCharCode(parseInt(h, 16)); }).replace(/&amp;/g, "&");
+  }).join("\n");
+}
+function mergeAddItem(name, text, geraten) {
+  MERGE.push({ id: ++mergeSeq, name: name, text: mergeClean(text), geraten: !!geraten });
+}
+function mergeFiles(list) {
+  var files = Array.prototype.slice.call(list || []);
+  if (!files.length) return;
+  mergeFehler = [];
+  var jobs = files.map(function (f) {
+    var ext = (f.name.match(/\.([^.]+)$/) || ["", ""])[1].toLowerCase();
+    if (ext !== "txt" && ext !== "docx") { mergeFehler.push(fmt(t("mgErrType"), { f: f.name })); return Promise.resolve(); }
+    return f.arrayBuffer().then(function (buf) {
+      if (ext === "txt") { var d = mergeDecode(buf); mergeAddItem(mergeName(f.name), d.text, d.geraten); return; }
+      return mergeDocx(buf).then(function (txt) { mergeAddItem(mergeName(f.name), txt, false); }, function (e) {
+        mergeFehler.push(fmt(t(e && e.message === "nods" ? "mgErrDocx" : "mgErrRead"), { f: f.name }));
+      });
+    }).catch(function () { mergeFehler.push(fmt(t("mgErrRead"), { f: f.name })); });
+  });
+  return Promise.all(jobs).then(function () { mergeSort(); mergeRender(); });
+}
+function mergePasteAdd() {
+  var n = document.getElementById("mgPN"), x = document.getElementById("mgPT");
+  if (!n || !x) return;
+  if (!n.value.trim()) { mergeFehler = [t("mgErrPasteName")]; mergeRender(); return; }
+  mergeFehler = [];
+  mergeAddItem(n.value.trim(), x.value, false);
+  n.value = ""; x.value = "";
+  mergeSort(); mergeRender();
+}
+function mergeMove(id, d) {
+  var i = MERGE.findIndex(function (m) { return m.id === id; }), j = i + d;
+  if (i < 0 || j < 0 || j >= MERGE.length) return;
+  var tmp = MERGE[i]; MERGE[i] = MERGE[j]; MERGE[j] = tmp;
+  mergeManuell = true; mergeRender();
+}
+function mergeRemove(id) { MERGE = MERGE.filter(function (m) { return m.id !== id; }); mergeRender(); }
+function mergeClear() { MERGE = []; mergeManuell = false; mergeFehler = []; mergeRender(); }
+function mergeRename(id, v) { var m = MERGE.find(function (x) { return x.id === id; }); if (m) m.name = v.trim(); }
+function mergeAktiv() { return MERGE.filter(function (m) { return m.text.trim() && m.name; }); }
+function mergeWarnungen(m) {
+  var w = [];
+  if (!m.text.trim()) w.push(t("mgWarnEmpty"));
+  if (!m.name) w.push(t("mgWarnNoName"));
+  else if (MERGE.filter(function (x) { return x.name.toLowerCase() === m.name.toLowerCase(); }).length > 1) w.push(t("mgWarnDup"));
+  if (m.geraten) w.push(t("mgWarnEnc"));
+  return w;
+}
+function mergeOutput() {
+  var a = mergeAktiv(), d = new Date();
+  var datum = ("0" + d.getDate()).slice(-2) + "." + ("0" + (d.getMonth() + 1)).slice(-2) + "." + d.getFullYear();
+  var L = [fmt(t("mgHeadTitle"), { n: a.length }), fmt(t("mgHeadNames"), { names: a.map(function (m) { return m.name; }).join(", ") }), fmt(t("mgHeadInfo"), { d: datum }), ""];
+  a.forEach(function (m) { L.push("===== " + m.name + " ====="); L.push(""); L.push(m.text); L.push(""); });
+  return L.join("\n");
+}
+function mergeDownload() {
+  if (!mergeAktiv().length) return;
+  var blob = new Blob([mergeOutput()], { type: "text/plain;charset=utf-8" });
+  var url = URL.createObjectURL(blob), a = document.createElement("a");
+  a.href = url; a.download = t("mgFile"); document.body.appendChild(a); a.click();
+  setTimeout(function () { URL.revokeObjectURL(url); a.remove(); }, 1000);
+}
+function mergeListHtml() {
+  var h = "";
+  if (MERGE.length) {
+    h += "<div class=\"mg-list\">";
+    MERGE.forEach(function (m, i) {
+      var w = mergeWarnungen(m);
+      h += "<div class=\"mg-row" + (w.length ? " warn" : "") + "\"><input type=\"text\" value=\"" + esc(m.name) + "\" title=\"" + esc(t("mgNameTitle")) + "\" aria-label=\"" + esc(t("mgNameTitle")) + "\" oninput=\"mergeRename(" + m.id + ",this.value)\" onchange=\"mergeRender()\">";
+      h += "<span class=\"mg-meta\">" + esc(fmt(t("mgChars"), { n: m.text.length.toLocaleString("de-DE") })) + "</span>";
+      if (w.length) h += "<span class=\"mg-w\">⚠ " + esc(w.join(" · ")) + "</span>";
+      h += "<button class=\"mg-btn\" title=\"" + esc(t("mgUp")) + "\" aria-label=\"" + esc(t("mgUp")) + "\" onclick=\"mergeMove(" + m.id + ",-1)\"" + (i === 0 ? " disabled" : "") + ">↑</button>";
+      h += "<button class=\"mg-btn\" title=\"" + esc(t("mgDown")) + "\" aria-label=\"" + esc(t("mgDown")) + "\" onclick=\"mergeMove(" + m.id + ",1)\"" + (i === MERGE.length - 1 ? " disabled" : "") + ">↓</button>";
+      h += "<button class=\"mg-btn\" title=\"" + esc(t("mgRemove")) + "\" aria-label=\"" + esc(t("mgRemove")) + "\" onclick=\"mergeRemove(" + m.id + ")\">✕</button></div>";
+    });
+    h += "</div>";
+    var a = mergeAktiv(), worte = a.reduce(function (s, m) { return s + (m.text.match(/\S+/g) || []).length; }, 0);
+    h += "<div class=\"mg-sum\">" + esc(fmt(t("mgSum"), { n: a.length, w: worte.toLocaleString("de-DE") })) + "</div>";
+    if (a.length > 15) h += "<div class=\"wb2\" style=\"margin-top:8px\">" + esc(t("mgTooMany")) + "</div>";
+    h += "<div class=\"mg-act\"><button class=\"mg-dl\" onclick=\"mergeDownload()\"" + (a.length ? "" : " disabled") + ">" + esc(t("mgDownload")) + "</button><button class=\"bb\" onclick=\"mergeClear()\">" + esc(t("mgClear")) + "</button></div>";
+    if (a.length) h += "<div class=\"mg-sum\">" + esc(t("mgHint")) + "</div>";
+  }
+  if (mergeFehler.length) h += "<div class=\"mg-err\">" + mergeFehler.map(esc).join("<br>") + "</div>";
+  return h;
+}
+function mergeRender() { var el = document.getElementById("mgList"); if (el) el.innerHTML = mergeListHtml(); }
+function mergeBoxHtml() {
+  var h = "<div class=\"mg\"><div class=\"mg-t\">" + esc(t("mgTitle")) + "</div><div class=\"mg-i\">" + esc(t("mgIntro")) + "</div>";
+  h += "<div class=\"mg-drop\" id=\"mgDrop\" tabindex=\"0\" role=\"button\" onclick=\"document.getElementById('mgFiles').click()\" onkeydown=\"if(event.key==='Enter'||event.key===' '){event.preventDefault();document.getElementById('mgFiles').click()}\" ondragover=\"event.preventDefault();this.classList.add('over')\" ondragleave=\"this.classList.remove('over')\" ondrop=\"event.preventDefault();this.classList.remove('over');mergeFiles(event.dataTransfer.files)\">📄 " + esc(t("mgDrop")) + "</div>";
+  h += "<input type=\"file\" id=\"mgFiles\" multiple accept=\".txt,.docx,text/plain,application/vnd.openxmlformats-officedocument.wordprocessingml.document\" style=\"display:none\" onchange=\"mergeFiles(this.files);this.value=''\">";
+  h += "<details class=\"fold\"><summary>" + esc(t("mgPaste")) + "</summary><div class=\"fb\"><input class=\"ti\" type=\"text\" id=\"mgPN\" placeholder=\"" + esc(t("mgPasteName")) + "\"><textarea class=\"ti inl\" id=\"mgPT\" rows=\"5\" placeholder=\"" + esc(t("mgPastePH")) + "\"></textarea><div style=\"margin-top:8px\"><button class=\"bb\" onclick=\"mergePasteAdd()\">" + esc(t("mgPasteAdd")) + "</button></div></div></details>";
+  h += "<div id=\"mgList\">" + mergeListHtml() + "</div>";
+  h += "<div class=\"mg-i\" style=\"margin:10px 0 0\">🔒 " + esc(t("mgPrivacy")) + "</div></div>";
+  return h;
 }
 
 function nav(dir) {
