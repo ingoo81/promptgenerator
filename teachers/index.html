@@ -166,7 +166,7 @@ footer a:hover{text-decoration:underline;}
   <div class="em" id="em" role="alert"></div>
   <div class="nr" id="navrow">
     <button class="bb" id="bb" onclick="nav(-1)"></button>
-    <button class="bn" id="bn" onclick="nav(1)"></button>
+    <button class="bn" id="bn" onclick="cur === STEPS - 1 ? neuStart() : nav(1)"></button>
   </div>
 </div>
 <footer id="footer"></footer>
@@ -1118,6 +1118,12 @@ function afterChange(path) {
   if (path === "merken") { if (S.merken) speichern(); else vergessen(); }
   speichern();
 }
+/* Neu starten: neue Aufgabe, gewählte Einstellungen bleiben. */
+function neuStart() {
+  S.aufgabe = ""; S.aufgabePrompt = ""; S.zielstruktur = ""; S.zielwortschatz = "";
+  MERGE = []; mergeManuell = false; mergeFehler = [];
+  cur = 0; render(); window.scrollTo(0, 0);
+}
 function resetAll() { vergessen(); var l = S.lang, lc = S.langChosen; S = defaultState(); S.lang = l; S.langChosen = lc; cur = 0; render(); window.scrollTo(0, 0); }
 
 function cbRow(path, title, desc) {
@@ -1197,8 +1203,8 @@ function render() {
   document.getElementById("scnt").textContent = fmt(t("stepOf"), { n: cur + 1, t: STEPS });
   var bb = document.getElementById("bb"), bn = document.getElementById("bn");
   bb.textContent = t("back"); bb.disabled = cur === 0;
-  bn.style.display = cur === STEPS - 1 ? "none" : "inline-block";
-  bn.textContent = cur === STEPS - 2 ? t("toResult") : t("next");
+  bn.style.display = "inline-block";
+  bn.textContent = cur === STEPS - 1 ? t("neu") : cur === STEPS - 2 ? t("toResult") : t("next");
   if (cur === STEPS - 1) { bb.disabled = false; }
   sc.innerHTML = [renderStep1, renderStep2, renderStep3, renderStep4, renderStep5][cur]();
   if (cur === 3) updateFormStatus();
@@ -1272,7 +1278,7 @@ function renderStep4() {
   var h = stepHead(esc(t("s4Title")), esc(t("s4Hint"))), o = effOut();
   h += blk(esc(t("s4Umfang")), "", "<div class=\"rg\">" + rdRow("umfang", "knapp", esc(t("uKnapp")), esc(t("uKnappD"))) + rdRow("umfang", "mittel", esc(t("uMittel")), esc(t("uMittelD"))) + rdRow("umfang", "ausfuehrlich", esc(t("uAus")), esc(t("uAusD"))) + "</div>");
   if (o.unterricht && S.quelle !== "einzel") {
-    h += blk(esc(t("s4Zeit")), "", "<div class=\"chips\">" + [15, 45, 90].map(function (m) { return chip("zeitrahmen", m, m + " " + esc(t("min"))); }).join("") + "</div>");
+    h += blk(esc(t("s4Zeit")), "", "<div class=\"chips\">" + [15, 30, 45, 90].map(function (m) { return chip("zeitrahmen", m, m + " " + esc(t("min"))); }).join("") + "</div>");
   }
   if (o.feedback || hatUebungen()) {
     var x = "<span class=\"bl\" style=\"font-size:12.5px\">" + esc(t("s4Sprache")) + "</span><div class=\"rg\">";
