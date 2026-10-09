@@ -203,8 +203,7 @@ var CONFIG = {
   KURS_DATENSCHUTZ_URL: "https://courses.promptgenerator.site/transcription/nutzen#03-3",
   STORAGE_KEY: "pgTeachers.settings.v1",
   /* Höchstlänge der Ergebnisdaten im vorausgefüllten Formular-Link (getestet: 1.475 Zeichen) */
-  FORM_DATEN_MAX: 1500,
-  FEEDBACK_RUNDE: 5
+  FORM_DATEN_MAX: 1500
 };
 
 var ZIELSPRACHEN = ["de", "en", "fr", "es"];
@@ -223,18 +222,43 @@ var ZIELSTRUKTUREN = {
   }
 };
 var NIVEAUS_REIHE = ["A1", "A2", "B1", "B2", "C1", "C2"];
-/* Notenskalen: Umrechnung der Gesamtstufe A–E (zweidimensional) bzw. der drei
-   Stufen bei A1 (h). D liegt an der Grenze zum Nichtbestehen. */
-var NOTENSKALEN = {
-  de: { chip: "Deutschland 1–6", name: "Schulnoten Deutschland (1 = sehr gut, 6 = ungenügend)", A: "1", B: "2", C: "3", D: "4 oder 5", E: "6", h: ["1", "3 bis 4", "6"], tend: "Tendenzen mit + und − sind erlaubt (z. B. 2+, 3−), wenn die Leistung zwischen zwei Stufen liegt." },
-  at: { chip: "Österreich 1–5", name: "Schulnoten Österreich (1 = Sehr gut, 5 = Nicht genügend)", A: "1", B: "2", C: "3", D: "4 oder 5", E: "5", h: ["1", "3 bis 4", "5"], tend: "Tendenzen mit + und − sind erlaubt (z. B. 2+, 3−), wenn die Leistung zwischen zwei Stufen liegt." },
-  ch: { chip: "Schweiz 6–1", name: "Schulnoten Schweiz (6 = sehr gut, 4 = genügend, 1 = sehr schwach)", A: "6", B: "5", C: "4,5", D: "4 oder 3,5", E: "3", h: ["6", "4", "3"], tend: "Halbe Noten sind erlaubt (z. B. 4,5 oder 5,5)." },
-  fr: { chip: "Frankreich 0–20", name: "Notenskala 0–20 (Frankreich; 10 = bestanden)", A: "17", B: "14", C: "12", D: "10 oder 9", E: "6", h: ["16", "10", "5"], tend: "Halbe Punkte sind erlaubt (z. B. 13,5)." },
-  es: { chip: "Spanien/Lateinamerika 1–10", name: "Notenskala 1–10 (Spanien und Lateinamerika; 5 = bestanden)", A: "9 bis 10", B: "8", C: "6 bis 7", D: "5 oder 4", E: "3", h: ["9", "5", "2"], tend: "Eine Nachkommastelle ist erlaubt (z. B. 7,5)." },
-  punkte: { chip: "0–100 Punkte", name: "Punkte von 0 bis 100", A: "100", B: "75", C: "50", D: "25", E: "0", h: ["100", "50", "0"], tend: "Zwischenwerte sind erlaubt (z. B. 85), wenn die Leistung zwischen zwei Stufen liegt." },
-  us: { chip: "USA A–F", name: "Notenskala A–F (USA; A = beste Note, F = nicht bestanden)", A: "A", B: "B", C: "C", D: "D", E: "F", h: ["A", "C", "F"], tend: "Tendenzen mit + und − sind erlaubt (z. B. B+, A−)." }
+/* Transkript-Rubriken: beobachtbare Goethe-Kriterien, ohne Aussprache.
+   Herleitung und Grenzen: teachers/BEWERTUNG.md. */
+var BEWERTUNGSRUBRIKEN = {
+  A1: { quelle: "Start Deutsch 1", art: "sprechakte" },
+  A2: { quelle: "Goethe-Zertifikat A2", kriterien: [
+    ["Aufgabenerfüllung und Verständlichkeit", 10, "Erfüllt die Gesprächsaufgabe und sind die Beiträge verständlich?"],
+    ["Sprache", 10, "Sind Wortwahl und sprachliche Formen für A2 angemessen, ohne die Verständigung wesentlich zu stören?"]
+  ] },
+  B1: { quelle: "Goethe-Zertifikat B1", kriterien: [
+    ["Aufgabenerfüllung", 36, "Werden die geforderten Sprachhandlungen in Inhalt und Umfang bewältigt?"],
+    ["Interaktion", 8, "Geht die Person auf die KI ein und führt das Gespräch mit?"],
+    ["Wortschatz und Register", 20, "Passen Wortwahl und Ausdruck zur Situation?"],
+    ["Strukturen", 20, "Sind die verwendeten Formen für B1 angemessen und verständlich?"]
+  ] },
+  B2: { quelle: "Goethe-Zertifikat B2", kriterien: [
+    ["Aufgabenerfüllung", 18, "Werden die geforderten Sprachhandlungen inhaltlich bewältigt?"],
+    ["Kohärenz", 8, "Sind Gedanken und Beiträge sinnvoll aufgebaut und verknüpft?"],
+    ["Wortschatz", 18, "Sind Spektrum und Wortwahl für B2 angemessen?"],
+    ["Strukturen", 22, "Sind Spektrum und Beherrschung der Formen für B2 angemessen?"],
+    ["Antwortverhalten", 8, "Werden Fragen inhaltlich passend aufgegriffen und beantwortet?"],
+    ["Interaktion", 10, "Wird das Gespräch situations- und partnergerecht mitgestaltet?"]
+  ] },
+  C1: { quelle: "Goethe-Zertifikat C1", kriterien: [
+    ["Aufgabenerfüllung", 14, "Werden Inhalt und geforderte Sprachhandlungen differenziert bearbeitet?"],
+    ["Kohärenz", 10, "Sind Gedanken und Beiträge klar aufgebaut und präzise verknüpft?"],
+    ["Wortschatz", 20, "Sind Spektrum und Wortwahl für C1 differenziert und treffend?"],
+    ["Strukturen", 22, "Sind Spektrum und Beherrschung der Formen für C1 angemessen?"],
+    ["Antwortverhalten", 8, "Werden Fragen inhaltlich und sprachlich angemessen beantwortet?"],
+    ["Interaktion", 10, "Wird das Gespräch flexibel und situationsgerecht geführt?"]
+  ] },
+  C2: { quelle: "Goethe-Zertifikat C2", kriterien: [
+    ["Aufgabenerfüllung", 8, "Werden Inhalt und Sprachhandlungen differenziert und adressatengerecht bewältigt?"],
+    ["Kohärenz", 8, "Sind die Beiträge klar, flexibel und wirkungsvoll verknüpft?"],
+    ["Wortschatz", 8, "Sind Spektrum und Wortwahl präzise und nuanciert?"],
+    ["Strukturen", 8, "Werden vielfältige Formen sicher und angemessen verwendet?"]
+  ] }
 };
-var NOTEN_REIHE = ["de", "at", "ch", "fr", "es", "punkte", "us"];
 /* Übersetzungssprachen für Wortschatzlisten (die Zielsprache wird ausgeblendet). */
 var WORT_SPRACHEN = ["Englisch", "Deutsch", "Französisch", "Spanisch", "Russisch", "Ukrainisch", "Arabisch", "Türkisch"];
 var NIVEAUS = ["A1", "A2", "B1", "B2", "C1", "C2"];
@@ -290,11 +314,11 @@ LANG_PACKS.de = {
     oGruppe: "Überblick über die Gruppe",
     oGruppeD: "Das Wichtigste auf einen Blick, häufige Fehlermuster und die Spannbreite der Gruppe.",
     oUnterricht: "Unterrichtsvorschläge",
-    oUnterrichtD: "Sprachlicher Fokus und Aktivitäten für deine nächste Stunde.",
+    oUnterrichtD: "Direkt durchführbare Aktivitäten für deine nächste Stunde, bei Bedarf mit einem KI-Auftrag für zusätzliches Material.",
     oFoerder: "Förderempfehlungen",
     oFoerderD: "Woran diese Person als Nächstes arbeiten sollte – für dich als Lehrkraft.",
-    oNoten: "Orientierungsnoten",
-    oNotenD: "Grobe Einordnung je Person – nur für dich, keine offizielle Note.",
+    oNoten: "Orientierungspunktzahl",
+    oNotenD: "Eine Punktzahl von 0 bis 100 je Person, bezogen auf das Zielniveau – nur für dich, kein Prüfungsergebnis.",
     oFeedback: "Feedback für jede/n Lernende/n",
     oFeedbackEinzel: "Feedback für diese Person",
     oFeedbackD: "Zum direkten Weitergeben: Stärken, Verbesserungen mit Beispiel aus dem eigenen Transkript, ein Tipp.",
@@ -385,13 +409,8 @@ LANG_PACKS.de = {
       "Oben rechts <i>Publish</i>. Bei <i>Responders</i> steht <i>Anyone with the link</i>. Die Bearbeitung (<i>Editor view</i>) bleibt <i>Restricted</i> – nie für alle zum Bearbeiten freigeben.",
       "Drei Punkte ⋮ → <i>Pre-fill form</i> → in beide Felder irgendetwas eintragen → <i>Get link</i> → <i>Copy link</i> → hier einfügen."
     ],
-    s4Noten: "Notenformat",
-    nEigene: "Eigene Skala",
-    nEigenePH: "Beschreibe deine Skala, z. B. „1–15 Punkte, 15 = beste Note, ab 5 bestanden“",
-    nUmrechnung: "So rechnet die KI um:",
-    errNotenEigene: "Bitte beschreibe deine Notenskala.",
-    s4NotenRegel: "Die Note richtet sich nach der schwächeren der beiden Bewertungsdimensionen – gute Sprache gleicht eine schwache Aufgabenerfüllung nicht einfach aus.",
-    s4NotenA1: "Für A1 gibt es eine ganzheitliche Einschätzung in drei Stufen (wie bei Start Deutsch 1).",
+    s4Noten: "Bewertungsmaßstab",
+    s4NotenRegel: "0–100 Punkte relativ zum gewählten Zielniveau. Bewertet wird nur, was im Transkript erkennbar ist; Aussprache bleibt außen vor.",
     errFbSprache: "Bitte gib die Sprache für die Lernenden an.",
     errFormate: "Bitte wähle mindestens ein Format für die Übungen.",
     errForm: "Der Formular-Link ist noch nicht in Ordnung – korrigiere ihn oder lass das Feld leer.",
@@ -421,7 +440,8 @@ LANG_PACKS.de = {
     mgErrRead: "„{f}“ konnte nicht gelesen werden.",
     mgErrDocx: "„{f}“: Word-Dateien kann dieser Browser nicht lesen. Speichere sie als .txt oder kopiere den Text über „Text einfügen“.",
     mgErrPasteName: "Bitte gib einen Namen ein.",
-    mgSum: "{n} Transkripte · ca. {w} Wörter",
+    mgSum: "{bereit} von {gesamt} Transkripten bereit · ca. {w} Wörter",
+    mgFix: "Bitte leere Transkripte sowie fehlende oder doppelte Namen korrigieren oder die betreffenden Einträge entfernen. Danach kannst du die Datei herunterladen.",
     mgTooMany: "Mehr als 15 Transkripte: Für kostenlose KI-Versionen kann die Datei zu groß werden. Die Zählkontrolle am Anfang der Antwort zeigt dir, ob alle gelesen wurden – sonst auf zwei Dateien aufteilen.",
     mgDownload: "⬇ Datei herunterladen",
     mgClear: "Liste leeren",
@@ -441,10 +461,10 @@ LANG_PACKS.de = {
     chainMainH: "Zuerst einfügen und die Datei hochladen.",
     chainMainOnlyH: "Einfügen und die Datei hochladen.",
     chainFbT: "Feedback für jede/n Lernende/n",
-    chainFbH: "Im selben Chat einfügen, wenn ① fertig ist. Die KI arbeitet in Runden zu je {n} Personen – schreib jeweils „weiter“.",
+    chainFbH: "Im selben Chat einfügen, wenn ① fertig ist. Die KI erstellt das Feedback für alle Personen in einer Antwort.",
     chainIndT: "Interaktive Übungsseite (individuell)",
-    chainIndH: "Erst einfügen, wenn alle Feedback-Runden fertig sind.",
-    chainIndAppH: "Erst einfügen, wenn alle Feedback-Runden fertig sind. Die KI vergibt jeder Person einen Code und gibt dir die Liste Name → Code. Verteile die Codes einzeln.",
+    chainIndH: "Erst einfügen, wenn das Feedback für alle Personen vollständig vorliegt.",
+    chainIndAppH: "Erst einfügen, wenn das Feedback für alle Personen vollständig vorliegt. Die KI vergibt jeder Person einen Code und gibt dir die Liste Name → Code. Verteile die Codes einzeln.",
     chainGrT: "Übungen für die ganze Gruppe",
     chainGrH: "Im selben Chat einfügen. Bei mehreren Formaten liefert die KI sie nacheinander – schreib jeweils „weiter“.",
     chainWortT: "Wortschatzliste für die Gruppe",
@@ -471,32 +491,6 @@ LANG_PACKS.de = {
     merkenD: "Beim nächsten Besuch sind deine Einstellungen vorausgefüllt – nur Aufgabe und Lernziel gibst du neu ein. Gespeichert wird nur in deinem Browser.",
     reset: "Alles zurücksetzen",
     neu: "Neu starten"
-  },
-
-  /* Bewertungskriterien je Niveau – destilliert aus den Goethe-Modellsätzen
-     (Sprechen), vereinfacht auf zwei Dimensionen. Aussprache fließt nicht ein. */
-  kriterien: {
-    A1: { typ: "holistisch", quelle: "Start Deutsch 1",
-      stufen: [
-        { label: "Aufgabe voll erfüllt und verständlich", punkte: 100, note: 1 },
-        { label: "Aufgabe wegen sprachlicher oder inhaltlicher Mängel nur teilweise erfüllt", punkte: 50, note: 4 },
-        { label: "Aufgabe nicht erfüllt und/oder unverständlich", punkte: 0, note: 6 }
-      ] },
-    A2: { typ: "zweidimensional", quelle: "Goethe-Zertifikat A2",
-      aufgabe: { A: "durchgängig angemessen", B: "überwiegend angemessen", C: "teilweise angemessen", D: "kaum angemessen", E: "nicht bewertbar" },
-      sprache: { A: "angemessen/differenziert, vereinzelte Fehlgriffe ohne Beeinträchtigung", B: "überwiegend angemessen, mehrere Fehlgriffe ohne Beeinträchtigung", C: "teilweise angemessen, Fehlgriffe beeinträchtigen teilweise", D: "kaum angemessen, Fehlgriffe beeinträchtigen erheblich", E: "durchgängig unangemessen" } },
-    B1: { typ: "zweidimensional", quelle: "Goethe-Zertifikat B1",
-      aufgabe: { A: "Sprachfunktionen in Inhalt und Umfang angemessen behandelt; Gespräch angemessen begonnen, in Gang gehalten und beendet", B: "überwiegend angemessen", C: "teilweise angemessen", D: "kaum angemessen", E: "Gesprächsanteil nicht bewertbar" },
-      sprache: { A: "Register situations- und partneradäquat; Wortschatz und Strukturen differenziert, vereinzelte Fehlgriffe beeinträchtigen das Verständnis nicht", B: "noch weitgehend situations- und partneradäquat; überwiegend angemessen, mehrere Fehlgriffe beeinträchtigen das Verständnis noch nicht", C: "ansatzweise situations- und partneradäquat; teilweise angemessen oder begrenzt, mehrere Fehlgriffe beeinträchtigen das Verständnis teilweise", D: "nicht mehr situations- und partneradäquat; kaum vorhanden, mehrere Fehlgriffe beeinträchtigen das Verständnis erheblich", E: "Äußerung größtenteils unverständlich" } },
-    B2: { typ: "zweidimensional", quelle: "Goethe-Zertifikat B2",
-      aufgabe: { A: "Sprachfunktionen angemessen; Gespräch angemessen begonnen, in Gang gehalten und beendet; Register situations- und partneradäquat", B: "überwiegend angemessen", C: "in Teilen angemessen", D: "kaum noch angemessen", E: "nicht mehr verständlich" },
-      sprache: { A: "Wortschatz/Strukturen differenziert, vereinzelte Fehlgriffe beeinträchtigen das Verständnis nicht; Sätze angemessen verknüpft, natürliche Sprechweise", B: "überwiegend angemessen, mehrere Fehlgriffe beeinträchtigen das Verständnis noch nicht; überwiegend angemessen verknüpft, verlangsamte aber flüssige Sprechweise", C: "Repertoire begrenzt, mehrere Fehlgriffe beeinträchtigen das Verständnis stellenweise; teilweise verknüpft, stockende Sprechweise beeinträchtigt das Verständnis stellenweise", D: "kaum Repertoire vorhanden, Fehlgriffe beeinträchtigen das Verständnis durchgehend; kaum verknüpft, stockende Sprechweise beeinträchtigt das Verständnis durchgehend", E: "Äußerung unverständlich" } },
-    C1: { typ: "zweidimensional", quelle: "Goethe-Zertifikat C1",
-      aufgabe: { A: "sehr gut und sehr ausführlich, sehr interaktiv", B: "gut und ausführlich, gut interaktiv", C: "gut und ausführlich genug; Gesprächsfähigkeit vorhanden, aber nicht sehr aktiv", D: "unvollständig und zu kurz; Beteiligung nur auf Anfrage", E: "viel zu kurz bzw. Thema verfehlt; große Schwierigkeiten, sich überhaupt zu beteiligen" },
-      sprache: { A: "klar zusammenhängend, angemessenes Sprechtempo; wenig Umschreibungen/Wortsuche; nur vereinzelte Regelverstöße", B: "zusammenhängend, angemessenes Sprechtempo; über weite Strecken angemessene Ausdrucksweise; stellenweise Regelverstöße mit Neigung zur Selbstkorrektur", C: "nicht immer zusammenhängend; vage/allgemeine Ausdrucksweise; häufige Regelverstöße, die das Verständnis noch nicht beeinträchtigen", D: "stockende, bruchstückhafte Sprechweise; situations-unspezifische Ausdrucksweise mit größerer Zahl an Fehlgriffen; Regelverstöße beeinträchtigen das Verständnis erheblich", E: "abgehackte Sprechweise, zentrale Aussagen bleiben unklar; Regelverstöße verhindern das Verständnis weitgehend" } },
-    C2: { typ: "zweidimensional", quelle: "Goethe-Zertifikat C2",
-      aufgabe: { A: "strukturiert, adressatenbezogen, ausführlich; souveräne, situations- und partneradäquate Gesprächsführung", B: "größtenteils strukturiert, Umfang angemessen; situations- und partneradäquate Gesprächsführung", C: "Struktur erkennbar, einzelne Aspekte unklar oder knapp; an mehreren Stellen nicht situations- und partneradäquat", D: "Struktur kaum erkennbar, viele Aspekte unklar oder zu knapp; wenig initiativ im Gespräch", E: "Thema verfehlt, Umfang nicht ausreichend; keine erkennbare Gesprächsführung" },
-      sprache: { A: "Verknüpfungsmittel komplex, variabel und flexibel eingesetzt; breites Spektrum, flexibel/differenziert, natürliche Kommunikation trotz höchstens vereinzelter Abweichungen", B: "verschiedene Verknüpfungsmittel angemessen eingesetzt; Spektrum angemessen, Fehlgriffe/Regelverstöße stören die Kommunikation nicht", C: "wenige, wenig abwechslungsreiche Verknüpfungsmittel; Spektrum angemessen mit einzelnen störenden Fehlgriffen, oder Spektrum begrenzt mit häufigeren, noch nicht störenden Fehlgriffen", D: "einfach strukturierte, unverbundene Sätze; kaum Spektrum vorhanden, Fehlgriffe/Regelverstöße behindern die Kommunikation", E: "Äußerung inkohärent bzw. unverständlich" } }
   },
 
   /* ------------------------------------------------------------------
@@ -557,12 +551,24 @@ LANG_PACKS.de = {
       : (S.zielsprache === "fr" || S.zielsprache === "es") ? " Nomen mit Artikel, Verben im Infinitiv." : " Verben im Infinitiv.";
     return "Ein Eintrag pro Zeile im Format: Eintrag - Übersetzung (Bindestrich mit je einem Leerzeichen davor und danach). Keine Überschriften, Nummern oder Leerzeilen im Codeblock." + nomen + " Übersetzung auf " + wortSprache(S) + ".";
   }
-  /* Notenskala */
-  function notenSkala(S) { return NOTENSKALEN[S.notenformat] || null; }
-  function notenUmrechnung(S) {
-    var sk = notenSkala(S);
-    if (!sk) return "Rechne die Gesamtstufe in diese Notenskala um: „" + (S.notenEigene || "").trim() + "“. A ist die beste Note, D liegt an der Grenze zum Nichtbestehen, E ist die schlechteste. Schreib die Zuordnung A–E einmal in einer Zeile über die Tabelle.";
-    return "Rechne die Gesamtstufe um in " + sk.name + ": A = " + sk.A + ", B = " + sk.B + ", C = " + sk.C + ", D = " + sk.D + ", E = " + sk.E + "." + (sk.D.indexOf("oder") >= 0 ? " D liegt an der Grenze zum Nichtbestehen – entscheide dort nach dem Gesamteindruck." : "") + " " + sk.tend;
+  function bewertungsRegeln(S, gruppe) {
+    var r = BEWERTUNGSRUBRIKEN[S.niveau], L = [];
+    L.push("Vergib " + (gruppe ? "für jede Person" : "für diese Person") + " genau eine Orientierungspunktzahl von 0 bis 100, relativ zum eingestellten Zielniveau " + S.niveau + ". Nutze die Kriterien von „" + r.quelle + "“ nur als Orientierung für diese Gesprächsaufgabe, nicht als offizielle Prüfungswertung.");
+    if (S.zielsprache !== "de") L.push("Die Goethe-Kriterien stammen aus Deutschprüfungen. Für " + zs(S) + " ist dies eine didaktische Übertragung, keine Goethe-Bewertung dieser Sprache.");
+    L.push("Bewerte ausschließlich die Beiträge der lernenden Person. Beurteile keine Aussprache, Intonation, Sprechgeschwindigkeit oder Pausen: Diese Merkmale sind im Transkript nicht zuverlässig beobachtbar. Die Kennzahlen dienen nicht zur Berechnung dieser Punktzahl.");
+    L.push("Werte Verständlichkeit und kommunikative Wirkung, nicht bloß die Anzahl von Fehlern. Berücksichtige das Zielniveau: Fordere keine Strukturen oder Wörter höherer Niveaus und gib für solche keine Extrapunkte. Nur belegte Leistungen und Fehler zählen; glätte mögliche Spracherkennungsfehler nicht zu scheinbar sicheren Befunden.");
+    if (r.art === "sprechakte") {
+      L.push("A1: Ermittle die Punktzahl aus allen eigenständigen, zur Aufgabe gehörenden Sprachhandlungen der Person (z. B. eine Frage stellen, antworten, bitten, reagieren). Bewerte jede Sprachhandlung mit 1 = erfüllt und verständlich, 0,5 = nur teilweise erfüllt, 0 = nicht erfüllt oder unverständlich. Rechne: 100 × Summe der Werte / Anzahl der bewerteten Sprachhandlungen; runde erst das Ergebnis auf eine ganze Zahl. Wähle die Sprachhandlungen anhand der tatsächlichen Aufgabe und zähle dieselbe Handlung nicht doppelt. Grammatische Fehler allein machen eine verständliche, erfüllte Handlung nicht falsch.");
+    } else {
+      var max = r.kriterien.reduce(function (sum, k) { return sum + k[1]; }, 0);
+      L.push("Bewerte jedes der folgenden Kriterien über das ganze Gespräch auf der fünfstufigen Skala A = 100 %, B = 75 %, C = 50 %, D = 25 %, E = 0 % seines Gewichts. A bedeutet für " + S.niveau + " angemessen, B überwiegend angemessen, C teilweise angemessen, D kaum angemessen, E belegbar durchgängig unangemessen oder unverständlich. Vergib keine frei erfundenen Zwischenwerte innerhalb eines Kriteriums:");
+      r.kriterien.forEach(function (k) { L.push("- " + k[0] + ": maximal " + k[1] + " Rohpunkte. " + k[2]); });
+      L.push("Rechne: 100 × (Summe der gewichteten Kriteriumspunkte) / " + max + "; runde erst das Endergebnis auf eine ganze Zahl. Die Gewichtssumme " + max + " enthält keine Aussprachepunkte. Bewerte die im Gespräch tatsächlich sichtbare Umsetzung der Aufgabe, nicht fehlende Prüfungsteile wie Vortrag oder Partnerdiskussion.");
+      L.push("Ist die Aufgabenerfüllung belegbar auf Stufe E, ist die gesamte Gesprächsaufgabe mit 0 Punkten zu bewerten. Das gilt nicht bei fehlenden oder unsicheren Daten.");
+    }
+    L.push("Ist das Transkript zu kurz, fehlt ein nennenswerter eigener Gesprächsanteil, ist die Person nicht sicher zuordenbar oder ist die Erkennung so unsicher, dass eine der nötigen Bewertungen nicht möglich ist, gib „nicht bewertbar“ statt 0 Punkten aus und nenne den Grund. 0 ist nur für eine belegte, durchgehend nicht erfüllte oder unverständliche Leistung zulässig. Erfinde keine Leistung für nicht beobachtbare Kriterien.");
+    L.push("Ausgabe: Tabelle mit genau den Spalten " + kennung(S) + " | Punkte (0–100 oder nicht bewertbar) | kurzer Beleg oder Grund. Keine A–E-Teilnoten, keine Schulnoten und keine weiteren Punktzahlen in der Tabelle. Prüfe die Rechnung intern vor der Ausgabe.");
+    return L.join("\n");
   }
   function endungenUebSatz(S, gruppe) {
     if (!isSkript(S)) return "";
@@ -716,8 +722,11 @@ LANG_PACKS.de = {
     if (o.unterricht) {
       if (gruppe) {
         sec("UNTERRICHTSVORSCHLÄGE FÜR " + S.zeitrahmen + " MINUTEN");
-        L.push("Sprachlicher Fokus: höchstens 3 Stichpunkte, je ein Satz" + (lz.length ? " – berücksichtige ausdrücklich den Lernziel-Check." : "."));
-        L.push("Ablauf: " + (S.zeitrahmen <= 15 ? "1–2 Aktivitäten" : S.zeitrahmen <= 45 ? "2–3 Aktivitäten" : "3–4 Aktivitäten") + ", je mit Minutenangabe, Name und 1–2 Sätzen Beschreibung. Die Minuten ergeben zusammen " + S.zeitrahmen + ". Keine Schritt-für-Schritt-Anleitungen.");
+        L.push("Sprachlicher Fokus: höchstens 3 Stichpunkte aus den beobachteten Fehlermustern" + (lz.length ? "; berücksichtige ausdrücklich den Lernziel-Check." : "."));
+        L.push("Plane " + (S.zeitrahmen <= 15 ? "1–2 Aktivitäten" : S.zeitrahmen <= 45 ? "2–3 Aktivitäten" : "3–4 Aktivitäten") + ". Die Minutenangaben müssen zusammen genau " + S.zeitrahmen + " ergeben. Jede Aktivität muss ohne Ausdrucke oder eigens vorzubereitendes Material sofort durchführbar sein.");
+        L.push("Gib für jede Aktivität knapp und in dieser Reihenfolge an: Nummer und Name | Zeit | konkretes Lernziel | Sozialform | 2–3 durchführbare Schritte für Lehrkraft und Lernende | einen wortwörtlich nutzbaren Arbeitsauftrag oder Beispielsatz zum beobachteten Fehlermuster | bei eindeutiger Lösung die Musterlösung. Vermeide bloße Themenhinweise wie „Vergangenheitsformen wiederholen“.");
+        L.push("Verwende nur anonymisierte, für die Gruppe passende Beispiele ohne persönliche Angaben. Ist ein Beispielsatz von dir formuliert und nicht aus einem Transkript übernommen, kennzeichne ihn als Beispiel.");
+        L.push("Nur wenn zusätzliches Material eine Aktivität sinnvoll ergänzt, füge darunter eine Zeile „Optionales KI-Material:“ mit einem direkt kopierbaren Folgeauftrag für denselben Chat an. Nenne darin Aktivitätsnummer, Materialart und Umfang, Zielniveau, relevantes Fehlermuster sowie bei eindeutig lösbaren Aufgaben die Lösungen. Die Lehrkraft soll mit diesem Auftrag das Material bei Bedarf später erzeugen können, ohne Transkripte erneut hochzuladen. Erstelle das Material jetzt noch nicht; wiederhole hier keine vollständigen Gruppenübungen oder Arbeitsblätter.");
       } else {
         sec("FÖRDEREMPFEHLUNGEN");
         L.push("3–4 konkrete Empfehlungen, woran diese Person als Nächstes arbeiten sollte, nach Wichtigkeit geordnet, je ein Satz.");
@@ -726,30 +735,9 @@ LANG_PACKS.de = {
     }
 
     if (o.noten) {
-      var k = LANG_PACKS.de.kriterien[S.niveau];
-      var bezug = S.zielsprache === "de" ? ("„" + k.quelle + "“ (mündlicher Teil)") : ("GER-orientierten Prüfungskriterien für Niveau " + S.niveau);
-      sec("ORIENTIERUNGSNOTEN (nur für mich – niemals als offizielle Note verwenden)");
-      if (k.typ === "holistisch") {
-        L.push("Vergib " + (gruppe ? "pro Person" : "für diese Person") + " eine ungefähre Note, angelehnt an das ganzheitliche Bewertungsprinzip von " + bezug + ". Es gibt keine A–E-Skala, sondern drei Stufen:");
-        var sk = notenSkala(S);
-        k.stufen.forEach(function (st, i) { L.push("- " + st.label + (sk ? " (" + sk.h[i] + ")" : "")); });
-        if (sk) L.push("Notenskala: " + sk.name + ". " + sk.tend);
-        else L.push("Notenskala: „" + (S.notenEigene || "").trim() + "“. Ordne den drei Stufen passende Noten dieser Skala zu und nenne die Zuordnung einmal über der Tabelle.");
-        L.push("Tabelle: " + kennung(S) + " | Einschätzung (kurz) | Note.");
-      } else {
-        L.push("Vergib " + (gruppe ? "pro Person" : "für diese Person") + " eine ungefähre Note, angelehnt an " + bezug + ". Bewerte zwei Dimensionen je auf einer Skala von A bis E:");
-        L.push("- Aufgabenerfüllung: A = " + k.aufgabe.A + " | B = " + k.aufgabe.B + " | C = " + k.aufgabe.C + " | D = " + k.aufgabe.D + " | E = " + k.aufgabe.E);
-        L.push("- Sprache: A = " + k.sprache.A + " | B = " + k.sprache.B + " | C = " + k.sprache.C + " | D = " + k.sprache.D + " | E = " + k.sprache.E);
-        L.push("Bilde die Gesamtstufe so – kein Durchschnitt: Ausgangspunkt ist die schwächere der beiden Dimensionen. Ist die stärkere Dimension mindestens zwei Stufen besser, hebe um genau eine Stufe an (Beispiel: Aufgabenerfüllung A, Sprache D → C). Ist eine Dimension E, bleibt es bei E.");
-        if (S.quelle === "app") L.push("Achtung: Diese Transkripte enthalten keine Zeitangaben. Merkmale zu Sprechtempo, Pausen und Sprechweise (z. B. „flüssig“, „stockend“, „natürliche Sprechweise“) bewertest du deshalb nicht – beurteile die Dimension Sprache nur nach Wortschatz, Strukturen und Verknüpfung der Sätze und schreib unter die Tabelle: „Flüssigkeit nicht bewertet (keine Zeitangaben im Transkript)“.");
-        L.push(notenUmrechnung(S));
-        L.push("Tabelle: " + kennung(S) + " | Aufgabenerfüllung (A–E) | Sprache (A–E) | Note.");
-      }
-      L.push("Nenne direkt darunter, ungekürzt, diese Einschränkungen:");
-      L.push("- Aussprache fließt nicht ein – in einer echten Prüfung ein eigenes Kriterium.");
-      L.push("- Eine echte Prüfung hat mehrere Aufgabentypen; hier liegt nur ein Gespräch vor.");
-      L.push("- Eine echte Prüfung bewerten zwei geschulte Personen; diese Note stammt von einer einzigen KI-Einschätzung.");
-      L.push("- Grobe Orientierung für die Lehrkraft – nicht an Lernende weitergeben, nicht offiziell verwenden.");
+      sec("ORIENTIERUNGSPUNKTZAHL (nur für mich – kein offizielles Prüfungsergebnis)");
+      L.push(bewertungsRegeln(S, gruppe));
+      L.push("Schreibe direkt unter die Tabelle genau diesen kurzen Hinweis, einmal für alle Personen: „Zur Punktzahl: Bewertet wurden nur im Transkript erkennbare Sprachhandlungen und Kriterien passend zum Zielniveau, orientiert an den Kriterien der mündlichen Goethe-Prüfungen; Aussprache wurde nicht berücksichtigt. Die Zahl stammt aus der KI-Auswertung eines Gesprächs und ist kein offizielles Goethe-Prüfungsergebnis.“" + (S.zielsprache !== "de" ? " Ergänze: „Für " + zs(S) + " wurden die Kriterien didaktisch übertragen.“" : ""));
       L.push("");
     }
 
@@ -809,7 +797,8 @@ LANG_PACKS.de = {
     } else {
       L.push("- Der Code dieser Person ist fest eingebaut und steht oben auf der Seite.");
     }
-    L.push("- Übungen mit sofortiger Rückmeldung und kurzer Erklärung. Zwei Versuche pro Aufgabe, danach erscheint die Lösung. Antworten tolerant prüfen (Groß-/Kleinschreibung, überflüssige Leerzeichen; bei offenen Antworten mehrere richtige Varianten hinterlegen).");
+    L.push("- Jede Aufgabe hat höchstens zwei Versuche. Bestätige eine richtige Antwort sofort. Nach dem ersten falschen Versuch gib einen konkreten Tipp zum Fehler, ohne die Lösung zu verraten, und erlaube einen zweiten Versuch. Nach dem zweiten falschen Versuch zeige die richtige Lösung mit einer kurzen Erklärung.");
+    L.push("- Prüfe Antworten tolerant: überflüssige Leerzeichen und abschließende Satzzeichen ignorieren, mehrere inhaltlich richtige Formulierungen akzeptieren. Groß-/Kleinschreibung nur dann als Fehler werten, wenn sie das Lernziel der Aufgabe ist. Zeige Musterlösungen immer mit korrekter Rechtschreibung, Groß-/Kleinschreibung und Zeichensetzung.");
     L.push("- Ergebnisbildschirm: Code, erreichte Punkte (richtig im ersten oder zweiten Versuch), Datum und ein Abschluss-Code im Format CODE-PUNKTE-TTMM-PZ. PZ ist eine zweistellige Prüfziffer: Summe der Zeichencodes von „CODE-PUNKTE-TTMM“ modulo 97.");
     if (f.state === "ok") {
       L.push("- Button „Ergebnis abschicken“: öffnet in einem neuen Tab diese Adresse: " + f.base + "&" + f.code + "=<CODE>&" + f.daten + "=<DATEN>. Beide Werte mit encodeURIComponent kodieren. <DATEN> ist eine Zeile im Format Ü1:<Fehlerbereich>:<r oder f>:<letzte falsche Eingabe>:<Versuche>, Einträge mit „|“ getrennt (Beispiel: Ü1:Dativ nach mit:f:mit der Bus:2|Ü2:Perfekt mit sein:r::1). Doppelpunkte und senkrechte Striche in Eingaben durch „/“ ersetzen. Wird <DATEN> länger als " + CONFIG.FORM_DATEN_MAX + " Zeichen, kürze die falschen Eingaben und hänge „|GEKUERZT“ an. Zeige unter dem Button zusätzlich denselben Link als normalen Link, falls das Öffnen blockiert wird.");
@@ -832,7 +821,7 @@ LANG_PACKS.de = {
     return a;
   }
 
-  /* ---------- Feedback-Runden (Gruppen-Quellen) ---------- */
+  /* ---------- Feedback für alle Personen (Gruppen-Quellen) ---------- */
   P.feedback = function (S) {
     var L = [];
     L.push("FEEDBACK FÜR JEDE/N LERNENDE/N");
@@ -852,7 +841,7 @@ LANG_PACKS.de = {
       if (en) L.push(en.trim());
     }
     L.push("");
-    L.push("Arbeite in Runden zu je " + CONFIG.FEEDBACK_RUNDE + " Personen, in der Reihenfolge der Datei. Beende jede Runde mit der Zeile „Weiter mit den nächsten " + CONFIG.FEEDBACK_RUNDE + "? Schreib ‚weiter‘.“ und warte. Nach der letzten Runde schreib: „Fertig – Feedback für alle Personen.“");
+    L.push("Erstelle das Feedback für alle Personen aus der Datei in einer einzigen Antwort, in der Reihenfolge der Datei. Lasse niemanden aus und warte nicht auf „weiter“. Nenne am Ende die Anzahl der bearbeiteten Personen und ihre " + kennungen(S) + ", damit ich die Vollständigkeit mit der Datei abgleichen kann.");
     return L.join("\n");
   };
 
@@ -861,7 +850,7 @@ LANG_PACKS.de = {
     var L = [];
     L.push("INTERAKTIVE ÜBUNGSSEITE MIT DEN INDIVIDUELLEN ÜBUNGEN");
     L.push("");
-    L.push("Baue jetzt aus den individuellen Übungen, die du in den Feedback-Runden erstellt hast, EINE interaktive Übungsseite für alle.");
+    L.push("Baue jetzt aus den individuellen Übungen des vollständigen Feedbacks EINE interaktive Übungsseite für alle.");
     if (S.quelle === "app") L.push("Vergib dafür jeder Person einen zufälligen Code aus 4 Großbuchstaben und Ziffern (keine Namen auf der Seite!) und gib mir vorher, getrennt von der Seite, die Liste Name → Code. Diese Liste ist nur für mich.");
     else L.push("Verwende die Codes aus der Datei.");
     L.push("");
@@ -952,12 +941,12 @@ function defaultState() {
     fbSprache: "ziel", fbSpracheAndere: "", anrede: "du", fbUmfang: "kurz",
     uebFormate: { blatt: true, lernprompt: false, html: false, moodle: false }, uebZeit: 20,
     wortSprache: "Englisch", wortSpracheAndere: "",
-    formLink: "", notenformat: "de", notenEigene: "",
+    formLink: "",
     merken: false
   };
 }
 /* Was gemerkt wird – Aufgabe und Lernziel bewusst nicht. */
-var PERSIST = ["lang", "zielsprache", "niveau", "quelle", "out", "feedbackUeb", "kennzahlen", "flussMarkieren", "umfang", "zeitrahmen", "fbSprache", "fbSpracheAndere", "anrede", "fbUmfang", "uebFormate", "formLink", "notenformat", "feedbackUebAnzahl", "feedbackWort", "uebZeit", "wortSprache", "wortSpracheAndere", "notenEigene"];
+var PERSIST = ["lang", "zielsprache", "niveau", "quelle", "out", "feedbackUeb", "kennzahlen", "flussMarkieren", "umfang", "zeitrahmen", "fbSprache", "fbSpracheAndere", "anrede", "fbUmfang", "uebFormate", "formLink", "feedbackUebAnzahl", "feedbackWort", "uebZeit", "wortSprache", "wortSpracheAndere"];
 
 var S = defaultState();
 var cur = 0;
@@ -1026,7 +1015,7 @@ function buildChain(s) {
   return meta.map(function (m, i) {
     var x = { id: m.id };
     if (m.id === "main") { x.title = t("chainMainT"); x.hint = meta.length > 1 ? t("chainMainH") : t("chainMainOnlyH"); x.text = P.main(s); }
-    if (m.id === "feedback") { x.title = t("chainFbT"); x.hint = fmt(t("chainFbH"), { n: CONFIG.FEEDBACK_RUNDE }); x.text = P.feedback(s); }
+    if (m.id === "feedback") { x.title = t("chainFbT"); x.hint = t("chainFbH"); x.text = P.feedback(s); }
     if (m.id === "uebInd") { x.title = t("chainIndT"); x.hint = s.quelle === "app" ? t("chainIndAppH") : t("chainIndH"); x.text = P.uebIndividuellSeite(s); }
     if (m.id === "wortGr") { x.title = t("chainWortT"); x.hint = t("chainWortH"); x.text = P.wortGruppe(s); }
     if (m.id === "uebGr") { x.title = t("chainGrT"); x.hint = t("chainGrH"); x.text = P.uebGruppe(s); }
@@ -1056,8 +1045,6 @@ function laden() {
     });
     if (!LANG_PACKS[S.lang]) S.lang = "de";
     if (S.quelle === "einzel") S.quelle = "";
-    if (S.notenformat === "schulnote") S.notenformat = "de";
-    if (!NOTENSKALEN[S.notenformat] && S.notenformat !== "eigene") S.notenformat = "de";
     S.merken = true; S.langChosen = true;
   } catch (e) {}
 }
@@ -1082,7 +1069,6 @@ function validate(step) {
       if (S.uebFormate.html && parseFormLink(S.formLink).state === "fehler") return t("errForm");
     }
     if (hatWortliste() && S.wortSprache === "andere" && !S.wortSpracheAndere.trim()) return t("errWortSprache");
-    if (o2.noten && S.notenformat === "eigene" && !S.notenEigene.trim()) return t("errNotenEigene");
   }
   return null;
 }
@@ -1303,13 +1289,7 @@ function renderStep4() {
     h += blk(esc(t("s4Wort")), esc(t("s4WortHint")), w);
   }
   if (o.noten) {
-    var k = LANG_PACKS.de.kriterien[S.niveau];
-    var n = "<div class=\"chips\">" + NOTEN_REIHE.map(function (x) { return chip("notenformat", x, esc(NOTENSKALEN[x].chip)); }).join("") + chip("notenformat", "eigene", esc(t("nEigene"))) + "</div>";
-    if (S.notenformat === "eigene") n += "<input class=\"ti inl\" type=\"text\" placeholder=\"" + esc(t("nEigenePH")) + "\" value=\"" + esc(S.notenEigene) + "\" oninput=\"setText('notenEigene',this.value)\">";
-    var sk = NOTENSKALEN[S.notenformat];
-    if (sk) n += "<div class=\"bh\" style=\"margin-top:8px\">" + esc(t("nUmrechnung")) + " " + esc(k && k.typ === "holistisch" ? sk.h.join(" · ") : "A → " + sk.A + " · B → " + sk.B + " · C → " + sk.C + " · D → " + sk.D + " · E → " + sk.E) + ". " + esc(sk.tend) + "</div>";
-    n += "<div class=\"av\" style=\"margin-top:10px\"><p>" + esc(k && k.typ === "holistisch" ? t("s4NotenA1") : t("s4NotenRegel")) + "</p></div>";
-    h += blk(esc(t("s4Noten")), "", n);
+    h += blk(esc(t("s4Noten")), "", "<div class=\"av\"><p>" + esc(t("s4NotenRegel")) + "</p></div>");
   }
   return h;
 }
@@ -1469,11 +1449,16 @@ function mergeRemove(id) { MERGE = MERGE.filter(function (m) { return m.id !== i
 function mergeClear() { MERGE = []; mergeManuell = false; mergeFehler = []; mergeRender(); }
 function mergeRename(id, v) { var m = MERGE.find(function (x) { return x.id === id; }); if (m) m.name = v.trim(); }
 function mergeAktiv() { return MERGE.filter(function (m) { return m.text.trim() && m.name; }); }
+function mergeDoppelterName(m) {
+  return !!m.name && MERGE.some(function (x) { return x.id !== m.id && x.name.toLowerCase() === m.name.toLowerCase(); });
+}
+function mergeBlockiert(m) { return !m.text.trim() || !m.name || mergeDoppelterName(m); }
+function mergeBereit() { return MERGE.length > 0 && !MERGE.some(mergeBlockiert); }
 function mergeWarnungen(m) {
   var w = [];
   if (!m.text.trim()) w.push(t("mgWarnEmpty"));
   if (!m.name) w.push(t("mgWarnNoName"));
-  else if (MERGE.filter(function (x) { return x.name.toLowerCase() === m.name.toLowerCase(); }).length > 1) w.push(t("mgWarnDup"));
+  else if (mergeDoppelterName(m)) w.push(t("mgWarnDup"));
   if (m.geraten) w.push(t("mgWarnEnc"));
   return w;
 }
@@ -1485,7 +1470,7 @@ function mergeOutput() {
   return L.join("\n");
 }
 function mergeDownload() {
-  if (!mergeAktiv().length) return;
+  if (!mergeBereit()) return;
   var blob = new Blob([mergeOutput()], { type: "text/plain;charset=utf-8" });
   var url = URL.createObjectURL(blob), a = document.createElement("a");
   a.href = url; a.download = t("mgFile"); document.body.appendChild(a); a.click();
@@ -1505,11 +1490,13 @@ function mergeListHtml() {
       h += "<button class=\"mg-btn\" title=\"" + esc(t("mgRemove")) + "\" aria-label=\"" + esc(t("mgRemove")) + "\" onclick=\"mergeRemove(" + m.id + ")\">✕</button></div>";
     });
     h += "</div>";
-    var a = mergeAktiv(), worte = a.reduce(function (s, m) { return s + (m.text.match(/\S+/g) || []).length; }, 0);
-    h += "<div class=\"mg-sum\">" + esc(fmt(t("mgSum"), { n: a.length, w: worte.toLocaleString("de-DE") })) + "</div>";
-    if (a.length > 15) h += "<div class=\"wb2\" style=\"margin-top:8px\">" + esc(t("mgTooMany")) + "</div>";
-    h += "<div class=\"mg-act\"><button class=\"mg-dl\" onclick=\"mergeDownload()\"" + (a.length ? "" : " disabled") + ">" + esc(t("mgDownload")) + "</button><button class=\"bb\" onclick=\"mergeClear()\">" + esc(t("mgClear")) + "</button></div>";
-    if (a.length) h += "<div class=\"mg-sum\">" + esc(t("mgHint")) + "</div>";
+    var bereit = MERGE.filter(function (m) { return !mergeBlockiert(m); });
+    var worte = bereit.reduce(function (s, m) { return s + (m.text.match(/\S+/g) || []).length; }, 0);
+    h += "<div class=\"mg-sum\">" + esc(fmt(t("mgSum"), { bereit: bereit.length, gesamt: MERGE.length, w: worte.toLocaleString("de-DE") })) + "</div>";
+    if (!mergeBereit()) h += "<div class=\"wb2\" style=\"margin-top:8px\">" + esc(t("mgFix")) + "</div>";
+    if (MERGE.length > 15) h += "<div class=\"wb2\" style=\"margin-top:8px\">" + esc(t("mgTooMany")) + "</div>";
+    h += "<div class=\"mg-act\"><button class=\"mg-dl\" onclick=\"mergeDownload()\"" + (mergeBereit() ? "" : " disabled") + ">" + esc(t("mgDownload")) + "</button><button class=\"bb\" onclick=\"mergeClear()\">" + esc(t("mgClear")) + "</button></div>";
+    if (mergeBereit()) h += "<div class=\"mg-sum\">" + esc(t("mgHint")) + "</div>";
   }
   if (mergeFehler.length) h += "<div class=\"mg-err\">" + mergeFehler.map(esc).join("<br>") + "</div>";
   return h;
