@@ -199,7 +199,7 @@ var CONFIG = {
      Tokens, zusammen mit den Transkripten zu groß für kostenlose KI-Konten. */
   WORTLISTE_NIVEAUS: ["A1", "A2"],
   WORTLISTE_PFAD: "wortlisten/",
-  KURS_URL: "https://courses.promptgenerator.site/transcription/",
+  KURS_URL: "https://courses.promptgenerator.site/transcription",
   KURS_DATENSCHUTZ_URL: "https://courses.promptgenerator.site/transcription/nutzen#03-3",
   STORAGE_KEY: "pgTeachers.settings.v1",
   /* Höchstlänge der Ergebnisdaten im vorausgefüllten Formular-Link (getestet: 1.475 Zeichen) */
@@ -272,13 +272,12 @@ LANG_PACKS.de = {
     s1AufgabeFullHint: "Falls deine Lernenden einen Prompt bekommen haben (z. B. aus dem Prompt Generator), füge ihn hier ein. Er wird in den Auswertungs-Prompt übernommen – du musst ihn nicht extra hochladen.",
     s1AufgabeFullPH: "Hier den Prompt einfügen, den die Lernenden bekommen haben …",
     s1Quelle: "Woher stammen die Transkripte?",
-    qAlle: "ALLE_TRANSKRIPTE.txt aus dem Transkriptionsskript",
-    qAlleD: "Eine Datei mit allen Aufnahmen deiner Gruppe – mit Pausen, Zeitangaben und Kennzahlen. Lernende erscheinen als Codes.",
-    qEinzel: "Einzelanalyse aus dem Transkriptionsskript",
-    qEinzelD: "Die Datei „Aufnahme_…_analyse.txt“ zu einer einzelnen Person.",
+    qAlle: "Selbst erstellte Datei aus Screen Recordings",
+    qAlleD: "Deine aus den Screen Recordings deiner Teilnehmenden selbst erstellte Datei – mit Pausen, Zeitangaben und Kennzahlen. Lernende erscheinen als Codes.",
+    qAlleKurs: "Im Kurs lernst du, wie du die Aufnahmen automatisch transkribierst und zu einer Datei für die Auswertung zusammenfasst.",
+    qAlleKursLink: "Zum Kurs: Sprachaufnahmen automatisch transkribieren und auswerten →",
     qApp: "Transkripte aus der KI-App",
     qAppD: "Die Texte, die die KI-App (z. B. Gemini, ChatGPT) beim Sprechen erstellt hat und die dir deine Lernenden geschickt haben.",
-    qAppKurs: "Transkripte mit Pausen und Sprechtempo? → So geht's",
     qAppMerge: "Mehrere Dateien? Im letzten Schritt führst du sie mit einem Klick zu einer zusammen.",
     qNurApp: "Das Transkriptionsskript gibt es bisher nur für Deutsch – für {sprache} bleibt der Weg über die KI-App.",
     errSprache: "Bitte wähle die Sprache, die du unterrichtest.",
@@ -289,11 +288,7 @@ LANG_PACKS.de = {
     s2Title: "Was soll herauskommen?",
     s2Hint: "Mehrfachauswahl möglich. Je nach Auswahl bekommst du einen oder mehrere Prompts, die du nacheinander in denselben Chat einfügst.",
     oGruppe: "Überblick über die Gruppe",
-    oGruppeD: "Das Wichtigste auf einen Blick und die Fehlermuster, die bei vielen auftreten.",
-    oSpann: "Spannbreite der Gruppe",
-    oSpannD: "Wie weit liegen die Stärksten und die Schwächsten auseinander – und was folgt daraus?",
-    oBildung: "Vorschläge zur Gruppenbildung",
-    oBildungD: "2–4 Paarungen für Partnerarbeit, mit Begründung.",
+    oGruppeD: "Das Wichtigste auf einen Blick, häufige Fehlermuster und die Spannbreite der Gruppe.",
     oUnterricht: "Unterrichtsvorschläge",
     oUnterrichtD: "Sprachlicher Fokus und Aktivitäten für deine nächste Stunde.",
     oFoerder: "Förderempfehlungen",
@@ -712,14 +707,9 @@ LANG_PACKS.de = {
       L.push("");
     }
 
-    if (gruppe && o.gruppe && S.gruppeSpann) {
+    if (gruppe && o.gruppe) {
       sec("SPANNBREITE DER GRUPPE");
       L.push("Höchstens 4 Sätze: Wie groß ist der Abstand zwischen den stärksten und den schwächsten Lernenden, und was folgt daraus für die Unterrichtsplanung (z. B. Differenzierung)?");
-      L.push("");
-    }
-    if (gruppe && o.gruppe && S.gruppeBildung) {
-      sec("VORSCHLÄGE ZUR GRUPPENBILDUNG");
-      L.push("Entscheide dich für eine Strategie – überwiegend heterogene Paare (Stärkere als Sprachvorbild) oder überwiegend homogene Paare (gemeinsamer Schwerpunkt) – und begründe sie in einem Satz. Dann 2–4 Paarungen, je eine Zeile: " + kennungen(S) + " – gemeinsamer Schwerpunkt.");
       L.push("");
     }
 
@@ -955,7 +945,7 @@ function defaultState() {
     lang: "de", langChosen: false,
     zielsprache: "", niveau: "", aufgabe: "", aufgabePrompt: "", quelle: "",
     out: { gruppe: true, unterricht: true, noten: false, feedback: false, uebGruppe: false, wortGruppe: false },
-    gruppeSpann: true, gruppeBildung: true, feedbackUeb: false, feedbackUebAnzahl: 2, feedbackWort: false,
+    feedbackUeb: false, feedbackUebAnzahl: 2, feedbackWort: false,
     zielstruktur: "", zielwortschatz: "",
     kennzahlen: "erklaeren", flussMarkieren: false,
     umfang: "mittel", zeitrahmen: 45,
@@ -967,7 +957,7 @@ function defaultState() {
   };
 }
 /* Was gemerkt wird – Aufgabe und Lernziel bewusst nicht. */
-var PERSIST = ["lang", "zielsprache", "niveau", "quelle", "out", "gruppeSpann", "gruppeBildung", "feedbackUeb", "kennzahlen", "flussMarkieren", "umfang", "zeitrahmen", "fbSprache", "fbSpracheAndere", "anrede", "fbUmfang", "uebFormate", "formLink", "notenformat", "feedbackUebAnzahl", "feedbackWort", "uebZeit", "wortSprache", "wortSpracheAndere", "notenEigene"];
+var PERSIST = ["lang", "zielsprache", "niveau", "quelle", "out", "feedbackUeb", "kennzahlen", "flussMarkieren", "umfang", "zeitrahmen", "fbSprache", "fbSpracheAndere", "anrede", "fbUmfang", "uebFormate", "formLink", "notenformat", "feedbackUebAnzahl", "feedbackWort", "uebZeit", "wortSprache", "wortSpracheAndere", "notenEigene"];
 
 var S = defaultState();
 var cur = 0;
@@ -1065,6 +1055,7 @@ function laden() {
       else S[k] = o[k];
     });
     if (!LANG_PACKS[S.lang]) S.lang = "de";
+    if (S.quelle === "einzel") S.quelle = "";
     if (S.notenformat === "schulnote") S.notenformat = "de";
     if (!NOTENSKALEN[S.notenformat] && S.notenformat !== "eigene") S.notenformat = "de";
     S.merken = true; S.langChosen = true;
@@ -1229,10 +1220,9 @@ function renderStep1() {
   h += blk(esc(t("s1Aufgabe")) + " <span class=\"rq\">*</span>", esc(t("s1AufgabeHint")), a);
   var q = "<div class=\"rg\">", skr = !S.zielsprache || skriptVerfuegbar(S.zielsprache);
   if (skr) {
-    q += rdRow("quelle", "alle", esc(t("qAlle")), esc(t("qAlleD")));
-    q += rdRow("quelle", "einzel", esc(t("qEinzel")), esc(t("qEinzelD")));
+    q += rdRow("quelle", "alle", esc(t("qAlle")), esc(t("qAlleD")) + "<br>" + esc(t("qAlleKurs")) + "<br><a href=\"" + CONFIG.KURS_URL + "\" target=\"_blank\" rel=\"noopener\" onclick=\"event.stopPropagation()\">" + esc(t("qAlleKursLink")) + "</a>");
   }
-  q += rdRow("quelle", "app", esc(t("qApp")), esc(t("qAppD")) + "<br>" + esc(t("qAppMerge")) + "<br><a href=\"" + CONFIG.KURS_URL + "\" target=\"_blank\" rel=\"noopener\" onclick=\"event.stopPropagation()\">" + esc(t("qAppKurs")) + "</a>");
+  q += rdRow("quelle", "app", esc(t("qApp")), esc(t("qAppD")) + "<br>" + esc(t("qAppMerge")));
   q += "</div>";
   if (!skr) q += "<div class=\"av\" style=\"margin-top:8px\"><p>" + esc(fmt(t("qNurApp"), { sprache: t("sprachen")[S.zielsprache] })) + "</p></div>";
   h += blk(esc(t("s1Quelle")) + " <span class=\"rq\">*</span>", "", q);
@@ -1243,7 +1233,6 @@ function renderStep2() {
   var h = stepHead(esc(t("s2Title")), esc(t("s2Hint"))), e = S.quelle === "einzel", r = "<div class=\"rg\">";
   if (!e) {
     r += cbRow("out.gruppe", esc(t("oGruppe")), esc(t("oGruppeD")));
-    if (S.out.gruppe) r += "<div class=\"sub\">" + cbRow("gruppeSpann", esc(t("oSpann")), esc(t("oSpannD"))) + cbRow("gruppeBildung", esc(t("oBildung")), esc(t("oBildungD"))) + "</div>";
     r += cbRow("out.unterricht", esc(t("oUnterricht")), esc(t("oUnterrichtD")));
   }
   r += cbRow("out.feedback", esc(e ? t("oFeedbackEinzel") : t("oFeedback")), esc(t("oFeedbackD")));
