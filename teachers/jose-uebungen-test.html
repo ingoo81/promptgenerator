@@ -1,0 +1,263 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Joses Übungen – Zeittest</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --navy: #003468;
+      --lime: #a5c500;
+      --ink: #1e293b;
+      --muted: #596b7e;
+      --line: #d7e1e9;
+      --paper: #ffffff;
+      --bg: #f6f8fa;
+      --good: #166534;
+      --good-bg: #ecfdf3;
+      --hint: #805400;
+      --hint-bg: #fff7dc;
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: var(--bg); color: var(--ink); font: 16px/1.5 "Segoe UI", Arial, sans-serif; }
+    header { background: var(--navy); color: white; border-bottom: 4px solid var(--lime); }
+    .header-inner { max-width: 760px; margin: auto; padding: 14px 20px; display: flex; align-items: center; gap: 12px; }
+    .header-inner img { width: 42px; height: 42px; border-radius: 50%; object-fit: cover; }
+    .brand { font-size: 15px; font-weight: 700; }
+    main { max-width: 760px; margin: 0 auto; padding: 30px 20px 60px; }
+    h1 { margin: 0 0 8px; color: var(--navy); font-size: clamp(1.5rem, 1.35rem + .6vw, 1.9rem); line-height: 1.2; }
+    h2 { margin: 0 0 12px; color: var(--navy); font-size: 1.25rem; line-height: 1.3; }
+    p { margin: 0 0 16px; }
+    .muted { color: var(--muted); }
+    .panel { background: var(--paper); border: 1px solid var(--line); border-radius: 8px; padding: 26px; }
+    .panel + .panel { margin-top: 16px; }
+    .intro-actions { margin-top: 24px; }
+    .topline { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; color: var(--muted); font-size: 14px; font-weight: 600; }
+    .timer { color: var(--navy); font-variant-numeric: tabular-nums; white-space: nowrap; }
+    .progress { height: 6px; margin: 10px 0 26px; background: #e8eef2; border-radius: 6px; overflow: hidden; }
+    .progress span { display: block; height: 100%; width: 0; background: var(--lime); transition: width .2s; }
+    .prompt { margin: 14px 0 24px; padding: 16px 18px; border-left: 4px solid var(--lime); background: #f5f9e9; font-size: 1.08rem; line-height: 1.5; overflow-wrap: anywhere; }
+    label { display: block; margin-bottom: 8px; font-weight: 700; color: var(--navy); }
+    input { display: block; width: 100%; min-height: 48px; padding: 11px 13px; border: 2px solid #c8d5df; border-radius: 6px; background: white; color: var(--ink); font: inherit; }
+    input:focus-visible, button:focus-visible { outline: 3px solid var(--lime); outline-offset: 2px; }
+    input:disabled { background: #f4f6f8; color: var(--muted); }
+    .actions { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; margin-top: 18px; }
+    button { min-height: 44px; padding: 10px 20px; border: 0; border-radius: 6px; background: var(--navy); color: white; font: 700 15px "Segoe UI", Arial, sans-serif; cursor: pointer; }
+    button:hover { background: #075087; }
+    .feedback { min-height: 0; margin-top: 20px; padding: 12px 14px; border-radius: 6px; font-size: 15px; }
+    .feedback:empty { display: none; }
+    .feedback.good { color: var(--good); background: var(--good-bg); }
+    .feedback.hint, .feedback.solution { color: var(--hint); background: var(--hint-bg); }
+    .feedback p { margin: 0; }
+    .feedback p + p { margin-top: 6px; }
+    .results { width: 100%; border-collapse: collapse; margin: 18px 0 24px; font-size: 14px; }
+    .results th, .results td { padding: 10px 8px; border-bottom: 1px solid var(--line); text-align: left; vertical-align: top; }
+    .results th:last-child, .results td:last-child { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+    .total { margin: 8px 0 22px; font-size: 1.1rem; font-weight: 700; color: var(--navy); }
+    [hidden] { display: none !important; }
+    @media (max-width: 520px) {
+      main { padding: 20px 14px 40px; }
+      .panel { padding: 20px 16px; }
+      .actions button { width: 100%; }
+      .results { font-size: 13px; }
+      .results th, .results td { padding: 9px 4px; }
+    }
+  </style>
+</head>
+<body>
+  <header><div class="header-inner"><img src="../logo.jpg" alt=""><span class="brand">Prompt Generator für Lehrkräfte</span></div></header>
+  <main>
+    <section id="intro" class="panel">
+      <h1>Joses Übungen</h1>
+      <p class="muted">Sieben kurze Aufgaben zu Formulierungen aus seinem Gespräch.</p>
+      <p>Bei einzelnen Korrekturen reicht das richtige Wort oder die richtige Wendung; du kannst auch den ganzen Satz schreiben. Nach einem Fehlversuch bekommst du einen Tipp, nach dem zweiten die Lösung.</p>
+      <div class="intro-actions"><button id="start" type="button">Übungen starten</button></div>
+    </section>
+
+    <section id="quiz" class="panel" hidden>
+      <div class="topline"><span id="step"></span><span class="timer">Zeit: <span id="clock">0:00</span></span></div>
+      <div class="progress" aria-hidden="true"><span id="progress-fill"></span></div>
+      <h2 id="instruction"></h2>
+      <div id="prompt" class="prompt"></div>
+      <form id="answer-form">
+        <label for="answer">Deine Antwort</label>
+        <input id="answer" type="text" autocomplete="off" autocapitalize="sentences" spellcheck="false" required>
+        <div class="actions">
+          <button id="check" type="submit">Antwort prüfen</button>
+          <button id="next" type="button" hidden>Weiter</button>
+        </div>
+      </form>
+      <div id="feedback" class="feedback" role="status" aria-live="polite"></div>
+    </section>
+
+    <section id="finish" class="panel" hidden>
+      <h1>Fertig</h1>
+      <p class="muted">Bearbeitungszeit je Aufgabe</p>
+      <table class="results">
+        <thead><tr><th>Aufgabe</th><th>Ergebnis</th><th>Zeit</th></tr></thead>
+        <tbody id="results-body"></tbody>
+      </table>
+      <p id="total" class="total"></p>
+      <button id="restart" type="button">Erneut starten</button>
+    </section>
+  </main>
+  <script>
+    "use strict";
+    const exercises = [
+      {
+        instruction: "Bringe die Wörter in die richtige Reihenfolge.",
+        prompt: "ich / gern / gehe / im See / schwimmen",
+        answers: ["Ich gehe gern im See schwimmen.", "Ich gehe im See gern schwimmen."],
+        hint: "Das konjugierte Verb steht direkt nach „ich“.",
+        solution: "Ich gehe gern im See schwimmen."
+      },
+      {
+        instruction: "Ändere nur die fehlerhafte Stelle.",
+        prompt: "Ich gehe jeden Woche schwimmen.",
+        answers: ["jede", "jede Woche", "Ich gehe jede Woche schwimmen."],
+        hint: "„Woche“ ist feminin.",
+        solution: "Ich gehe jede Woche schwimmen."
+      },
+      {
+        instruction: "Korrigiere das letzte Wort.",
+        prompt: "Das Wasser ist kalten.",
+        answers: ["kalt", "Das Wasser ist kalt."],
+        hint: "Nach „ist“ bekommt das Adjektiv hier keine Endung.",
+        solution: "Das Wasser ist kalt."
+      },
+      {
+        instruction: "Formuliere mit „klettern“ und „in den Bergen“.",
+        prompt: "Ich steige gern klettern Berge.",
+        answers: ["Ich klettere gern in den Bergen.", "Ich klettere in den Bergen gern.", "In den Bergen klettere ich gern.", "Ich gehe gern in den Bergen klettern."],
+        hint: "Du kannst „klettern“ direkt als Verb verwenden: „Ich …“",
+        solution: "Ich klettere gern in den Bergen."
+      },
+      {
+        instruction: "Ändere nur die fehlerhafte Stelle.",
+        prompt: "Am liebste gehe ich am Wochenende in die Berge.",
+        answers: ["liebsten", "am liebsten", "Am liebsten gehe ich am Wochenende in die Berge."],
+        hint: "Der Superlativ lautet „am liebsten“.",
+        solution: "Am liebsten gehe ich am Wochenende in die Berge."
+      },
+      {
+        instruction: "Ändere nur die fehlerhafte Stelle.",
+        prompt: "Dort bin ich weit weg von alle Menschen.",
+        answers: ["allen", "allen Menschen", "Dort bin ich weit weg von allen Menschen."],
+        hint: "Nach „von“ steht der Dativ Plural.",
+        solution: "Dort bin ich weit weg von allen Menschen."
+      },
+      {
+        instruction: "Ändere nur die fehlerhafte Stelle.",
+        prompt: "Ich habe jetzt keine Zeiten. Ich muss weg.",
+        answers: ["Zeit", "keine Zeit", "Ich habe jetzt keine Zeit. Ich muss weg."],
+        hint: "Für fehlende verfügbare Zeit verwendet man hier den Singular.",
+        solution: "Ich habe jetzt keine Zeit. Ich muss weg."
+      }
+    ];
+
+    const $ = id => document.getElementById(id);
+    const normalize = value => value.normalize("NFKC").toLocaleLowerCase("de-DE")
+      .replace(/[.,!?;:„“"'’]/g, "").replace(/\s+/g, " ").trim();
+    const formatTime = seconds => `${Math.floor(seconds / 60)}:${String(Math.floor(seconds % 60)).padStart(2, "0")}`;
+    let current = 0;
+    let attempts = 0;
+    let startedAt = 0;
+    let resolved = false;
+    let results = [];
+
+    function tick() {
+      if (!resolved && !$('quiz').hidden) $('clock').textContent = formatTime((performance.now() - startedAt) / 1000);
+    }
+
+    function showExercise() {
+      const exercise = exercises[current];
+      attempts = 0;
+      resolved = false;
+      $('step').textContent = `Aufgabe ${current + 1} von ${exercises.length}`;
+      $('progress-fill').style.width = `${(current / exercises.length) * 100}%`;
+      $('instruction').textContent = exercise.instruction;
+      $('prompt').textContent = exercise.prompt;
+      $('answer').value = "";
+      $('answer').disabled = false;
+      $('answer').required = true;
+      $('check').hidden = false;
+      $('next').hidden = true;
+      $('next').textContent = current === exercises.length - 1 ? "Ergebnis ansehen" : "Weiter";
+      $('feedback').textContent = "";
+      $('feedback').className = "feedback";
+      $('clock').textContent = "0:00";
+      startedAt = performance.now();
+      $('answer').focus();
+    }
+
+    function resolve(outcome, text) {
+      resolved = true;
+      const seconds = (performance.now() - startedAt) / 1000;
+      results.push({ outcome, seconds });
+      $('clock').textContent = formatTime(seconds);
+      $('answer').disabled = true;
+      $('answer').required = false;
+      $('check').hidden = true;
+      $('next').hidden = false;
+      $('feedback').className = `feedback ${outcome === "Lösung angezeigt" ? "solution" : "good"}`;
+      $('feedback').textContent = text;
+      $('next').focus();
+    }
+
+    function finish() {
+      $('quiz').hidden = true;
+      $('finish').hidden = false;
+      const body = $('results-body');
+      body.replaceChildren();
+      results.forEach((result, index) => {
+        const row = document.createElement('tr');
+        [String(index + 1), result.outcome, formatTime(result.seconds)].forEach(value => {
+          const cell = document.createElement('td');
+          cell.textContent = value;
+          row.appendChild(cell);
+        });
+        body.appendChild(row);
+      });
+      const total = results.reduce((sum, result) => sum + result.seconds, 0);
+      $('total').textContent = `Gesamte Bearbeitungszeit: ${formatTime(total)}`;
+      $('restart').focus();
+    }
+
+    function start() {
+      current = 0;
+      results = [];
+      $('intro').hidden = true;
+      $('finish').hidden = true;
+      $('quiz').hidden = false;
+      showExercise();
+    }
+
+    $('start').addEventListener('click', start);
+    $('restart').addEventListener('click', start);
+    $('answer-form').addEventListener('submit', event => {
+      event.preventDefault();
+      if (resolved) return;
+      const answer = normalize($('answer').value);
+      if (!answer) return;
+      const exercise = exercises[current];
+      if (exercise.answers.some(candidate => normalize(candidate) === answer)) {
+        resolve(attempts ? 'Richtig nach Tipp' : 'Sofort richtig', 'Richtig!');
+      } else if (++attempts === 1) {
+        $('feedback').className = 'feedback hint';
+        $('feedback').textContent = `Noch nicht. Tipp: ${exercise.hint}`;
+        $('answer').focus();
+        $('answer').select();
+      } else {
+        resolve('Lösung angezeigt', `Eine mögliche Lösung: ${exercise.solution}`);
+      }
+    });
+    $('next').addEventListener('click', () => {
+      current += 1;
+      if (current === exercises.length) finish();
+      else showExercise();
+    });
+    setInterval(tick, 250);
+  </script>
+</body>
+</html>

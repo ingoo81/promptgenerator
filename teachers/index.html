@@ -11,8 +11,8 @@
 body{background:#f8fafc;font-family:'Segoe UI',Arial,sans-serif;color:#1e293b;}
 .gh{background:var(--d);}
 .hi{max-width:780px;margin:0 auto;padding:16px 24px;display:flex;align-items:center;gap:16px;}
-.ht{flex:1;}.ht h1{font-size:26px;font-weight:800;color:white;margin-bottom:3px;letter-spacing:-.01em;}
-.hlogo{width:56px;height:56px;border-radius:50%;flex-shrink:0;display:block;}
+.ht{flex:1;}.ht h1{font-size:28px;font-weight:800;color:white;margin-bottom:3px;letter-spacing:-.01em;}
+.him{width:72px;height:72px;object-fit:cover;border-radius:50%;flex-shrink:0;border:3px solid rgba(165,197,0,.6);}
 .hs{background:linear-gradient(135deg,var(--d) 0%,#005a8e 100%);padding:9px 24px;display:flex;align-items:center;justify-content:center;border-bottom:3px solid var(--p);}
 .hs span{color:rgba(255,255,255,.85);font-size:13px;font-style:italic;text-align:center;}
 .ww{max-width:780px;margin:0 auto;padding:26px 20px 50px;}
@@ -130,7 +130,6 @@ footer a:hover{text-decoration:underline;}
 @media (max-width: 600px){
   .hi{padding:12px 16px;gap:10px;}
   .ht h1{font-size:18px;}
-  .hlogo{width:44px;height:44px;}
   .hs{padding:7px 16px;}
   .hs span{font-size:12px;}
   .ww{padding:16px 12px 48px;}
@@ -155,7 +154,7 @@ footer a:hover{text-decoration:underline;}
 <header class="gh">
   <div class="hi">
     <div class="ht"><h1 id="appTitle">Prompt Generator für Lehrkräfte</h1></div>
-    <img class="hlogo" src="logo.webp" width="56" height="56" alt="">
+    <img class="him" src="logo.jpg" width="72" height="72" alt="">
   </div>
 </header>
 <div class="hs"><span id="tagline"></span></div>
@@ -796,7 +795,7 @@ LANG_PACKS.de = {
   }
 
   function lernpromptSpec(S, umfangText) {
-    return "ÜBUNGS-PROMPT FÜR LERNENDE: Schreib einen fertigen Prompt in einem Codeblock, den " + umfangText + " in die eigene KI (z. B. Gemini oder ChatGPT) einfügen kann. Darin soll die KI: sich kurz vorstellen; die Übungen einzeln stellen und jeweils auf die Antwort warten; sofort sagen, ob die Antwort stimmt; bei Fehlern kurz erklären und einen zweiten Versuch erlauben; nach dem zweiten Fehlversuch die Lösung zeigen; am Ende zusammenfassen, was gut lief und was noch geübt werden sollte. Erklärungen " + erklSprache(S) + ". " + anrede(S) + " Der Prompt enthält alle Übungen und Lösungen, die Lösungen zeigt die KI aber erst nach der Antwort.";
+    return "ÜBUNGS-PROMPT FÜR LERNENDE: Schreib einen fertigen Prompt in einem Codeblock, den " + umfangText + " in die eigene KI (z. B. Gemini oder ChatGPT) einfügen kann. Darin soll die KI: sich kurz vorstellen; die Übungen einzeln stellen und jeweils auf die Antwort warten; sofort sagen, ob die Antwort stimmt; bei Fehlern kurz erklären und einen zweiten Versuch erlauben; nach dem zweiten Fehlversuch die Lösung zeigen; am Ende zusammenfassen, was gut lief und was noch geübt werden sollte. Bei Aufgaben mit genau einer zu korrigierenden Stelle akzeptiert sie sowohl das richtige Wort bzw. die richtige Wendung allein als auch den vollständig korrigierten Satz. Erklärungen " + erklSprache(S) + ". " + anrede(S) + " Der Prompt enthält alle Übungen und Lösungen, die Lösungen zeigt die KI aber erst nach der Antwort.";
   }
 
   function blattSpec(mitLoesungEnde) {
@@ -818,6 +817,7 @@ LANG_PACKS.de = {
     }
     L.push("- Jede Aufgabe hat höchstens zwei Versuche. Bestätige eine richtige Antwort sofort. Nach dem ersten falschen Versuch gib einen konkreten Tipp zum Fehler, ohne die Lösung zu verraten, und erlaube einen zweiten Versuch. Nach dem zweiten falschen Versuch zeige die richtige Lösung mit einer kurzen Erklärung.");
     L.push("- Prüfe Antworten tolerant: überflüssige Leerzeichen und abschließende Satzzeichen ignorieren, mehrere inhaltlich richtige Formulierungen akzeptieren. Groß-/Kleinschreibung nur dann als Fehler werten, wenn sie das Lernziel der Aufgabe ist. Zeige Musterlösungen immer mit korrekter Rechtschreibung, Groß-/Kleinschreibung und Zeichensetzung.");
+    L.push("- Bei einer Korrekturaufgabe mit genau einer fehlerhaften Stelle (z. B. „Ändere nur die fehlerhafte Stelle“) ist sowohl das korrigierte Wort bzw. die korrigierte Wendung allein als auch der vollständig korrigierte Satz richtig. Hinterlege und prüfe beide Antwortformen im JavaScript; verlange nicht den ganzen Satz, wenn die Aufgabe nur nach einer Stelle fragt. Bei Umformungs- oder Wortstellungsaufgaben darfst du dagegen ausdrücklich einen ganzen Satz verlangen.");
     L.push("- Ergebnisbildschirm: Code, erreichte Punkte (richtig im ersten oder zweiten Versuch), Datum und ein Abschluss-Code im Format CODE-PUNKTE-TTMM-PZ. PZ ist eine zweistellige Prüfziffer: Summe der Zeichencodes von „CODE-PUNKTE-TTMM“ modulo 97.");
     if (f.state === "ok") {
       L.push("- Button „Ergebnis abschicken“: öffnet in einem neuen Tab diese Adresse: " + f.base + "&" + f.code + "=<CODE>&" + f.daten + "=<DATEN>. Beide Werte mit encodeURIComponent kodieren. <DATEN> ist eine Zeile im Format Ü1:<Fehlerbereich>:<r oder f>:<letzte falsche Eingabe>:<Versuche>, Einträge mit „|“ getrennt (Beispiel: Ü1:Dativ nach mit:f:mit der Bus:2|Ü2:Perfekt mit sein:r::1). Doppelpunkte und senkrechte Striche in Eingaben durch „/“ ersetzen. Wird <DATEN> länger als " + CONFIG.FORM_DATEN_MAX + " Zeichen, kürze die falschen Eingaben und hänge „|GEKUERZT“ an. Zeige unter dem Button zusätzlich denselben Link als normalen Link, falls das Öffnen blockiert wird.");
