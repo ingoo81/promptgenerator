@@ -329,7 +329,7 @@ LANG_PACKS.de = {
     oUebGruppe: "Übungen für die ganze Gruppe",
     oUebGruppeD: "Aus allen Transkripten: Übungen zu den häufigsten Fehlerbereichen. Den Umfang wählst du in Schritt 4.",
     oWortGruppe: "Wortschatzliste für die Gruppe",
-    oWortGruppeD: "Wörter, Wendungen und ganze Sätze, die in den Gesprächen gefehlt haben oder gepasst hätten – mit Übersetzung, bereit für Quizlet.",
+    oWortGruppeD: "Wörter, Wendungen und ganze Sätze, die in den Gesprächen gefehlt haben oder gepasst hätten – mit Übersetzung in die Sprache deiner Wahl, bereit für Vokabelapps wie z. B. Quizlet.",
     errOut: "Bitte wähle mindestens ein Ergebnis.",
 
     s3Title: "Worauf soll die Auswertung achten?",
@@ -349,13 +349,13 @@ LANG_PACKS.de = {
     s3Kennzahlen: "Kennzahlen aus dem Skript",
     kErklaeren: "In verständlichen Worten erklären",
     kErklaerenD: "Die KI ordnet Sprechtempo, Pausen und Co. für dich ein – ohne Fachjargon.",
-    kIgnorieren: "Ignorieren",
-    kIgnorierenD: "Die Auswertung stützt sich nur auf den Wortlaut der Gespräche.",
+    kIgnorieren: "Weitere Kennzahlen nicht erläutern",
+    kIgnorierenD: "Wortzahl und Flüssigkeitsindex werden dennoch für die Übersicht verwendet.",
     s3Fluss: "Auffällig flüssige Aufnahmen markieren",
     s3FlussD: "Hinweis zum Nachhören, falls eine Aufnahme wie vorgelesen wirkt – kein Vorwurf.",
     s3Immer: "Immer automatisch im Prompt:",
-    s3ImmerSkript: ["Nur die Äußerungen der Lernenden werden bewertet, nie die der KI.", "Die Lesehinweise der Datei werden befolgt (z. B. geglättete Endungen nicht als Lernerfolg werten).", "Unsichere Aufnahmen („BITTE PRÜFEN“) werden gekennzeichnet und nicht in Vergleiche eingerechnet.", "Codes statt Namen; entfernte Daten wie [NAME] werden nicht kommentiert."],
-    s3ImmerApp: ["Nur die Äußerungen der Lernenden werden bewertet, nie die der KI.", "Keine Aussagen zu Sprechtempo oder Pausen – die App-Transkripte enthalten keine Zeitangaben.", "Hinweis, dass App-Transkripte geglättet oder nachbearbeitet sein können."],
+    s3ImmerSkript: ["Nur die Äußerungen der Lernenden werden bewertet, nie die der KI.", "Grammatik- und Wortschatzfehler pro 100 Wörter sowie die Gesamtfehlerdichte werden ausgewiesen.", "Die Lesehinweise der Datei werden befolgt (z. B. geglättete Endungen nicht als Lernerfolg werten).", "Unsichere Aufnahmen („BITTE PRÜFEN“) werden gekennzeichnet und nicht in Vergleiche eingerechnet.", "Codes statt Namen; entfernte Daten wie [NAME] werden nicht kommentiert."],
+    s3ImmerApp: ["Nur die Äußerungen der Lernenden werden bewertet, nie die der KI.", "Grammatik- und Wortschatzfehler pro 100 Wörter sowie die Gesamtfehlerdichte werden ausgewiesen.", "Keine Aussagen zu Sprechtempo oder Pausen – die App-Transkripte enthalten keine Zeitangaben.", "Hinweis, dass App-Transkripte geglättet oder nachbearbeitet sein können."],
 
     s4Title: "Feinjustierung",
     s4Hint: "Hier siehst du nur, was zu deiner Auswahl gehört. Die Voreinstellungen passen meistens.",
@@ -379,6 +379,9 @@ LANG_PACKS.de = {
     s4UebZeit: "Bearbeitungszeit der Übungen",
     s4UebZeitHint: "Die KI richtet die Zahl der Übungen danach – aber nie mehr, als es belegte Fehler gibt.",
     s4UebZeitEinzel: "Bearbeitungszeit der Übungen für diese Person",
+    s4UebMix: "Schwerpunkt der Gruppenübungen",
+    s4UebMixHint: "Anteile der einzelnen Aufgaben: Grammatik / Wortschatz. Ohne ausreichende Belege entstehen weniger Aufgaben.",
+    uebMixAuto: "Automatisch nach Bedarf",
     s4UebAnzahl: "Übungen je Person im Feedback",
     uebStk: "Übungen",
     s4Wort: "Wortschatzliste: Übersetzung in",
@@ -570,6 +573,15 @@ LANG_PACKS.de = {
     L.push("Ausgabe: Tabelle mit genau den Spalten " + kennung(S) + " | Punkte (0–100 oder nicht bewertbar) | kurzer Beleg oder Grund. Keine A–E-Teilnoten, keine Schulnoten und keine weiteren Punktzahlen in der Tabelle. Prüfe die Rechnung intern vor der Ausgabe.");
     return L.join("\n");
   }
+  function fehlerdichteRegeln(S) {
+    var L = [];
+    L.push("Berechne die Fehlerdichten für jede lernende Person getrennt, nur aus ihren eigenen Äußerungen; Beiträge der KI und Zeitmarken zählen nicht. Bei Skript-Transkripten verwende die ausgewiesene Zahl „Wörter (ohne äh und ähm)“ als Nenner: Darin sind maskierte, tatsächlich gesprochene Wörter bereits enthalten; Platzhalter sind keine Fehler. Bei App-Transkripten zähle die gesprochenen Wörter im Text ohne Fülllaute, Zeitmarken und Platzhalter; Satzzeichen sind keine Wörter.");
+    L.push("Zähle jede im Transkript belegte Fehlerstelle einmal: Grammatik umfasst Formen, Artikel, Kasus, Endungen, Zeiten und Satzbau; Wortschatz umfasst falsche oder fehlende Inhaltswörter und unpassende Wendungen. Derselbe Fehler darf nicht in beiden Kategorien stehen. Wiederholt sich eine belegte Fehlerstelle, zähle jedes Vorkommen; mehrere nur scheinbar getrennte Fehler an derselben Stelle zähle nicht doppelt. Vermutete Spracherkennungsfehler und bloße Stilpräferenzen nicht mitzählen.");
+    L.push("Rechne je Person: Grammatikfehler pro 100 Wörter = 100 × Grammatikfehler / Wörter; Wortschatzfehler pro 100 Wörter = 100 × Wortschatzfehler / Wörter; Gesamtfehlerdichte = 100 × (Grammatikfehler + Wortschatzfehler) / Wörter. Runde erst die drei Endwerte auf eine Dezimalstelle. Kontrolliere, dass die Gesamtfehlerdichte zur Summe der beiden ungerundeten Einzelwerte passt. Bei null auswertbaren Wörtern: „nicht berechenbar“ statt 0.");
+    L.push("Gib eine Tabelle mit " + kennung(S) + " | Wörter | Grammatikfehler | Grammatik pro 100 Wörter | Wortschatzfehler | Wortschatz pro 100 Wörter | Gesamtfehlerdichte pro 100 Wörter" + (isSkript(S) ? " | Flüssigkeitsindex (0–100 oder nicht verfügbar)" : "") + " aus. Bei weniger als 50 Wörtern kennzeichne die Werte als wenig belastbar. Eine Fehlerdichte von 0 belegt nicht, dass die Aufnahme fehlerfrei war.");
+    if (isSkript(S)) L.push("Übernimm den Flüssigkeitsindex nur dann aus den Kennzahlen der jeweiligen Aufnahme, wenn das Transkriptionsskript ihn bereits ausweist. Berechne ihn nicht selbst aus gerundeten Kennzahlen. Fehlt er oder steht dort „nicht berechnet“, gib „nicht verfügbar“ mit dem angegebenen Grund aus. Er ist ein vorläufiger Verlaufswert und keine Note.");
+    return L.join("\n");
+  }
   function endungenUebSatz(S, gruppe) {
     if (!isSkript(S)) return "";
     return gruppe
@@ -611,11 +623,11 @@ LANG_PACKS.de = {
     else R.push("Bewerte ausschließlich, was die Lernenden selbst sagen. Die Beiträge der KI sind nur Kontext und werden nicht bewertet.");
     if (skript) {
       R.push("Befolge die LESEHINWEISE in der Datei. Besonders wichtig: Die Spracherkennung glättet Lernersprache teilweise, vor allem Endungen. Werte korrekt aussehende Endungen deshalb nicht als Lernerfolg. Fehler im Transkript sind meist echt, können aber Erkennungsfehler sein – formuliere sie dann mit „wahrscheinlich“.");
-      if (S.quelle === "alle") R.push("Aufnahmen, die unter „BITTE PRÜFEN“ stehen oder eine HINWEIS-Zeile haben, kennzeichnest du mit ⚠, bewertest sie vorsichtig und rechnest sie nicht in Zählungen oder Gruppenvergleiche ein.");
+      if (S.quelle === "alle") R.push("Aufnahmen, die unter „BITTE PRÜFEN“ stehen oder eine HINWEIS-Zeile haben, kennzeichnest du mit ⚠, bewertest sie vorsichtig und rechnest sie nicht in Gruppenzählungen oder Gruppenvergleiche ein. Persönliche Fehlerdichten darfst du mit entsprechendem Warnhinweis dennoch ausweisen.");
       else R.push("Steht in der Datei ein HINWEIS (unsichere Stimmenzuordnung oder sehr kurze Aufnahme), bewerte vorsichtig und weise mich darauf hin.");
       R.push("Sprich von den Lernenden nur mit ihren Codes. Erfrage oder erfinde keine Namen. Platzhalter wie [NAME], [NAME/ORT], [TELEFON] oder [EMAIL] sind entfernte persönliche Daten – kommentiere sie nicht und werte sie nicht als Fehler.");
-      R.push("Vergleiche nur Dateien, die mit demselben Spracherkennungsmodell erstellt wurden (es steht oben in der Datei).");
-      if (S.kennzahlen === "ignorieren") R.push("Ignoriere die Abschnitte mit Kennzahlen. Die Pausenmarkierungen im Gespräch darfst du für Aussagen zur Flüssigkeit nutzen.");
+      R.push("Vergleiche Flüssigkeitsindex und übrige Skript-Kennzahlen nur bei gleichem Spracherkennungsmodell und gleicher Skriptversion (soweit angegeben) sowie möglichst ähnlicher Gesprächsaufgabe.");
+      if (S.kennzahlen === "ignorieren") R.push("Nutze aus den Kennzahlen nur Wortzahl und, falls vorhanden, den Flüssigkeitsindex für die Fehlerdichtetabelle. Erläutere die übrigen Kennzahlen nicht. Die Pausenmarkierungen im Gespräch darfst du für Aussagen zur Flüssigkeit nutzen.");
       else R.push("Die Kennzahlen dienen dem Vergleich innerhalb dieser Gruppe und über die Zeit – leite aus Zahlen keine Niveaustufe ab.");
     } else {
       R.push("Die Transkripte enthalten keine Zeitangaben und keine Pausen. Mache deshalb keine Aussagen über Sprechtempo, Pausenlängen, Sprechdauer oder Antwortzeiten – auch nicht geschätzt. Flüssigkeit beurteilst du nur am Wortlaut: abgebrochene oder neu begonnene Sätze, Selbstkorrekturen, Füllwörter, sehr kurze Antworten auf offene Fragen. Lässt sich dazu nichts Belastbares sagen, schreib das.");
@@ -638,7 +650,10 @@ LANG_PACKS.de = {
 
     var hatHaupt = gruppe ? (o.gruppe || o.unterricht || o.noten) : true;
     if (!hatHaupt) {
-      L.push("Gib danach noch keine Auswertung aus. Bestätige nur kurz, dass du alle Transkripte gelesen hast, und warte auf meinen nächsten Auftrag.");
+      L.push("Gib danach nur die folgende Kennzahlentabelle aus, keine weiteren Analysen oder Übungen. Warte anschließend auf meinen nächsten Auftrag in diesem Chat.");
+      L.push("");
+      L.push("FEHLERDICHTE JE PERSON" + (skript ? " UND FLÜSSIGKEITSINDEX" : ""));
+      L.push(fehlerdichteRegeln(S));
       return L.join("\n");
     }
 
@@ -696,6 +711,10 @@ LANG_PACKS.de = {
       if (skript) L.push("Für den Bereich Flüssigkeit darfst du die Pausenmarkierungen und Kennzahlen nutzen, wie in den Lesehinweisen beschrieben.");
       L.push("");
     }
+
+    sec("FEHLERDICHTE JE PERSON" + (skript ? " UND FLÜSSIGKEITSINDEX" : ""));
+    L.push(fehlerdichteRegeln(S));
+    L.push("");
 
     if (skript && S.kennzahlen === "erklaeren") {
       sec("KENNZAHLEN VERSTÄNDLICH ERKLÄRT");
@@ -865,6 +884,12 @@ LANG_PACKS.de = {
     L.push("");
     L.push("Erstelle Übungen für die ganze Gruppe. Sammle dazu die Fehler aus allen Transkripten und beginne mit den Fehlerbereichen, die die meisten Lernenden betreffen. Verwende als Material echte Formulierungen verschiedener Lernender (ohne " + kennungen(S) + ").");
     L.push(uebZeitSatz(S, "den Transkripten"));
+    if (S.uebMix && S.uebMix !== "auto") {
+      var anteile = S.uebMix.split("-");
+      L.push("Schwerpunkt: ungefähr " + anteile[0] + " % Grammatik und " + anteile[1] + " % Wortschatz, bezogen auf die einzelnen Aufgaben über alle Übungen hinweg, nicht auf die Zahl der Übungsblöcke. Grammatik umfasst Formen, Strukturen und Satzbau; Wortschatz umfasst Wortwahl, fehlende Wörter und Wendungen. Nutze nur Fehler und Lücken, die in den Transkripten belegt sind. Falls für einen Anteil zu wenige Belege vorliegen, erstelle entsprechend weniger Aufgaben, statt Fehler zu erfinden oder den anderen Anteil stillschweigend aufzufüllen; nenne die Abweichung kurz.");
+    } else {
+      L.push("Verteile die einzelnen Aufgaben zwischen Grammatik und Wortschatz nach den häufigsten belegten Fehlern und Lücken, ohne ein festes Verhältnis zu erzwingen.");
+    }
     var lz = lernzielZeilen(S);
     if (lz.length) L.push("Berücksichtige vorrangig das Lernziel (" + lz.join("; ") + "), vor allem Teile, die noch nicht oder nicht sicher verwendet wurden.");
     var ws = wortlisteSatz(S), en = endungenUebSatz(S, true);
@@ -939,14 +964,14 @@ function defaultState() {
     kennzahlen: "erklaeren", flussMarkieren: false,
     umfang: "mittel", zeitrahmen: 45,
     fbSprache: "ziel", fbSpracheAndere: "", anrede: "du", fbUmfang: "kurz",
-    uebFormate: { blatt: true, lernprompt: false, html: false, moodle: false }, uebZeit: 20,
+    uebFormate: { blatt: true, lernprompt: false, html: false, moodle: false }, uebZeit: 20, uebMix: "auto",
     wortSprache: "Englisch", wortSpracheAndere: "",
     formLink: "",
     merken: false
   };
 }
 /* Was gemerkt wird – Aufgabe und Lernziel bewusst nicht. */
-var PERSIST = ["lang", "zielsprache", "niveau", "quelle", "out", "feedbackUeb", "kennzahlen", "flussMarkieren", "umfang", "zeitrahmen", "fbSprache", "fbSpracheAndere", "anrede", "fbUmfang", "uebFormate", "formLink", "feedbackUebAnzahl", "feedbackWort", "uebZeit", "wortSprache", "wortSpracheAndere"];
+var PERSIST = ["lang", "zielsprache", "niveau", "quelle", "out", "feedbackUeb", "kennzahlen", "flussMarkieren", "umfang", "zeitrahmen", "fbSprache", "fbSpracheAndere", "anrede", "fbUmfang", "uebFormate", "formLink", "feedbackUebAnzahl", "feedbackWort", "uebZeit", "uebMix", "wortSprache", "wortSpracheAndere"];
 
 var S = defaultState();
 var cur = 0;
@@ -1267,6 +1292,11 @@ function renderStep4() {
   }
   if (o.uebGruppe || (S.quelle === "einzel" && o.feedbackUeb)) {
     h += blk(esc(t(o.uebGruppe ? "s4UebZeit" : "s4UebZeitEinzel")), esc(t("s4UebZeitHint")), "<div class=\"chips\">" + [10, 20, 30].map(function (m) { return chip("uebZeit", m, "ca. " + m + " " + esc(t("min"))); }).join("") + "</div>");
+  }
+  if (o.uebGruppe) {
+    var mix = chip("uebMix", "auto", esc(t("uebMixAuto")));
+    mix += ["100-0", "75-25", "50-50", "25-75", "0-100"].map(function (v) { return chip("uebMix", v, v.replace("-", " / ")); }).join("");
+    h += blk(esc(t("s4UebMix")), esc(t("s4UebMixHint")), "<div class=\"chips\">" + mix + "</div>");
   }
   if (o.feedbackUeb && S.quelle !== "einzel") {
     h += blk(esc(t("s4UebAnzahl")), "", "<div class=\"chips\">" + [2, 4].map(function (m) { return chip("feedbackUebAnzahl", m, m + " " + esc(t("uebStk"))); }).join("") + "</div>");

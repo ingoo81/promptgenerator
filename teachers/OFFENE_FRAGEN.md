@@ -1,6 +1,6 @@
 # Offene Fragen zum Prompt Generator für Lehrkräfte
 
-Stand: 9. Oktober 2026. Dieses Dokument hält Entscheidungen und noch offene
+Stand: 10. Oktober 2026. Dieses Dokument hält Entscheidungen und noch offene
 Folgefragen fest; es ist keine Liste bereits beschlossener Änderungen.
 
 ## Feedback für alle Lernenden auf einmal
@@ -34,3 +34,37 @@ Transkripten. Die Übungen sollen automatisch erstellt und per Link oder HTML
 verteilt werden; ihre Anzahl ist daher keine Frage der manuellen Korrekturzeit
 der Lehrkraft. Eine feste Begrenzung auf fünf Lernende ist dafür nicht
 vorgesehen.
+
+## Verhältnis von Grammatik und Wortschatz in Gruppenübungen
+
+**Entscheidung:** In Schritt 4 kann die Lehrkraft zwischen einer automatischen
+Verteilung und festen Richtwerten von 100/0, 75/25, 50/50, 25/75 oder 0/100
+für Grammatik/Wortschatz wählen. Die Anteile beziehen sich auf einzelne
+Aufgaben, nicht auf ganze Übungsblöcke. Ohne genügend belegte Fehler soll die
+KI weniger Aufgaben erstellen und die Abweichung nennen.
+
+**Noch zu prüfen:** Ergeben die festen Verhältnisse bei echten Transkripten
+eine sinnvolle Aufgabenverteilung, besonders bei wenigen Aufgaben und bei
+Mischfällen wie falschen Artikeln? Hält die KI dabei die Belegpflicht ein,
+statt fehlende Fehler zu erfinden oder stillschweigend durch Aufgaben des
+anderen Bereichs zu ersetzen? Die Ausgaben für alle gewählten Übungsformate
+an kurzen und längeren Transkripten vergleichen.
+
+## Fehlerdichte und Flüssigkeitsindex
+
+**Entscheidung:** Für jede Person werden Grammatik- und Wortschatzfehler pro
+100 Wörter getrennt und als Gesamtfehlerdichte ausgewiesen, unabhängig von
+der Transkriptart. Es gibt keine Korrektheitspunktzahl. Bei Dateien des
+Transkriptionsskripts kommt ein vorläufiger Flüssigkeitsindex von 0 bis 100
+hinzu, der im Skript aus Tempo, Pausen und Unterbrechungen berechnet wird.
+Formeln, Pilotgrenzen und Einschränkungen stehen in `KENNZAHLEN.md`.
+
+**Noch zu prüfen:** Die Pilotgrenzen und Gewichte mit ausreichend echten,
+unterschiedlichen Aufnahmen und menschlichen Einschätzungen kalibrieren.
+Insbesondere prüfen, ob der Index sinnvolle Sprechpausen zu stark bestraft,
+ob Whisper Zögerungslaute und Wiederholungen zuverlässig erfasst und wie
+stabil die Werte bei verschiedenen Aufgaben, Längen und Spracherkennungsmodellen
+sind. Die Fehlerzählung der KI anhand manuell markierter Transkripte prüfen:
+Wortzahl bei App-Transkripten, Grenzfälle zwischen Grammatik und Wortschatz,
+fehlende Wörter und mögliche Erkennungsfehler. Eine niedrige Fehlerdichte oder
+ein hoher Index darf nicht als Nachweis für ein bestimmtes Sprachniveau gelten.
