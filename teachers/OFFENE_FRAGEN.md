@@ -18,11 +18,15 @@ Feedback-Runde als eigenen Arbeitsschritt sehen. Daher ist eine vollständige
 Antwort der gewünschte Standard. Der Prompt nennt am Ende Anzahl und Codes
 oder Namen, damit die Lehrkraft die Vollständigkeit prüfen kann.
 
+**Entscheidung zur Fortsetzung:** Bricht das Feedback ab, bietet der Generator
+einen optionalen Folgeauftrag im selben Chat an. Die KI soll nur die fehlenden
+Personen bearbeiten und ein zuletzt angefangenes, unvollständiges Feedback
+vollständig neu ausgeben. Eine feste Fünfer-Aufteilung wird nicht eingeführt.
+
 **Noch zu klären:** Wie verhalten sich die verwendeten KI-Modelle bei sehr
-großen Gruppen, langen Transkripten und vielen individuellen Übungen? Falls
-Antworten abgeschnitten werden, brauchen wir eine erkennbare Warnung und eine
-praktische Fortsetzung, ohne wieder eine feste Fünfer-Aufteilung für alle
-einzuführen. Auch die anschließende Erstellung einer einzigen interaktiven
+großen Gruppen, langen Transkripten und vielen individuellen Übungen? Die
+Vollständigkeitsangaben und der Folgeauftrag müssen mit echten Ausgaben
+getestet werden. Auch die anschließende Erstellung einer einzigen interaktiven
 HTML-Seite kann an Ausgabelimits stoßen.
 
 ## Dynamische Anzahl individueller Übungen

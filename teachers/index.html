@@ -464,6 +464,8 @@ LANG_PACKS.de = {
     chainMainOnlyH: "Einfügen und die Datei hochladen.",
     chainFbT: "Feedback für jede/n Lernende/n",
     chainFbH: "Im selben Chat einfügen, wenn ① fertig ist. Die KI erstellt das Feedback für alle Personen in einer Antwort.",
+    chainFbResumeT: "Falls die Feedback-Antwort abbricht",
+    chainFbResumeH: "Nur bei einer unvollständigen Antwort im selben Chat einfügen. Vollständige Feedbacks werden nicht wiederholt.",
     chainIndT: "Interaktive Übungsseite (individuell)",
     chainIndH: "Erst einfügen, wenn das Feedback für alle Personen vollständig vorliegt.",
     chainIndAppH: "Erst einfügen, wenn das Feedback für alle Personen vollständig vorliegt. Die KI vergibt jeder Person einen Code und gibt dir die Liste Name → Code. Verteile die Codes einzeln.",
@@ -862,6 +864,18 @@ LANG_PACKS.de = {
     L.push("");
     L.push("Erstelle das Feedback für alle Personen aus der Datei in einer einzigen Antwort, in der Reihenfolge der Datei. Lasse niemanden aus und warte nicht auf „weiter“. Nenne am Ende die Anzahl der bearbeiteten Personen und ihre " + kennungen(S) + ", damit ich die Vollständigkeit mit der Datei abgleichen kann.");
     return L.join("\n");
+  };
+
+  P.feedbackFortsetzen = function (S) {
+    return [
+      "FORTSETZUNG DES FEEDBACKS NACH EINER UNVOLLSTÄNDIGEN ANTWORT",
+      "",
+      "Vergleiche die " + kennungen(S) + " aller Personen in der hochgeladenen Transkriptdatei mit den bereits vollständig ausgegebenen Feedbacks in diesem Chat.",
+      "Fahre nur mit den noch fehlenden Personen fort, in der Reihenfolge der Datei. Wiederhole kein vollständiges Feedback. Falls das Feedback für die zuletzt begonnene Person abgebrochen wurde, erstelle es für diese Person noch einmal vollständig.",
+      "Es gelten unverändert alle Regeln und Übungsanforderungen aus meinem vorherigen Feedback-Auftrag. Warte nicht auf ‚weiter‘ und teile die Personen nicht in feste Gruppen ein.",
+      "Nenne am Ende die Anzahl und " + kennungen(S) + " der in diesem Nachtrag vollständig bearbeiteten Personen sowie die Gesamtzahl und " + kennungen(S) + " aller bisher vollständig bearbeiteten Personen. Nenne ausdrücklich, welche Personen aus der Datei noch fehlen, falls erneut nicht alle in eine Antwort passen.",
+      "Wenn du die Datei oder den bisherigen Bearbeitungsstand nicht zuverlässig erkennen kannst, frage gezielt nach den fehlenden " + kennungen(S) + ", statt zu raten."
+    ].join("\n");
   };
 
   /* ---------- Individuelle Übungsseite (Gruppen-Quellen) ---------- */
@@ -1346,6 +1360,11 @@ function renderStep5() {
     h += "<div class=\"ci\"><div class=\"ch\"><div class=\"cn\">" + (i + 1) + "</div><div><div class=\"ct\">" + esc(c.title) + "</div><div class=\"chh\">" + esc(c.hint) + "</div></div></div>";
     h += "<div class=\"rb\">" + esc(c.text) + "</div>";
     h += "<button class=\"cb\" id=\"cpb" + i + "\" onclick=\"doCopy(" + i + ")\"><span id=\"cpl" + i + "\">📋 " + esc(t("copy")) + " " + NUM[i] + "</span></button></div>";
+    if (c.id === "feedback") {
+      h += "<details class=\"fold\"><summary>" + esc(t("chainFbResumeT")) + "</summary><div class=\"fb\"><p>" + esc(t("chainFbResumeH")) + "</p>";
+      h += "<div class=\"rb\">" + esc(PACK().prompt.feedbackFortsetzen(S)) + "</div>";
+      h += "<button class=\"cb\" id=\"cpbResume\" onclick=\"doCopyFeedbackResume()\"><span id=\"cplResume\">📋 " + esc(t("copy")) + "</span></button></div></details>";
+    }
   });
   h += "</div>";
   if (hatUebungen()) {
@@ -1553,15 +1572,20 @@ function nav(dir) {
   window.scrollTo(0, 0);
 }
 
-function doCopy(i) {
-  var chain = buildChain(S), text = chain[i].text;
-  var btn = document.getElementById("cpb" + i), lbl = document.getElementById("cpl" + i);
+function copyPrompt(text, btn, lbl, original) {
   function done() {
     btn.classList.add("ok"); lbl.textContent = t("copied");
-    setTimeout(function () { btn.classList.remove("ok"); lbl.textContent = "📋 " + t("copy") + " " + NUM[i]; }, 1800);
+    setTimeout(function () { btn.classList.remove("ok"); lbl.textContent = original; }, 1800);
   }
   if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(text).then(done).catch(function () { fallbackCopy(text); done(); });
   else { fallbackCopy(text); done(); }
+}
+function doCopy(i) {
+  var text = buildChain(S)[i].text;
+  copyPrompt(text, document.getElementById("cpb" + i), document.getElementById("cpl" + i), "📋 " + t("copy") + " " + NUM[i]);
+}
+function doCopyFeedbackResume() {
+  copyPrompt(PACK().prompt.feedbackFortsetzen(S), document.getElementById("cpbResume"), document.getElementById("cplResume"), "📋 " + t("copy"));
 }
 function fallbackCopy(text) {
   var ta = document.createElement("textarea"); ta.value = text; ta.style.position = "fixed"; ta.style.left = "-9999px";
