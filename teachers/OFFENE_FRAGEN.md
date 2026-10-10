@@ -26,18 +26,41 @@ vollständig neu ausgeben. Eine feste Fünfer-Aufteilung wird nicht eingeführt.
 **Noch zu klären:** Wie verhalten sich die verwendeten KI-Modelle bei sehr
 großen Gruppen, langen Transkripten und vielen individuellen Übungen? Die
 Vollständigkeitsangaben und der Folgeauftrag müssen mit echten Ausgaben
-getestet werden. Auch die anschließende Erstellung einer einzigen interaktiven
-HTML-Seite kann an Ausgabelimits stoßen.
+getestet werden. Auch die anschließende Erstellung interaktiver HTML-Seiten
+kann an Ausgabelimits stoßen. Für die Übungsseiten gilt deshalb
+vorläufig: bis zu 20 einzeln zu beantwortende Aufgaben in einer Datei; darüber
+werden ganze Personen auf möglichst wenige eigenständige Dateien verteilt.
+Eine Person wird nie aufgeteilt, auch wenn sie allein mehr als 20 Aufgaben hat.
+Das ist eine Grenze für die Ausgabe, keine Fünfer-Grenze für die Auswertung.
+Jede Datei bekommt eine nur für die Lehrkraft sichtbare Übersicht mit Anzahl
+der Aufgaben und enthaltenen Codes. Wenn die Ausgabe nicht vollständig in eine
+KI-Antwort passt, werden weitere komplette Dateien nach „weiter“ ausgegeben.
+Die Grenze von 20 Aufgaben und die Vollständigkeit der erzeugten Dateien sind
+mit echten Gruppen noch zu prüfen.
 
 ## Dynamische Anzahl individueller Übungen
 
-Bei längeren Transkripten könnten mehr belegte Fehlerbereiche und damit mehr
-persönliche Übungen sinnvoll sein. Noch offen sind die Regel für die Anzahl
-pro Person, eine Obergrenze und der Umgang mit kurzen oder fehlerarmen
-Transkripten. Die Übungen sollen automatisch erstellt und per Link oder HTML
-verteilt werden; ihre Anzahl ist daher keine Frage der manuellen Korrekturzeit
-der Lehrkraft. Eine feste Begrenzung auf fünf Lernende ist dafür nicht
-vorgesehen.
+**Entscheidung:** Bei individuellen Übungen zählt jede kurze,
+einzeln zu beantwortende Aufgabe als eine Übung, nicht ein Block mit mehreren
+Teilaufgaben. Auch die vorläufige Grenze von 20 Aufgaben pro HTML-Datei zählt
+in dieser Einheit. Die Gruppenübungen dürfen weiterhin aus Blöcken mit
+mehreren Aufgaben bestehen.
+
+**Vorläufige Regel:** In Schritt 4 wählt die Lehrkraft die Bearbeitungszeit
+pro Person statt einer festen Zahl von 2 oder 4 Übungen. Der Prompt rechnet
+konservativ mit etwa 45 Sekunden pro kurzer Einzelaufgabe. Die Anzahl wird
+zusätzlich auf die eigenständigen, im Transkript belegten Fehlerstellen dieser
+Person begrenzt: eine Aufgabe je Fehlerstelle; wiederholte Fehler zählen nur
+bei mehreren tatsächlichen Stellen. Bei kurzen oder fehlerarmen Transkripten
+entstehen entsprechend weniger Aufgaben. Die Lehrkraft verteilt diese per Link
+oder HTML, sie korrigiert nicht jede Aufgabe selbst. Eine feste Begrenzung auf
+fünf Lernende ist nicht vorgesehen.
+
+**Noch zu prüfen:** Passt der Richtwert von 45 Sekunden bei authentischen
+Aufgaben und Lernenden? Führen längere Transkripte zu einer sinnvollen Zahl
+verschiedener Aufgaben, ohne dass die Feedback-Ausgabe oder HTML-Dateien zu
+lang werden? Gegebenenfalls Zeitoptionen und Zählregel nach den Praxistests
+anpassen.
 
 ## Verhältnis von Grammatik und Wortschatz in Gruppenübungen
 
@@ -45,11 +68,16 @@ vorgesehen.
 Verteilung und festen Richtwerten von 100/0, 75/25, 50/50, 25/75 oder 0/100
 für Grammatik/Wortschatz wählen. Die Anteile beziehen sich auf einzelne
 Aufgaben, nicht auf ganze Übungsblöcke. Ohne genügend belegte Fehler soll die
-KI weniger Aufgaben erstellen und die Abweichung nennen.
+KI weniger Aufgaben erstellen und die Abweichung nennen. Mischfälle zählen
+genau einmal nach dem hauptsächlichen Lernziel der Aufgabe: Das Üben von
+Artikelformen oder Kongruenz ist Grammatik, ein neues Nomen mit seinem festen
+Artikel zu lernen ist Wortschatz, sofern die Unterscheidung in der Zielsprache
+relevant ist.
 
 **Noch zu prüfen:** Ergeben die festen Verhältnisse bei echten Transkripten
 eine sinnvolle Aufgabenverteilung, besonders bei wenigen Aufgaben und bei
-Mischfällen wie falschen Artikeln? Hält die KI dabei die Belegpflicht ein,
+Mischfällen wie falschen Artikeln? Hält die KI die Zuordnungsregel und die
+Belegpflicht ein,
 statt fehlende Fehler zu erfinden oder stillschweigend durch Aufgaben des
 anderen Bereichs zu ersetzen? Die Ausgaben für alle gewählten Übungsformate
 an kurzen und längeren Transkripten vergleichen.

@@ -26,6 +26,8 @@ body{background:#f8fafc;font-family:'Segoe UI',Arial,sans-serif;color:#1e293b;}
 .sh{font-size:13px;color:#64748b;line-height:1.55;margin-bottom:20px;}
 .blk{margin-bottom:22px;}
 .blk:last-child{margin-bottom:0;}
+.fine-section + .fine-section{border-top:1px solid #e2e8f0;margin-top:20px;padding-top:20px;}
+.fine-title{font-size:15px;font-weight:700;color:var(--d);margin-bottom:12px;}
 .bl{display:block;font-size:13.5px;font-weight:700;color:var(--d);margin-bottom:4px;}
 .bh{display:block;font-size:12px;color:#64748b;margin-bottom:8px;line-height:1.45;}
 .rq{color:#ef4444;}
@@ -270,7 +272,7 @@ LANG_PACKS.de = {
   flag: "🇩🇪",
   ui: {
     title: "Prompt Generator für Lehrkräfte",
-    tagline: "✦ Lass eine KI die Sprech-Hausaufgaben deiner Klasse auswerten – mit Feedback, Übungen und Ideen für den Unterricht.",
+    tagline: "✦ Sprechaufgaben auswerten – Feedback und Übungen.",
     langScreenTitle: "Wähle deine Sprache",
     langScreenHint: "In dieser Sprache siehst du das Tool und bekommst die Auswertung.",
     back: "← Zurück",
@@ -335,10 +337,11 @@ LANG_PACKS.de = {
     s3Hint: "Alles hier ist optional. Ein Lernziel macht die Auswertung deutlich konkreter.",
     s3Lernziel: "Lernziel dieser Aufgabe",
     s3LernzielHint: "Was hast du zuletzt eingeführt? Die Auswertung prüft dann, ob es angekommen ist – und was die Lernenden stattdessen verwenden.",
-    s3Struktur: "Zielstruktur(en)",
+    s3Struktur: "Zielstrukturen",
     s3StrukturHint: "Grammatik, die dran war. Mehrere durch Komma trennen.",
     s3StrukturPH: "z. B. Perfekt mit sein, Nebensätze mit weil",
-    s3StrukturHintChips: "Grammatik, die dran war. Antippen zum Auswählen oder unten selbst eintragen, mehrere durch Komma getrennt.",
+    s3StrukturHintChips: "Wähle passende Vorschläge oder ergänze eigene Strukturen.",
+    s3StrukturFrei: "Zielstrukturen als Freitext",
     s3ChipsHint: "Auswahl nach dem Goethe-Curriculum, nur Strukturen des gesprochenen Deutsch.",
     s3Frueher: "Wiederholung: frühere Niveaus",
     s3ZuViele: "Mehr als 3 Strukturen sind in einer kurzen Aufnahme kaum prüfbar – wähle lieber die wichtigsten.",
@@ -358,6 +361,14 @@ LANG_PACKS.de = {
 
     s4Title: "Feinjustierung",
     s4Hint: "Hier siehst du nur, was zu deiner Auswahl gehört. Die Voreinstellungen passen meistens.",
+    s4Allgemein: "Allgemein",
+    s4Unterricht: "Unterrichtsvorschläge",
+    s4Feedback: "Feedback",
+    s4EinzelUeb: "Individuelle Übungen",
+    s4GruppeUeb: "Gruppenübungen",
+    s4UebAusgabe: "Ausgabe der Übungen",
+    s4Wortlisten: "Wortschatzlisten",
+    s4Bewertung: "Bewertung",
     s4Umfang: "Umfang der Auswertung",
     uKnapp: "Knapp", uKnappD: "Nur Tabellen und Stichpunkte.",
     uMittel: "Mittel", uMittelD: "Tabellen mit einem Satz Einordnung je Abschnitt.",
@@ -375,14 +386,13 @@ LANG_PACKS.de = {
     s4FbUmfang: "Länge des Feedbacks",
     fuKurz: "Kurz", fuKurzD: "3–4 Sätze plus Beispiele.",
     fuAus: "Ausführlich", fuAusD: "Mit kurzen Erklärungen.",
-    s4UebZeit: "Bearbeitungszeit der Übungen",
+    s4UebZeit: "Bearbeitungszeit der Gruppenübungen",
     s4UebZeitHint: "Die KI richtet die Zahl der Übungen danach – aber nie mehr, als es belegte Fehler gibt.",
-    s4UebZeitEinzel: "Bearbeitungszeit der Übungen für diese Person",
+    s4UebZeitEinzel: "Bearbeitungszeit pro Person",
+    s4UebZeitEinzelHint: "Eine Übung ist eine kurze Aufgabe. Die Anzahl richtet sich nach der Zeit und den belegten Fehlern.",
     s4UebMix: "Schwerpunkt der Gruppenübungen",
     s4UebMixHint: "Anteile der einzelnen Aufgaben: Grammatik / Wortschatz. Ohne ausreichende Belege entstehen weniger Aufgaben.",
     uebMixAuto: "Automatisch nach Bedarf",
-    s4UebAnzahl: "Übungen je Person im Feedback",
-    uebStk: "Übungen",
     s4Wort: "Wortschatzliste: Übersetzung in",
     s4WortHint: "Ein Eintrag pro Zeile im Format „Wort - Übersetzung“.",
     wsAndere: "Andere …",
@@ -392,7 +402,8 @@ LANG_PACKS.de = {
     s4FormateHint: "Mehrere möglich.",
     fBlatt: "Arbeitsblatt", fBlattD: "Zum Kopieren oder Ausdrucken, Lösungen am Ende.",
     fPrompt: "Übungs-Prompt für Lernende", fPromptD: "Ein fertiger Prompt, den Lernende in ihre eigene KI einfügen – die KI fragt die Übungen ab und korrigiert sofort.",
-    fHtml: "Interaktive Übungsseite", fHtmlD: "Eine HTML-Seite mit sofortiger Rückmeldung. Bei individuellen Übungen: eine Seite für alle, Lernende geben ihren Code ein.",
+    fHtml: "Interaktive Übungsseite", fHtmlD: "HTML-Seite mit sofortiger Rückmeldung.",
+    fHtmlEinzelD: "Bei individuellen Übungen geben Lernende ihren Code ein; bei mehr als 20 Aufgaben können mehrere Dateien entstehen.",
     fMoodle: "Moodle-Quiz (zum Import)", fMoodleD: "Fragen im GIFT-Format – Moodle erfasst die Ergebnisse je Person. Nur für Gruppenübungen.",
     s4Form: "Ergebnisse einsammeln (optional)",
     s4FormHint: "Mit einem eigenen Google-Formular landen die Ergebnisse der Übungsseite automatisch bei dir – je Übung: richtig/falsch, Versuche und falsche Eingaben.",
@@ -518,7 +529,7 @@ LANG_PACKS.de = {
   function anrede(S) { return S.anrede === "sie" ? "Sprich die Lernenden mit „Sie“ an." : "Sprich die Lernenden mit „du“ an."; }
   function lernzielZeilen(S) {
     var z = [], st = S.zielstruktur.trim(), w = wortschatzListe(S);
-    if (st) z.push("Zielstruktur(en): " + st);
+    if (st) z.push("Zielstrukturen: " + st);
     if (w.length) z.push("Zielwortschatz und Wendungen: " + w.join(", "));
     return z;
   }
@@ -530,6 +541,10 @@ LANG_PACKS.de = {
   function uebZeitSatz(S, wessen) {
     var z = S.uebZeit, n = z <= 10 ? "2" : z <= 20 ? "3–4" : "5–6";
     return "Umfang: Übungen für insgesamt etwa " + z + " Minuten Bearbeitungszeit (Richtwert: eine Übung mit 5–8 Aufgaben dauert etwa 5 Minuten, also ungefähr " + n + " Übungen). Mach nicht mehr Übungen, als es Fehlerbereiche mit Belegen in " + wessen + " gibt. Reichen die Belege nicht für die Zeit, sag mir das, statt mit Übungen ohne Beleg aufzufüllen.";
+  }
+  function einzelUebZeitSatz(S, wessen) {
+    var max = Math.floor(S.uebZeitPerson * 60 / 45);
+    return "Umfang pro Person: kurze Übungen für höchstens etwa " + S.uebZeitPerson + " Minuten Bearbeitungszeit. Eine Übung ist genau eine einzeln zu beantwortende Aufgabe, kein Block mit mehreren Teilaufgaben. Rechne vorläufig mit etwa 45 Sekunden pro Aufgabe, also höchstens " + max + " Aufgaben pro Person. Erstelle höchstens eine Aufgabe je eigenständiger belegter Fehlerstelle in " + wessen + "; wiederholte Fehler können nur dann mehrere Aufgaben ergeben, wenn sie an mehreren Stellen belegt sind. Maßgeblich ist die kleinere der beiden Grenzen: Zeit oder belegte Fehlerstellen. Reichen die Fehler nicht für die gewählte Zeit, erstelle weniger Aufgaben und sag mir das, statt welche zu erfinden.";
   }
   /* Übungsformen als Vorschlag – Vielfalt statt Schema. */
   function uebFormenSatz(S, f) {
@@ -806,7 +821,7 @@ LANG_PACKS.de = {
 
   function htmlSpec(S, modus) {
     var f = parseFormLink(S.formLink), L = [];
-    L.push("INTERAKTIVE ÜBUNGSSEITE: Erstelle eine einzige, vollständige HTML-Datei – HTML, CSS und JavaScript in einer Datei, ohne externe Dateien, Bibliotheken oder Schriften. Sie muss im Browser und auf dem Handy gut funktionieren. Wenn du eine Canvas- oder Artefakt-Funktion hast, nutze sie; sonst gib den vollständigen Code in einem Codeblock aus.");
+    L.push("INTERAKTIVE ÜBUNGSSEITE: Erstelle " + (modus === "individuell" ? "vollständige HTML-Dateien" : "eine einzige, vollständige HTML-Datei") + " – jeweils HTML, CSS und JavaScript in einer Datei, ohne externe Dateien, Bibliotheken oder Schriften. Jede Datei muss eigenständig im Browser und auf dem Handy gut funktionieren. Wenn du eine Canvas- oder Artefakt-Funktion hast, nutze sie; sonst gib jede vollständige Datei in einem eigenen Codeblock aus.");
     L.push("Ablauf der Seite:");
     if (modus === "individuell") {
       L.push("- Startbildschirm mit einem Eingabefeld „Dein Code“. Nach der Eingabe erscheinen nur die Übungen zu diesem Code (Groß-/Kleinschreibung egal). Unbekannter Code → freundliche Meldung. Zeige nirgends eine Liste der Codes.");
@@ -828,7 +843,7 @@ LANG_PACKS.de = {
       L.push("- Zeige am Ende den Hinweis: „Schick deiner Lehrkraft einen Screenshot dieser Seite oder den Abschluss-Code.“");
     }
     L.push("- Gestaltung: schlicht, gut lesbar, große Schaltflächen. Alle Texte der Seite " + erklSprache(S) + ". " + anrede(S));
-    if (modus === "individuell") L.push("Wird die Seite zu lang für eine Antwort, teile sie in zwei Dateien (erste und zweite Hälfte der Codes) und sag mir das.");
+    if (modus === "individuell") L.push("Eine Übung ist genau eine einzeln zu beantwortende Aufgabe, kein Block mit mehreren Teilaufgaben. Zähle diese Aufgaben über alle Personen hinweg. Bis einschließlich 20 Aufgaben erstelle eine HTML-Datei für alle. Bei mehr als 20 Aufgaben verteile die Personen auf möglichst wenige eigenständige HTML-Dateien mit höchstens 20 Aufgaben je Datei. Teile die Aufgaben einer Person nie auf mehrere Dateien auf; falls eine Person allein mehr als 20 Aufgaben hat, darf ihre Datei diese Grenze überschreiten. Werte trotzdem alle Personen aus, ohne eine feste Zahl von Lernenden pro Datei vorzugeben. Nenne vor den Dateien für jede Datei den Dateinamen, die Anzahl der Aufgaben und die enthaltenen Codes als Übersicht nur für die Lehrkraft; zeige diese Übersicht nicht auf der Übungsseite. Gib nur vollständig abgeschlossene Dateien aus, keine HTML-Fragmente. Passen nicht alle vollständigen Dateien in eine Antwort, nenne die noch fehlenden Codes und setze mit der nächsten Datei nach „weiter“ fort.");
     return L.join("\n");
   }
 
@@ -853,10 +868,11 @@ LANG_PACKS.de = {
     if (S.feedbackUeb) {
       var f = formatListe(S, ["blatt", "lernprompt", "html"]);
       L.push("");
-      L.push("Hänge an jedes Feedback " + S.feedbackUebAnzahl + " kurze Übungen zu genau den Fehlern dieser Person an – nur Fehler, die sie selbst gemacht hat. Hat sie weniger Fehlerbereiche, mach weniger Übungen, statt aufzufüllen. Wechsle die Übungsformen ab (z. B. Lückentext, Auswahl, Sätze ordnen, Umformen, Fehler finden), damit nicht jede Person dieselbe Form bekommt.");
+      L.push("Hänge an jedes Feedback kurze Übungen zu den Fehlern dieser Person an – nur Fehler, die sie selbst gemacht hat. " + einzelUebZeitSatz(S, "ihrem Transkript"));
+      L.push("Wechsle die Übungsformen ab (z. B. Lückentext, Auswahl, Sätze ordnen, Umformen, Fehler finden), damit nicht jede Person dieselbe Form bekommt.");
       if (f.indexOf("blatt") >= 0) L.push("Form: Arbeitsanweisung und Aufgabe, darunter abgesetzt „Lösung:“.");
       if (f.indexOf("lernprompt") >= 0) L.push(lernpromptSpec(S, "diese Person"));
-      if (f.indexOf("html") >= 0) L.push("Gib die beiden Übungen in jedem Fall vollständig mit Lösung an – daraus baust du später eine interaktive Seite.");
+      if (f.indexOf("html") >= 0) L.push("Gib alle Übungen vollständig mit Lösung an – daraus baust du später eine interaktive Seite.");
       var ws = wortlisteSatz(S), en = endungenUebSatz(S, false);
       if (ws) L.push(ws.trim());
       if (en) L.push(en.trim());
@@ -883,7 +899,7 @@ LANG_PACKS.de = {
     var L = [];
     L.push("INTERAKTIVE ÜBUNGSSEITE MIT DEN INDIVIDUELLEN ÜBUNGEN");
     L.push("");
-    L.push("Baue jetzt aus den individuellen Übungen des vollständigen Feedbacks EINE interaktive Übungsseite für alle.");
+    L.push("Baue jetzt aus den individuellen, einzeln beantwortbaren Übungen des vollständigen Feedbacks interaktive Übungsseiten für alle Personen. Füge keine neuen Teilaufgaben hinzu. Die Zahl der HTML-Dateien richtet sich nur nach der Aufgabenmenge, nicht nach einer festen Zahl von Lernenden.");
     if (S.quelle === "app") L.push("Vergib dafür jeder Person einen zufälligen Code aus 4 Großbuchstaben und Ziffern (keine Namen auf der Seite!) und gib mir vorher, getrennt von der Seite, die Liste Name → Code. Diese Liste ist nur für mich.");
     else L.push("Verwende die Codes aus der Datei.");
     L.push("");
@@ -904,6 +920,7 @@ LANG_PACKS.de = {
     } else {
       L.push("Verteile die einzelnen Aufgaben zwischen Grammatik und Wortschatz nach den häufigsten belegten Fehlern und Lücken, ohne ein festes Verhältnis zu erzwingen.");
     }
+    L.push("Ordne jede Aufgabe genau einem Bereich nach ihrem hauptsächlichen Lernziel zu und zähle sie nicht doppelt. Bei Artikeln zählt das Üben von Formen oder Kongruenz zur Grammatik; das Lernen eines neuen Nomens mit seinem festen Artikel zählt zum Wortschatz, sofern diese Unterscheidung in der Zielsprache relevant ist.");
     var lz = lernzielZeilen(S);
     if (lz.length) L.push("Berücksichtige vorrangig das Lernziel (" + lz.join("; ") + "), vor allem Teile, die noch nicht oder nicht sicher verwendet wurden.");
     var ws = wortlisteSatz(S), en = endungenUebSatz(S, true);
@@ -949,7 +966,7 @@ LANG_PACKS.de = {
     L.push("ÜBUNGEN FÜR DIESE PERSON");
     L.push("");
     L.push("Erstelle Übungen zu genau den Fehlern dieser Person aus deiner Auswertung oben.");
-    L.push(uebZeitSatz(S, "ihrem Transkript"));
+    L.push(einzelUebZeitSatz(S, "ihrem Transkript"));
     var lz = lernzielZeilen(S);
     if (lz.length) L.push("Berücksichtige vorrangig das Lernziel (" + lz.join("; ") + ").");
     var ws = wortlisteSatz(S), en = endungenUebSatz(S, false);
@@ -973,19 +990,19 @@ function defaultState() {
     lang: "de", langChosen: false,
     zielsprache: "", niveau: "", aufgabe: "", aufgabePrompt: "", quelle: "",
     out: { gruppe: true, unterricht: true, noten: false, feedback: false, uebGruppe: false, wortGruppe: false },
-    feedbackUeb: false, feedbackUebAnzahl: 2, feedbackWort: false,
+    feedbackUeb: false, feedbackWort: false,
     zielstruktur: "", zielwortschatz: "",
     kennzahlen: "erklaeren", flussMarkieren: false,
     umfang: "mittel", zeitrahmen: 45,
     fbSprache: "ziel", fbSpracheAndere: "", anrede: "du", fbUmfang: "kurz",
-    uebFormate: { blatt: true, lernprompt: false, html: false, moodle: false }, uebZeit: 20, uebMix: "auto",
+    uebFormate: { blatt: true, lernprompt: false, html: false, moodle: false }, uebZeit: 20, uebZeitPerson: 5, uebMix: "auto",
     wortSprache: "Englisch", wortSpracheAndere: "",
     formLink: "",
     merken: false
   };
 }
 /* Was gemerkt wird – Aufgabe und Lernziel bewusst nicht. */
-var PERSIST = ["lang", "zielsprache", "niveau", "quelle", "out", "feedbackUeb", "kennzahlen", "flussMarkieren", "umfang", "zeitrahmen", "fbSprache", "fbSpracheAndere", "anrede", "fbUmfang", "uebFormate", "formLink", "feedbackUebAnzahl", "feedbackWort", "uebZeit", "uebMix", "wortSprache", "wortSpracheAndere"];
+var PERSIST = ["lang", "zielsprache", "niveau", "quelle", "out", "feedbackUeb", "kennzahlen", "flussMarkieren", "umfang", "zeitrahmen", "fbSprache", "fbSpracheAndere", "anrede", "fbUmfang", "uebFormate", "formLink", "feedbackWort", "uebZeit", "uebZeitPerson", "uebMix", "wortSprache", "wortSpracheAndere"];
 
 var S = defaultState();
 var cur = 0;
@@ -1137,10 +1154,11 @@ function afterChange(path) {
 /* Neu starten: neue Aufgabe, gewählte Einstellungen bleiben. */
 function neuStart() {
   S.aufgabe = ""; S.aufgabePrompt = ""; S.zielstruktur = ""; S.zielwortschatz = "";
+  strukturenOffen = false; frueherOffen = false;
   MERGE = []; mergeManuell = false; mergeFehler = [];
   cur = 0; render(); window.scrollTo(0, 0);
 }
-function resetAll() { vergessen(); var l = S.lang, lc = S.langChosen; S = defaultState(); S.lang = l; S.langChosen = lc; cur = 0; render(); window.scrollTo(0, 0); }
+function resetAll() { vergessen(); var l = S.lang, lc = S.langChosen; S = defaultState(); S.lang = l; S.langChosen = lc; strukturenOffen = false; frueherOffen = false; cur = 0; render(); window.scrollTo(0, 0); }
 
 function cbRow(path, title, desc) {
   var on = !!getP(path);
@@ -1158,12 +1176,14 @@ function stepHead(title, hint) {
   return "<div class=\"ey\">" + esc(fmt(t("stepOf"), { n: cur + 1, t: STEPS })).toUpperCase() + "</div><div class=\"st\">" + title + "</div>" + (hint ? "<div class=\"sh\">" + hint + "</div>" : "");
 }
 /* Zielstrukturen als Buttons */
+var strukturenOffen = false;
 var frueherOffen = false;
 function strukturListe() { return S.zielstruktur.split(",").map(function (x) { return x.trim(); }).filter(Boolean); }
 function strukturToggle(niv, i) {
   var lbl = ZIELSTRUKTUREN[S.zielsprache][niv][i], l = strukturListe(), k = l.indexOf(lbl);
   if (k >= 0) l.splice(k, 1); else l.push(lbl);
   S.zielstruktur = l.join(", ");
+  strukturenOffen = true;
   render();
 }
 function strukturChipRow(niv) {
@@ -1188,6 +1208,7 @@ function strukturChips() {
 function strukturWarnHtml() { return strukturListe().length > 3 ? "<div class=\"sww\">" + esc(t("s3ZuViele")) + "</div>" : ""; }
 function strukturWarnung() { var el = document.getElementById("strukWarn"); if (el) el.innerHTML = strukturWarnHtml(); }
 function blk(label, hint, inner) { return "<div class=\"blk\">" + (label ? "<span class=\"bl\">" + label + "</span>" : "") + (hint ? "<span class=\"bh\">" + hint + "</span>" : "") + inner + "</div>"; }
+function fineSection(title, inner) { return "<section class=\"fine-section\"><h3 class=\"fine-title\">" + esc(title) + "</h3>" + inner + "</section>"; }
 
 function renderChrome() {
   document.title = t("title");
@@ -1272,10 +1293,11 @@ function renderStep2() {
 function renderStep3() {
   var h = stepHead(esc(t("s3Title")), esc(t("s3Hint")));
   var hatChips = !!(ZIELSTRUKTUREN[S.zielsprache] && ZIELSTRUKTUREN[S.zielsprache][S.niveau]);
-  var lz = "<span class=\"bl\" style=\"font-size:12.5px\">" + esc(t("s3Struktur")) + "</span><span class=\"bh\">" + esc(t(hatChips ? "s3StrukturHintChips" : "s3StrukturHint")) + "</span>";
+  var lz = "<details class=\"fold\"" + (strukturenOffen ? " open" : "") + " ontoggle=\"strukturenOffen=this.open\"><summary>" + esc(t("s3Struktur")) + "</summary><div class=\"fb\"><span class=\"bh\">" + esc(t(hatChips ? "s3StrukturHintChips" : "s3StrukturHint")) + "</span>";
   lz += strukturChips();
-  lz += "<textarea class=\"ti\" rows=\"2\" placeholder=\"" + esc(t("s3StrukturPH")) + "\" oninput=\"setText('zielstruktur',this.value);strukturWarnung()\">" + esc(S.zielstruktur) + "</textarea>";
-  lz += "<div id=\"strukWarn\">" + strukturWarnHtml() + "</div>";
+  lz += "<label class=\"bl\" for=\"zielstrukturFrei\">" + esc(t("s3StrukturFrei")) + "</label>";
+  lz += "<textarea class=\"ti\" id=\"zielstrukturFrei\" rows=\"2\" placeholder=\"" + esc(t("s3StrukturPH")) + "\" oninput=\"setText('zielstruktur',this.value);strukturWarnung()\">" + esc(S.zielstruktur) + "</textarea>";
+  lz += "<div id=\"strukWarn\">" + strukturWarnHtml() + "</div></div></details>";
   lz += "<div style=\"height:12px\"></div><span class=\"bl\" style=\"font-size:12.5px\">" + esc(t("s3Wortschatz")) + "</span><span class=\"bh\">" + esc(t("s3WortschatzHint")) + "</span>";
   lz += "<textarea class=\"ti\" rows=\"5\" placeholder=\"" + esc(t("s3WortschatzPH")) + "\" oninput=\"setText('zielwortschatz',this.value)\">" + esc(S.zielwortschatz) + "</textarea>";
   h += blk(esc(t("s3Lernziel")), esc(t("s3LernzielHint")), lz);
@@ -1290,50 +1312,51 @@ function renderStep3() {
 
 function renderStep4() {
   var h = stepHead(esc(t("s4Title")), esc(t("s4Hint"))), o = effOut();
-  h += blk(esc(t("s4Umfang")), "", "<div class=\"rg\">" + rdRow("umfang", "knapp", esc(t("uKnapp")), esc(t("uKnappD"))) + rdRow("umfang", "mittel", esc(t("uMittel")), esc(t("uMittelD"))) + rdRow("umfang", "ausfuehrlich", esc(t("uAus")), esc(t("uAusD"))) + "</div>");
+  h += fineSection(t("s4Allgemein"), blk(esc(t("s4Umfang")), "", "<div class=\"rg\">" + rdRow("umfang", "knapp", esc(t("uKnapp")), esc(t("uKnappD"))) + rdRow("umfang", "mittel", esc(t("uMittel")), esc(t("uMittelD"))) + rdRow("umfang", "ausfuehrlich", esc(t("uAus")), esc(t("uAusD"))) + "</div>"));
   if (o.unterricht && S.quelle !== "einzel") {
-    h += blk(esc(t("s4Zeit")), "", "<div class=\"chips\">" + [15, 30, 45, 90].map(function (m) { return chip("zeitrahmen", m, m + " " + esc(t("min"))); }).join("") + "</div>");
+    h += fineSection(t("s4Unterricht"), blk(esc(t("s4Zeit")), "", "<div class=\"chips\">" + [15, 30, 45, 90].map(function (m) { return chip("zeitrahmen", m, m + " " + esc(t("min"))); }).join("") + "</div>"));
   }
   if (o.feedback || hatUebungen()) {
-    var x = "<span class=\"bl\" style=\"font-size:12.5px\">" + esc(t("s4Sprache")) + "</span><div class=\"rg\">";
-    x += rdRow("fbSprache", "ziel", esc(fmt(t("fsZiel"), { sprache: t("sprachen")[S.zielsprache] || "", niveau: S.niveau })), "");
-    x += rdRow("fbSprache", "andere", esc(t("fsAndere")), "");
-    x += "</div>";
-    if (S.fbSprache === "andere") x += "<input class=\"ti inl\" type=\"text\" placeholder=\"" + esc(t("fsAnderePH")) + "\" value=\"" + esc(S.fbSpracheAndere) + "\" oninput=\"setText('fbSpracheAndere',this.value)\">";
-    x += "<div style=\"height:12px\"></div><span class=\"bl\" style=\"font-size:12.5px\">" + esc(t("s4Anrede")) + "</span><div class=\"chips\">" + chip("anrede", "du", esc(t("aDu"))) + chip("anrede", "sie", esc(t("aSie"))) + "</div>";
-    if (o.feedback) x += "<div style=\"height:12px\"></div><span class=\"bl\" style=\"font-size:12.5px\">" + esc(t("s4FbUmfang")) + "</span><div class=\"rg\">" + rdRow("fbUmfang", "kurz", esc(t("fuKurz")), esc(t("fuKurzD"))) + rdRow("fbUmfang", "ausfuehrlich", esc(t("fuAus")), esc(t("fuAusD"))) + "</div>";
-    h += blk(esc(t("s4Lernende")), esc(t("s4LernendeHint")), x);
+    var sprache = "<div class=\"rg\">" + rdRow("fbSprache", "ziel", esc(fmt(t("fsZiel"), { sprache: t("sprachen")[S.zielsprache] || "", niveau: S.niveau })), "") + rdRow("fbSprache", "andere", esc(t("fsAndere")), "") + "</div>";
+    if (S.fbSprache === "andere") sprache += "<input class=\"ti inl\" type=\"text\" placeholder=\"" + esc(t("fsAnderePH")) + "\" value=\"" + esc(S.fbSpracheAndere) + "\" oninput=\"setText('fbSpracheAndere',this.value)\">";
+    var lernende = blk(esc(t("s4Sprache")), "", sprache);
+    lernende += blk(esc(t("s4Anrede")), "", "<div class=\"chips\">" + chip("anrede", "du", esc(t("aDu"))) + chip("anrede", "sie", esc(t("aSie"))) + "</div>");
+    h += fineSection(t("s4Lernende"), lernende);
   }
-  if (o.uebGruppe || (S.quelle === "einzel" && o.feedbackUeb)) {
-    h += blk(esc(t(o.uebGruppe ? "s4UebZeit" : "s4UebZeitEinzel")), esc(t("s4UebZeitHint")), "<div class=\"chips\">" + [10, 20, 30].map(function (m) { return chip("uebZeit", m, "ca. " + m + " " + esc(t("min"))); }).join("") + "</div>");
+  if (o.feedback) {
+    h += fineSection(t("s4Feedback"), blk(esc(t("s4FbUmfang")), "", "<div class=\"rg\">" + rdRow("fbUmfang", "kurz", esc(t("fuKurz")), esc(t("fuKurzD"))) + rdRow("fbUmfang", "ausfuehrlich", esc(t("fuAus")), esc(t("fuAusD"))) + "</div>"));
+  }
+  if (o.feedbackUeb) {
+    h += fineSection(t("s4EinzelUeb"), blk(esc(t("s4UebZeitEinzel")), esc(t("s4UebZeitEinzelHint")), "<div class=\"chips\">" + [5, 10, 20, 30].map(function (m) { return chip("uebZeitPerson", m, "ca. " + m + " " + esc(t("min"))); }).join("") + "</div>"));
   }
   if (o.uebGruppe) {
+    var gruppe = blk(esc(t("s4UebZeit")), esc(t("s4UebZeitHint")), "<div class=\"chips\">" + [10, 20, 30].map(function (m) { return chip("uebZeit", m, "ca. " + m + " " + esc(t("min"))); }).join("") + "</div>");
     var mix = chip("uebMix", "auto", esc(t("uebMixAuto")));
     mix += ["100-0", "75-25", "50-50", "25-75", "0-100"].map(function (v) { return chip("uebMix", v, v.replace("-", " / ")); }).join("");
-    h += blk(esc(t("s4UebMix")), esc(t("s4UebMixHint")), "<div class=\"chips\">" + mix + "</div>");
-  }
-  if (o.feedbackUeb && S.quelle !== "einzel") {
-    h += blk(esc(t("s4UebAnzahl")), "", "<div class=\"chips\">" + [2, 4].map(function (m) { return chip("feedbackUebAnzahl", m, m + " " + esc(t("uebStk"))); }).join("") + "</div>");
+    gruppe += blk(esc(t("s4UebMix")), esc(t("s4UebMixHint")), "<div class=\"chips\">" + mix + "</div>");
+    h += fineSection(t("s4GruppeUeb"), gruppe);
   }
   if (hatUebungen()) {
-    var f = "<div class=\"rg\">" + cbRow("uebFormate.blatt", esc(t("fBlatt")), esc(t("fBlattD"))) + cbRow("uebFormate.lernprompt", esc(t("fPrompt")), esc(t("fPromptD"))) + cbRow("uebFormate.html", esc(t("fHtml")), esc(t("fHtmlD")));
+    var htmlHint = t("fHtmlD") + (o.feedbackUeb ? " " + t("fHtmlEinzelD") : "");
+    var f = "<div class=\"rg\">" + cbRow("uebFormate.blatt", esc(t("fBlatt")), esc(t("fBlattD"))) + cbRow("uebFormate.lernprompt", esc(t("fPrompt")), esc(t("fPromptD"))) + cbRow("uebFormate.html", esc(t("fHtml")), esc(htmlHint));
     if (o.uebGruppe) f += cbRow("uebFormate.moodle", esc(t("fMoodle")), esc(t("fMoodleD")));
     f += "</div>";
-    h += blk(esc(t("s4Formate")), esc(t("s4FormateHint")), f);
+    var ausgabe = blk(esc(t("s4Formate")), esc(t("s4FormateHint")), f);
     if (S.uebFormate.html) {
       var g = "<input class=\"ti\" type=\"url\" placeholder=\"" + esc(t("s4FormPH")) + "\" value=\"" + esc(S.formLink) + "\" oninput=\"setText('formLink',this.value)\"><div class=\"fstat\" id=\"fstat\"></div>";
       g += "<details class=\"fold\"><summary>" + esc(t("formGuide")) + "</summary><div class=\"fb\"><ol>" + t("formSteps").map(function (s) { return "<li>" + s + "</li>"; }).join("") + "</ol></div></details>";
-      h += blk(esc(t("s4Form")), esc(t("s4FormHint")), g);
+      ausgabe += blk(esc(t("s4Form")), esc(t("s4FormHint")), g);
     }
+    h += fineSection(t("s4UebAusgabe"), ausgabe);
   }
   if (hatWortliste()) {
     var zsName = t("sprachen")[S.zielsprache];
     var w = "<div class=\"chips\">" + WORT_SPRACHEN.filter(function (x) { return x !== zsName; }).map(function (x) { return chip("wortSprache", x, esc(x)); }).join("") + chip("wortSprache", "andere", esc(t("wsAndere"))) + "</div>";
     if (S.wortSprache === "andere") w += "<input class=\"ti inl\" type=\"text\" placeholder=\"" + esc(t("wsAnderePH")) + "\" value=\"" + esc(S.wortSpracheAndere) + "\" oninput=\"setText('wortSpracheAndere',this.value)\">";
-    h += blk(esc(t("s4Wort")), esc(t("s4WortHint")), w);
+    h += fineSection(t("s4Wortlisten"), blk(esc(t("s4Wort")), esc(t("s4WortHint")), w));
   }
   if (o.noten) {
-    h += blk(esc(t("s4Noten")), "", "<div class=\"av\"><p>" + esc(t("s4NotenRegel")) + "</p></div>");
+    h += fineSection(t("s4Bewertung"), blk(esc(t("s4Noten")), "", "<div class=\"av\"><p>" + esc(t("s4NotenRegel")) + "</p></div>"));
   }
   return h;
 }
